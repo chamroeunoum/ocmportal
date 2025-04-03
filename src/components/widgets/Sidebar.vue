@@ -23,7 +23,7 @@
               <!-- Apps -->
               <div class="sidebar ">
                 <div v-for="(app, index) in matchedApps" :key="index" class="sidebar-item">
-                  <div class='item-content ' @click="$router.push(app.url)"  >
+                  <div v-if="$hasPermission(app.permissions)" class='item-content ' @click="$router.push(app.url)"  >
                     <div class="item-icon " v-html="app.svg" ></div>
                     <div class="item-label font-btb text-xs font-btb-black" v-html="app.name" ></div>
                     <svg class="absolute right-2 h-4 w-2 mt-1  text-gray-500 " 
@@ -32,9 +32,8 @@
                   </div>
                   <!-- children -->
                   <div class="sidebar-children" >
-                    <div class="sidebar-children-item" 
-                      v-for="(childApp , cIndex ) in app.children" :key="cIndex" >
-                      <div class='child-item-content ' @click="$router.push(childApp.url)"  >
+                    <div class="sidebar-children-item" v-for="(childApp , cIndex ) in app.children" :key="cIndex" >
+                      <div v-if="$hasPermission(childApp.permissions)"  class='child-item-content ' @click="$router.push(childApp.url)"  >
                         <div class="child-item-icon " v-html="childApp.svg" ></div>
                         <div class="child-item-label font-btb text-xs font-btb-black" v-html="childApp.name" ></div>
                       </div>
@@ -100,7 +99,10 @@ export default {
             1, // Super
             2, // Administrator
             3, // backend
-          ]
+          ],
+          permissions: [
+            'portal'
+          ],
       },
       {
           url: '/dashboard' ,
@@ -111,7 +113,10 @@ export default {
             1, // Super
             2, // Administrator
             3, // backend
-          ]
+          ],
+          permissions: [
+            'portal'
+          ],
       },
       {
           url: '/regulator' ,
@@ -123,6 +128,9 @@ export default {
             2, // Administrator
             3, // backend
           ],
+          permissions: [
+            	'portal_regulator'
+          ],
           children: [
             {
               url: '/regulator' ,
@@ -133,7 +141,10 @@ export default {
                 1, // Super
                 2, // Administrator
                 // 3, // backend
-              ]
+              ],
+              permissions: [
+                'portal_regulator'
+              ],
             },
             {
               url: '/folder' ,
@@ -144,7 +155,10 @@ export default {
                 1, // Super
                 2, // Administrator
                 // 3, // backend
-              ]
+              ],
+              permissions: [
+                'portal_regulator_folder'
+              ],
             },
             {
               url: '/regulator/favorites' ,
@@ -155,7 +169,10 @@ export default {
                 1, // Super
                 2, // Administrator
                 // 3, // backend
-              ]
+              ],
+              permissions: [
+                'portal_regulator_favorite'
+              ],
             },
           ]
       },
@@ -169,6 +186,9 @@ export default {
             2, // Administrator
             3, // backend
           ],
+          permissions: [
+            'portal_meeting'
+          ],
           children: [
             {
               url: '/meeting' ,
@@ -179,7 +199,10 @@ export default {
                 1, // Super
                 2, // Administrator
                 3, // backend
-              ]
+              ],
+              permissions: [
+                'portal_meeting_listing'
+              ],
             },
             {
               url: '/meeting/schedule' ,
@@ -190,7 +213,10 @@ export default {
                 1, // Super
                 2, // Administrator
                 3, // backend
-              ]
+              ],
+              permissions: [
+                'portal_meeting_schedule'
+              ],
             },
           ]
       },
@@ -236,6 +262,9 @@ export default {
             1, // Super
             2, // Administrator
             // 3, // backend
+          ],
+          permissions: [
+            'portal_staff'
           ]
           , children: [
             {
@@ -247,6 +276,9 @@ export default {
                 1, // Super
                 2, // Administrator
                 // 3, // backend
+              ],
+              permissions: [
+                'portal_staff_listing'
               ]
             },
             {
@@ -258,6 +290,9 @@ export default {
                 1, // Super
                 2, // Administrator
                 // 3, // backend
+              ],
+              permissions: [
+                'portal_attendant'
               ]
             },
             {
@@ -269,6 +304,9 @@ export default {
                 1, // Super
                 2, // Administrator
                 // 3, // backend
+              ],
+              permissions: [
+                'portal_attendant_qrcodes'
               ]
             },
           ]

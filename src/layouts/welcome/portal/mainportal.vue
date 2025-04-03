@@ -3,7 +3,7 @@
     <div class="portal-panel mx-auto" >
       <Transition name="slide-fade" >
         <div v-if="visibleHelper" class="text-center mt-8 " >
-          <div class="my-2 font-moul text-gray-700 text-3xl ">ស្វាគមន៍មកកាន់ច្រកសេវារួម ទីស្ដីការគណៈរដ្ឋមន្ត្រី</div>
+          <div class="my-2 font-moul text-gray-700 text-3xl ">ច្រកសេវារួម ទីស្ដីការគណៈរដ្ឋមន្ត្រី</div>
           <!-- <div class="w-20 mx-auto mt-4">
             <img :src="logo" class="w-full" >
           </div> -->
@@ -115,7 +115,7 @@ export default {
     const notify = useNotification()
     const dialog = useDialog()
 
-    const title = ref("សង្ខេបព័ត៌មាន")
+    const title = ref("ទំព័រស្វាគមន៍")
   
     const model = reactive({
       name: 'portal' ,

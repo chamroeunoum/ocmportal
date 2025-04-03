@@ -77,5 +77,8 @@ export const permissions = () => {
   return user != null && user != undefined && user.permissions != undefined && user.permissions.length > 0 ? user.permissions : []
 }
 export const hasPermission = ( code ) => {
-  return permissions().find( ( p ) => p == code ) != undefined ? true : false
+  return  Array.isArray( code ) ? (
+    permissions().find( p => code.includes( p ) ) != undefined
+    ? true : false
+  ) : permissions().includes( code )
 }

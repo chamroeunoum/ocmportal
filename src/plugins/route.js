@@ -70,21 +70,30 @@ export const getRoutes = () => {
                 name: "EmptyURI" ,
                 redirect: to => {
                     return '/welcome'
-                }
+                },
+                permissions: [
+                    'portal'
+                ]
             },
             { 
                 path: '/login', 
                 name: "EmptyURI" ,
                 redirect: to => {
                     return '/welcome'
-                }
+                },
+                permissions: [
+                    'portal'
+                ]
             },
             { 
                 path: '/', 
                 name: "RootURI" ,
                 redirect: to => {
                     return '/welcome'
-                }
+                },
+                permissions: [
+                    'portal'
+                ]
             },
             {
                 name: "Dashboard" ,
@@ -92,7 +101,11 @@ export const getRoutes = () => {
                 component: DashboardComponent ,
                 meta: {
                     // transition: 'fade'
-                }
+                },
+                permissions: [
+                    'portal' ,
+                    'portal_dashboard'
+                ]
             },
             {
                 name: "UserProfile" ,
@@ -100,7 +113,11 @@ export const getRoutes = () => {
                 component: UserProfileComponent ,
                 meta: {
                     // transition: 'fade'
-                }
+                },
+                permissions: [
+                    'portal' ,
+                    'portal_user_profile'
+                ]
             },
             {
                 name: "UserPasswordChange" ,
@@ -108,7 +125,11 @@ export const getRoutes = () => {
                 component: PasswordChangeComponent ,
                 meta: {
                     // transition: 'fade'
-                }
+                },
+                permissions: [
+                    'portal_password_change' ,
+                    'portal'
+                ]
             },
             {
                 name: "RegulatorPage" ,
@@ -116,7 +137,10 @@ export const getRoutes = () => {
                 component: GlobalSearchComponent ,
                 meta: {
                     // transition: 'fade'
-                }
+                },
+                permissions: [
+                    'portal_regulator'
+                ]
             },
             {
                 name: "RegulatorFavoritePage" ,
@@ -124,7 +148,10 @@ export const getRoutes = () => {
                 component: RegulatorFavoriteComponent ,
                 meta: {
                     // transition: 'fade'
-                }
+                },
+                permissions: [
+                    'portal_regulator_favorite'
+                ]
             },
             {
                 name: "FolderPage" ,
@@ -133,16 +160,25 @@ export const getRoutes = () => {
                 meta: {
                     // transition: 'fade'
                 },
+                permissions: [
+                    'portal_regulator_folder'
+                ],
                 children: [
                     {
                         name: "FolderList" ,
                         path: '' ,
-                        component: FolderListComponent
+                        component: FolderListComponent ,
+                        permissions: [
+                            'portal_regulator_folder_listing'
+                        ]
                     },
                     {
                         name: "FolderRegulatorComponent" ,
                         path: ':id/regulators' ,
-                        component: FolderRegulatorComponent
+                        component: FolderRegulatorComponent ,
+                        permissions: [
+                            'portal_regulator_folder_regulators'
+                        ]
                     }
                 ]
             },
@@ -155,21 +191,33 @@ export const getRoutes = () => {
                     requiresAuth: true,
                     is_admin : true
                 },
+                permissions: [
+                    'portal_staff'
+                ],
                 children: [
                     {
                         name: "OfficerTable" ,
                         path: '' ,
-                        component: OfficerThumbnailCrud // UserTableCrud
+                        component: OfficerThumbnailCrud , // UserTableCrud
+                        permissions: [
+                            'portal_staff_listing'
+                        ],
                     },
                     {
                         name: "OfficerThumbnail" ,
                         path: 'thumbnail' ,
-                        component: OfficerThumbnailCrud
+                        component: OfficerThumbnailCrud ,
+                        permissions: [
+                            'portal_staff_listing'
+                        ],
                     },
                     {
                         name: "OfficerThumbnailFilter" ,
                         path: 'thumbnail/:ids' ,
-                        component: OfficerThumbnailCrud
+                        component: OfficerThumbnailCrud ,
+                        permissions: [
+                            'portal_staff_listing'
+                        ],
                     }
                 ]
             },
@@ -179,7 +227,10 @@ export const getRoutes = () => {
                 component: DetailCardComponent ,
                 meta: {
                     // transition: 'fade'
-                }
+                },
+                permissions: [
+                    'portal_staff_preview_card'
+                ],
             },
             {
                 name: 'PrintOfficerCard',
@@ -187,7 +238,10 @@ export const getRoutes = () => {
                 component: PrintOfficerCardComponent ,
                 meta: {
                     // transition: 'fade'
-                }
+                },
+                permissions: [
+                    'portal_staff_print_card'
+                ],
             },
             {
                 name: 'QrCheckinAndCheckoutComponent',
@@ -195,7 +249,10 @@ export const getRoutes = () => {
                 component: QrCheckinAndCheckoutComponent ,
                 meta: {
                     // transition: 'fade'
-                }
+                },
+                permissions: [
+                    'portal_attendant_checkin_checkout'
+                ],
             },
             {
                 name: 'QrCheckinAndCheckoutCameraComponent',
@@ -203,7 +260,10 @@ export const getRoutes = () => {
                 component: QrCheckinAndCheckoutCameraComponent ,
                 meta: {
                     // transition: 'fade'
-                }
+                },
+                permissions: [
+                    'portal_staff_checkin_checkout_camera'
+                ],
             },
             {
                 name: 'Meeting' ,
@@ -214,16 +274,25 @@ export const getRoutes = () => {
                     requiresAuth: true,
                     is_admin : true
                 },
+                permissions: [
+                    'portal_meeting'
+                ],
                 children: [
                     {
                         name: "MeetingThumbnailComponent" ,
                         path: '' ,
-                        component: MeetingThumbnailComponent
+                        component: MeetingThumbnailComponent ,
+                        permissions: [
+                            'portal_meeting_listing'
+                        ],
                     },
                     {
                         name: "MeetingScheduleComponent" ,
                         path: 'schedule' ,
-                        component: MeetingScheduleComponent
+                        component: MeetingScheduleComponent ,
+                        permissions: [
+                            'portal_meeting_schedule'
+                        ],
                     },
                     
                 ]
@@ -266,9 +335,14 @@ export const getRoutes = () => {
                 component: WelcomeComponent ,
                 meta: {
                     // transition: 'fade'
-                }
+                },
+                permissions: [
+                    'portal'
+                ],
             }
         ]
+        routers = routers.filter( ( router ) => hasPermission( router.permissions ) )
+        console.log( routers )
     }else{
         routers = [
             { 
@@ -276,14 +350,20 @@ export const getRoutes = () => {
                 name: "EmptyURI" ,
                 redirect: to => {
                     return '/login'
-                }
+                },
+                permissions: [
+                    'portal_auth_login'
+                ],
             },
             { 
                 path: '/', 
                 name: "RootURI" ,
                 redirect: to => {
                     return '/login'
-                }
+                },
+                permissions: [
+                    'portal_auth_login'
+                ],
             },
             {
                 name: "LoginPage" ,
@@ -291,7 +371,10 @@ export const getRoutes = () => {
                 component: LoginComponent ,
                 meta: {
                     // transition: 'fade'
-                }
+                },
+                permissions: [
+                    'portal_auth_login'
+                ],
             }
             // , {
             //     name: "Welcome" ,

@@ -4,7 +4,7 @@
     <router-view v-slot="{ Component }">
       <component :is="Component" />
     </router-view>
-    <float-top-menu />
+    <float-top-menu v-bind:title="title" />
     <sidebar />
   </div>
 </template>
@@ -25,9 +25,11 @@ export default {
       name: 'DashboardWidgets' ,
       title: 'សង្ខេបព័ត៌មាន'
     })
+    const title = ref("សង្ខេបព័ត៌មាន")
     return {
       model ,
-      pkachan
+      pkachan ,
+      title
     };
   },
   name: "DashboardPage", 

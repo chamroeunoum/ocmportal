@@ -5,9 +5,10 @@
       <digital-clock dgClass=" w-28 text-xxs pt-1" />
     </div> -->
     <div class="absolute right-0 h-12 p-2 w-12 sm:visible md:w-40 lg:w-40 xl:w-40 flex flex-row-reverse cursor-pointer" @click="$router.push('/profile')" >
-      <div class="flex-none border border-gray-200 rounded-full overflow-hidden w-8 h-8  bg-white" >
+      <div class="flex-none rounded-full overflow-hidden w-8 h-8 " >
         <div v-if="profilePicture!=null" class="rounded-full bord er-gray-200 w-8 h-8 flex-none mx-auto overflow-hidden bg-center bg-no-repeat bg-cover" :style=" 'background-image: url(' + profilePicture +');' " ></div>
-        <svg v-if="profilePicture==null" class="w-8 mx-auto" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-128 -128 768 768"><rect x="64" y="64" width="80" height="80" rx="40" ry="40" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></rect><rect x="216" y="64" width="80" height="80" rx="40" ry="40" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></rect><rect x="368" y="64" width="80" height="80" rx="40" ry="40" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></rect><rect x="64" y="216" width="80" height="80" rx="40" ry="40" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></rect><rect x="216" y="216" width="80" height="80" rx="40" ry="40" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></rect><rect x="368" y="216" width="80" height="80" rx="40" ry="40" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></rect><rect x="64" y="368" width="80" height="80" rx="40" ry="40" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></rect><rect x="216" y="368" width="80" height="80" rx="40" ry="40" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></rect><rect x="368" y="368" width="80" height="80" rx="40" ry="40" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></rect></svg>
+        <svg v-if="profilePicture==null" class="w-8 h-8 mx-auto text-white" 
+        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" data-v-73966616=""><path d="M16 8a5 5 0 1 0 5 5a5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3a3.003 3.003 0 0 1-3 3z" fill="currentColor" data-v-73966616=""></path><path d="M16 2a14 14 0 1 0 14 14A14.016 14.016 0 0 0 16 2zm-6 24.377V25a3.003 3.003 0 0 1 3-3h6a3.003 3.003 0 0 1 3 3v1.377a11.899 11.899 0 0 1-12 0zm13.992-1.451A5.002 5.002 0 0 0 19 20h-6a5.002 5.002 0 0 0-4.992 4.926a12 12 0 1 1 15.985 0z" fill="currentColor" data-v-73966616=""></path></svg>
       </div>
       <!-- <div v-if="username!=''" class="flex-none h-8 leading-8 pt-1 font-moul text-right mr-2 text-xs text-gray-700 invisible sm:visible md:visible lg:visible xl:visible" style=" overflow: hidden; white-space: nowrap; text-overflow: ellipsis;" >{{ username }}</div> -->
     </div>
@@ -26,7 +27,7 @@
         class="flex-none mx-2 h-8 w-8 shadow p-1 bg-white rounded-md cursor-pointer  hover:text-yellow-700 hover:border-yellow-700 border border-gray-100 duration-500" >
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1024 1024"><path d="M864 144H560c-8.8 0-16 7.2-16 16v304c0 8.8 7.2 16 16 16h304c8.8 0 16-7.2 16-16V160c0-8.8-7.2-16-16-16zm0 400H560c-8.8 0-16 7.2-16 16v304c0 8.8 7.2 16 16 16h304c8.8 0 16-7.2 16-16V560c0-8.8-7.2-16-16-16zM464 144H160c-8.8 0-16 7.2-16 16v304c0 8.8 7.2 16 16 16h304c8.8 0 16-7.2 16-16V160c0-8.8-7.2-16-16-16zm0 400H160c-8.8 0-16 7.2-16 16v304c0 8.8 7.2 16 16 16h304c8.8 0 16-7.2 16-16V560c0-8.8-7.2-16-16-16z" fill="currentColor"></path></svg>
       </div> -->
-      <n-tooltip trigger="hover" >
+      <!-- <n-tooltip trigger="hover" >
         <template #trigger>
           <div 
             @click="$router.push('/cards')"
@@ -56,7 +57,7 @@
         </template>
         ព័ត៌មានមន្ត្រី
       </n-tooltip>
-      <!-- <n-tooltip trigger="hover" >
+      <n-tooltip trigger="hover" >
         <template #trigger>
           <div 
             @click="logout"

@@ -226,7 +226,7 @@
         </div>
       </Transition>
     </div>
-    <float-top-menu />
+    <float-top-menu v-bind:title="title" />
     <sidebar />
   </div>  
 </template>
@@ -259,6 +259,7 @@ import Sidebar from '@components/widgets/Sidebar.vue'
       const transitionHelper = ref(false)
       const peopleDob = ref(null)
       const officerDate = ref(null)
+      const title = ref("ប្រវត្តិរូបមន្ត្រី")
 
       if( isAuth() ){
         user.value = getUser()
@@ -691,7 +692,8 @@ import Sidebar from '@components/widgets/Sidebar.vue'
         selectedCountesies ,
         positions ,
         organizations ,
-        countesies
+        countesies ,
+        title
       }
     }
 

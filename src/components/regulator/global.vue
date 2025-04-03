@@ -172,7 +172,7 @@
         </div>
       </Transition>
     </div>
-    <float-top-menu />
+    <float-top-menu v-bind:title="title"/>
     <sidebar />
     <!-- Folder modal selection -->
     <n-modal v-model:show="showFolderModal" @on-after-leave="showFolderModal.value=false" >
@@ -251,6 +251,8 @@ export default {
     const selectedRegulatorId = ref(0)
     const year = ref(null)
     const fid = ref(null)
+
+    const title = ref('ស្វែករកឯកសារគតិយុត្ត')
 
     if( getUser() == undefined && getUser() == null ){
       router.push('/')  
@@ -800,7 +802,8 @@ export default {
       pdfPreviewRecord ,
       showPdfPreviewModal ,
       closePdfPreviewModal ,
-      pkachan
+      pkachan ,
+      title
     }
   },
   mounted(){
