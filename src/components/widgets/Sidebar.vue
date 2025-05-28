@@ -261,7 +261,7 @@ export default {
           roles: [
             1, // Super
             2, // Administrator
-            // 3, // backend
+            3, // backend
           ],
           permissions: [
             'portal_staff'
@@ -275,7 +275,7 @@ export default {
               roles: [
                 1, // Super
                 2, // Administrator
-                // 3, // backend
+                3, // backend
               ],
               permissions: [
                 'portal_staff_listing'
@@ -289,7 +289,7 @@ export default {
               roles: [
                 1, // Super
                 2, // Administrator
-                // 3, // backend
+                3, // backend
               ],
               permissions: [
                 'portal_attendant'
@@ -303,7 +303,7 @@ export default {
               roles: [
                 1, // Super
                 2, // Administrator
-                // 3, // backend
+                3, // backend
               ],
               permissions: [
                 'portal_attendant_qrcodes'

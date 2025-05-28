@@ -6,7 +6,7 @@
     </div> -->
     <div class="absolute right-0 h-12 p-2 w-12 sm:visible md:w-40 lg:w-40 xl:w-40 flex flex-row-reverse cursor-pointer" @click="$router.push('/profile')" >
       <div class="flex-none rounded-full overflow-hidden w-8 h-8 " >
-        <div v-if="profilePicture!=null" class="rounded-full bord er-gray-200 w-8 h-8 flex-none mx-auto overflow-hidden bg-center bg-no-repeat bg-cover" :style=" 'background-image: url(' + profilePicture +');' " ></div>
+        <div v-if="profilePicture!=null" class="rounded-full border-gray-200 w-8 h-8 flex-none mx-auto overflow-hidden bg-center bg-no-repeat bg-cover bg-white " :style=" 'background-size: 80%; background-image: url(' + profilePicture +');' " ></div>
         <svg v-if="profilePicture==null" class="w-8 h-8 mx-auto text-white" 
         xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" data-v-73966616=""><path d="M16 8a5 5 0 1 0 5 5a5 5 0 0 0-5-5zm0 8a3 3 0 1 1 3-3a3.003 3.003 0 0 1-3 3z" fill="currentColor" data-v-73966616=""></path><path d="M16 2a14 14 0 1 0 14 14A14.016 14.016 0 0 0 16 2zm-6 24.377V25a3.003 3.003 0 0 1 3-3h6a3.003 3.003 0 0 1 3 3v1.377a11.899 11.899 0 0 1-12 0zm13.992-1.451A5.002 5.002 0 0 0 19 20h-6a5.002 5.002 0 0 0-4.992 4.926a12 12 0 1 1 15.985 0z" fill="currentColor" data-v-73966616=""></path></svg>
       </div>

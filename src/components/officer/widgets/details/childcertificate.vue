@@ -32,7 +32,7 @@
                             </div>
                         </div>
                         <div v-if="certificates == undefined || certificates == null || ( certificates.length <= 0 )" >
-                            មិនទាន់មាន ឯកសារអត្រានុកុលដ្ឋាន នៅឡើយ
+                            មិនទាន់មាន ឯកសារអត្រានុកុលដ្ឋានរបស់កូនឡើយ
                         </div>
                     </div>
                 </n-scrollbar>
@@ -42,7 +42,7 @@
                         <n-scrollbar>
                             <div class="form-panel border border-gray-200 rounded-md m-4  bg-white shadow w-2/3 mx-auto " >
                                 <div class="w-full p-4 " >
-                                    <div class="relative w-full mb-4 border-b border-gray-200 pb-2 font-moul " >ព័ត៌មាន អត្រានុកុលដ្ឋាន
+                                    <div class="relative w-full mb-4 border-b border-gray-200 pb-2 font-moul " >ព័ត៌មាន អត្រានុកុលដ្ឋានកូន
                                         <svg 
                                         class="w-7 h-7 text-green-500 absolute right-0 -top-2 cursor-pointer " 
                                         @click="save"
@@ -212,11 +212,9 @@
                                                     <n-form-item label="នាម" class="w-1/2 p-1" >
                                                         <n-input v-model:value="birthCertificate.father_enfirstname" placeholder="នាម អង់គ្លេស" />
                                                     </n-form-item>
-
                                                     <n-form-item label="ថ្ងៃ ខែ ឆ្នាំ កំណើត" class="w-1/2 p-1" >
                                                         <n-date-picker v-model:value="fatherDateOfBirth" type="date" clearable format="dd-MM-yyyy" placeholder="ថ្ងៃ ខែ ឆ្នាំ កំណើត" />
                                                     </n-form-item>
-
                                                     <n-form-item label="សញ្ជាតិ" class="w-1/2 p-1" >
                                                         <n-radio-group v-model:value="birthCertificate.father_nationality" name="gender">
                                                             <n-space>
@@ -231,7 +229,6 @@
                                                             </n-space>
                                                         </n-radio-group>
                                                     </n-form-item>
-
                                                     <n-form-item-row label="ទីកន្លែងកំណើត" class="w-full p-2" >
                                                         <n-input placeholder="ទីកន្លែងកំណើត" class="text-left" 
                                                         v-model:value="birthCertificate.father_pob" 
@@ -255,11 +252,9 @@
                                                     <n-form-item label="នាម" class="w-1/2 p-1" >
                                                         <n-input v-model:value="birthCertificate.mother_enfirstname" placeholder="នាម អង់គ្លេស" />
                                                     </n-form-item>
-
                                                     <n-form-item label="ថ្ងៃ ខែ ឆ្នាំ កំណើត" class="w-1/2 p-1" >
                                                         <n-date-picker v-model:value="motherDateOfBirth" type="date" clearable format="dd-MM-yyyy" placeholder="ថ្ងៃ ខែ ឆ្នាំ កំណើត" />
                                                     </n-form-item>
-
                                                     <n-form-item label="សញ្ជាតិ" class="w-1/2 p-1" >
                                                         <n-radio-group v-model:value="birthCertificate.mother_nationality" name="gender">
                                                             <n-space>
@@ -274,7 +269,6 @@
                                                             </n-space>
                                                         </n-radio-group>
                                                     </n-form-item>
-
                                                     <n-form-item-row label="ទីកន្លែងកំណើត" class="w-full p-2" >
                                                         <n-input placeholder="ទីកន្លែងកំណើត" class="text-left" 
                                                         v-model:value="birthCertificate.mother_pob" 
@@ -309,15 +303,15 @@
                                 <n-form-item label="ឯកសារយោង" path="pdfs" class="w-4/5 mx-auto " >
                                     <input type="file" placeholder="ឯកសារយោង" @change="fileChange" class="hidden " id="referenceDocument" />
                                     <div class="border rounded border-gray-200 w-full text-sm text-center cursor-pointer hover:border-green-500" @click="clickUpload" >
-                                    <div class="no-files-upload h-full w-full p-4">
-                                        <svg 
-                                        class="text-red-600 w-14 mx-auto"
-                                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1024 1024"><path d="M531.3 574.4l.3-1.4c5.8-23.9 13.1-53.7 7.4-80.7c-3.8-21.3-19.5-29.6-32.9-30.2c-15.8-.7-29.9 8.3-33.4 21.4c-6.6 24-.7 56.8 10.1 98.6c-13.6 32.4-35.3 79.5-51.2 107.5c-29.6 15.3-69.3 38.9-75.2 68.7c-1.2 5.5.2 12.5 3.5 18.8c3.7 7 9.6 12.4 16.5 15c3 1.1 6.6 2 10.8 2c17.6 0 46.1-14.2 84.1-79.4c5.8-1.9 11.8-3.9 17.6-5.9c27.2-9.2 55.4-18.8 80.9-23.1c28.2 15.1 60.3 24.8 82.1 24.8c21.6 0 30.1-12.8 33.3-20.5c5.6-13.5 2.9-30.5-6.2-39.6c-13.2-13-45.3-16.4-95.3-10.2c-24.6-15-40.7-35.4-52.4-65.8zM421.6 726.3c-13.9 20.2-24.4 30.3-30.1 34.7c6.7-12.3 19.8-25.3 30.1-34.7zm87.6-235.5c5.2 8.9 4.5 35.8.5 49.4c-4.9-19.9-5.6-48.1-2.7-51.4c.8.1 1.5.7 2.2 2zm-1.6 120.5c10.7 18.5 24.2 34.4 39.1 46.2c-21.6 4.9-41.3 13-58.9 20.2c-4.2 1.7-8.3 3.4-12.3 5c13.3-24.1 24.4-51.4 32.1-71.4zm155.6 65.5c.1.2.2.5-.4.9h-.2l-.2.3c-.8.5-9 5.3-44.3-8.6c40.6-1.9 45 7.3 45.1 7.4zm191.4-388.2L639.4 73.4c-6-6-14.1-9.4-22.6-9.4H192c-17.7 0-32 14.3-32 32v832c0 17.7 14.3 32 32 32h640c17.7 0 32-14.3 32-32V311.3c0-8.5-3.4-16.7-9.4-22.7zM790.2 326H602V137.8L790.2 326zm1.8 562H232V136h302v216a42 42 0 0 0 42 42h216v494z" fill="currentColor"></path></svg>
-                                        <br/>បញ្ចូលឯកសារយោង ដើម្បីជំនួសឯកសារដែលមានរួចហើយ។
-                                    </div>
-                                    <div class="list-files-upload w-full p-4" >
-                                        <div class="selectedFiles w-full m-2" v-for="(pdf,index) in record.pdfs" :key="index" v-html="'ឯកសារយោងមានឈ្មោះ៖ ' + pdf.name + ' , ទំហំ៖ ' + (pdf.size/1024/1024).toFixed(2) + ' មេកាបៃ (MB)' " ></div>
-                                    </div>
+                                        <div class="no-files-upload h-full w-full p-4">
+                                            <svg 
+                                            class="text-red-600 w-14 mx-auto"
+                                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1024 1024"><path d="M531.3 574.4l.3-1.4c5.8-23.9 13.1-53.7 7.4-80.7c-3.8-21.3-19.5-29.6-32.9-30.2c-15.8-.7-29.9 8.3-33.4 21.4c-6.6 24-.7 56.8 10.1 98.6c-13.6 32.4-35.3 79.5-51.2 107.5c-29.6 15.3-69.3 38.9-75.2 68.7c-1.2 5.5.2 12.5 3.5 18.8c3.7 7 9.6 12.4 16.5 15c3 1.1 6.6 2 10.8 2c17.6 0 46.1-14.2 84.1-79.4c5.8-1.9 11.8-3.9 17.6-5.9c27.2-9.2 55.4-18.8 80.9-23.1c28.2 15.1 60.3 24.8 82.1 24.8c21.6 0 30.1-12.8 33.3-20.5c5.6-13.5 2.9-30.5-6.2-39.6c-13.2-13-45.3-16.4-95.3-10.2c-24.6-15-40.7-35.4-52.4-65.8zM421.6 726.3c-13.9 20.2-24.4 30.3-30.1 34.7c6.7-12.3 19.8-25.3 30.1-34.7zm87.6-235.5c5.2 8.9 4.5 35.8.5 49.4c-4.9-19.9-5.6-48.1-2.7-51.4c.8.1 1.5.7 2.2 2zm-1.6 120.5c10.7 18.5 24.2 34.4 39.1 46.2c-21.6 4.9-41.3 13-58.9 20.2c-4.2 1.7-8.3 3.4-12.3 5c13.3-24.1 24.4-51.4 32.1-71.4zm155.6 65.5c.1.2.2.5-.4.9h-.2l-.2.3c-.8.5-9 5.3-44.3-8.6c40.6-1.9 45 7.3 45.1 7.4zm191.4-388.2L639.4 73.4c-6-6-14.1-9.4-22.6-9.4H192c-17.7 0-32 14.3-32 32v832c0 17.7 14.3 32 32 32h640c17.7 0 32-14.3 32-32V311.3c0-8.5-3.4-16.7-9.4-22.7zM790.2 326H602V137.8L790.2 326zm1.8 562H232V136h302v216a42 42 0 0 0 42 42h216v494z" fill="currentColor"></path></svg>
+                                            <br/>បញ្ចូលឯកសារយោង ដើម្បីជំនួសឯកសារដែលមានរួចហើយ។
+                                        </div>
+                                        <div class="list-files-upload w-full p-4" >
+                                            <div class="selectedFiles w-full m-2" v-for="(pdf,index) in record.pdfs" :key="index" v-html="'ឯកសារយោងមានឈ្មោះ៖ ' + pdf.name + ' , ទំហំ៖ ' + (pdf.size/1024/1024).toFixed(2) + ' មេកាបៃ (MB)' " ></div>
+                                        </div>
                                     </div>
                                 </n-form-item>
                             </n-form>

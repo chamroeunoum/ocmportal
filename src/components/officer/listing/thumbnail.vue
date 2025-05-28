@@ -30,7 +30,7 @@
           </n-tooltip>
         </div>
         <div class="mt-1 mr-2 flex flex-wrap">
-          <n-tooltip trigger="hover">
+          <n-tooltip v-if="$hasPermission('portal_staff_creating')" trigger="hover">
             <template #trigger>
               <div @click="showCreateModal()" class="flex cursor-pointer hover:text-green-500 duration-300 ml-2 leading-8" >
                 <svg class="w-7 h-7 mr-1 " xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M9 12h6"></path><path d="M12 9v6"></path></g></svg>
@@ -39,7 +39,7 @@
             </template>
             បញ្ចូលព័ត៌មានមន្ត្រី
           </n-tooltip>
-          <n-tooltip trigger="hover">
+          <n-tooltip v-if="$hasPermission('portal_staff_creating')" trigger="hover">
             <template #trigger>
               <div @click="showCreateNonOfficerModal()" class="flex cursor-pointer hover:text-green-500 duration-300 ml-2 leading-8" >
                 <svg class="w-7 h-7 mr-1 " xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M9 12h6"></path><path d="M12 9v6"></path></g></svg>
