@@ -15,11 +15,11 @@
           <div class="crud-create-form w-full border-t">
             <div class=" mx-auto p-4 flex-wrap">
               <div class="crud-form-panel w-full flex flex-wrap ">
+                <!-- :rules="rules" -->
                 <n-form v-if="record!=null" 
                   class="w-full text-left font-btb text-lg flex flex-wrap" 
                   :label-width="80"
                   :model="record"
-                  :rules="rules"
                   size="large"
                   ref="formRef"
                 >
@@ -74,15 +74,97 @@
                   <n-form-item label="ទូរស័ព្ទការិយាល័យ" path="phone" class="w-1/2 p-1" >
                     <n-input v-model:value="record.people.office_phone" placeholder="ទូរស័ព្ទការិយាល័យ" />
                   </n-form-item>
-                  <n-form-item-row label="អសយដ្ឋានបច្ចុប្បន្ន" >
+                  <div class="w-full mr-1 border-b border-gray-100  mb-2 " >អាសយដ្ឋាន</div>
+                  <n-form-item label="ខេត្ត ក្រុង" class="w-1/5 p-1" >
+                    <n-select 
+                      v-model:value="record.people.address_province_id"
+                      placeholder="ខេត្ត ក្រុង" 
+                      filterable
+                      clearable
+                      :options="provinceOptions"
+                      @update:value="setProvince()" >
+                    </n-select>
+                  </n-form-item>
+                  <n-form-item label="ស្រុក ខណ្ឌ" class="w-1/5 p-1" >
+                    <n-select 
+                      v-model:value="record.people.address_district_id"
+                      placeholder="ស្រុក ខណ្ឌ" 
+                      filterable
+                      clearable
+                      :options="districtOptions"
+                      @update:value="setDistrict()">
+                    </n-select>
+                  </n-form-item>
+                  <n-form-item label="ឃុំ សង្កាត់" class="w-1/5 p-1" >
+                    <n-select 
+                      v-model:value="record.people.address_commune_id"
+                      placeholder="ឃុំ សង្កាត់" 
+                      filterable
+                      clearable
+                      :options="communeOptions"
+                      @update:value="setCommune()">
+                    </n-select>
+                  </n-form-item>
+                  <n-form-item label="ភូមិ" class="w-1/5 p-1" >
+                    <n-select 
+                      v-model:value="record.people.address_village_id"
+                      placeholder="ភូមិ" 
+                      filterable
+                      clearable
+                      :options="villageOptions"
+                      @update:value="setVillage()">
+                    </n-select>
+                  </n-form-item>
+                  <n-form-item-row label="ព័ត៌មានផ្សេងៗពីអាសយដ្ឋាន" >
                     <n-input 
-                      placeholder="អសយដ្ឋានបច្ចុប្បន្ន" 
+                      placeholder="ព័ត៌មានផ្សេងៗពីអាសយដ្ឋាន" 
                       class="text-left" 
                       v-model:value="record.people.address" 
                       type="textarea" show-count maxlength="5000" />
                   </n-form-item-row>
-                  <n-form-item-row label="ទីកន្លែងកំណើត" >
-                    <n-input placeholder="ទីកន្លែងកំណើត" class="text-left" 
+                  <div class="w-full mr-1 border-b border-gray-100  mb-2 " >ទីកន្លែងកំណើត</div>
+                  <n-form-item label="ខេត្ត ក្រុង" class="w-1/5 p-1" >
+                    <n-select 
+                      v-model:value="record.people.pob_province_id"
+                      placeholder="ខេត្ត ក្រុង" 
+                      filterable
+                      clearable
+                      :options="pobProvinceOptions"
+                      @update:value="pobSetProvince()" >
+                    </n-select>
+                  </n-form-item>
+                  <n-form-item label="ស្រុក ខណ្ឌ" class="w-1/5 p-1" >
+                    <n-select 
+                      v-model:value="record.people.pob_district_id"
+                      placeholder="ស្រុក ខណ្ឌ" 
+                      filterable
+                      clearable
+                      :options="pobDistrictOptions"
+                      @update:value="pobSetDistrict()">
+                    </n-select>
+                  </n-form-item>
+                  <n-form-item label="ឃុំ សង្កាត់" class="w-1/5 p-1" >
+                    <n-select 
+                      v-model:value="record.people.pob_commune_id"
+                      placeholder="ឃុំ សង្កាត់" 
+                      filterable
+                      clearable
+                      :options="pobCommuneOptions"
+                      @update:value="pobSetCommune()">
+                    </n-select>
+                  </n-form-item>
+                  <n-form-item label="ភូមិ" class="w-1/5 p-1" >
+                    <n-select 
+                      v-model:value="record.people.pob_village_id"
+                      placeholder="ភូមិ" 
+                      filterable
+                      clearable
+                      :options="pobVillageOptions"
+                      @update:value="pobSetVillage()">
+                    </n-select>
+                  </n-form-item>
+                  <n-form-item-row label="ព័ត៌មានផ្សេងៗពីទីកន្លែងកំណើត" >
+                    <n-input placeholder="ព័ត៌មានផ្សេងៗពីទីកន្លែងកំណើត" class="text-left" 
                     v-model:value="record.people.pob" 
                     type="textarea" show-count maxlength="5000" />
                   </n-form-item-row>
@@ -96,6 +178,46 @@
                   <n-form-item label="ទូរស័ព្ទ" path="officer_phone" class="w-1/2 p-1" >
                     <n-input v-model:value="record.officer_phone" placeholder="ទូរស័ព្ទ" />
                   </n-form-item>
+                  <!-- <div class="w-full" >
+                    <div class="w-full border-b border-gray-200 py-2 mb-2 " >ក្របខ័ណ្ឌ</div>
+                    <div class="flex flex-wrap " >
+                      <n-form-item label="អង្គ" class="w-1/5 p-1" >
+                        <n-select
+                          v-model:value="selectedAnk"
+                          filterable
+                          placeholder="អង្គ"
+                          :options="visayOptions"
+                          @update:value="updateKrobKhan"
+                        />
+                      </n-form-item>
+                      <n-form-item label="ប្រភេទក្របខ័ណ្ឌ" class="w-1/5 p-1" >
+                        <n-select
+                          v-model:value="selectedKrobKhan"
+                          filterable
+                          placeholder="ប្រភេទក្របខ័ណ្ឌ"
+                          :options="krobKhanOptions"
+                          @update:value="updateRank"
+                        />
+                      </n-form-item>
+                      <n-form-item label="ឋានន្តរស័ក្ដិ" class="w-1/5 p-1" >
+                        <n-select
+                          v-model:value="selectedRank"
+                          filterable
+                          placeholder="ឋានន្តរស័ក្ដិ"
+                          :options="rankOptions"
+                          @update:value="updateThnaks"
+                        />
+                      </n-form-item>
+                      <n-form-item label="ថ្នាក់" class="w-1/5 p-1" >
+                        <n-select
+                          v-model:value="selectedThnak"
+                          filterable
+                          placeholder="ថ្នាក់"
+                          :options="thnakOptions"
+                        />
+                      </n-form-item>
+                    </div>
+                  </div> -->
                   <n-form-item label="លេខិតឆ្លងដែន" path="officer_passport" class="w-1/2 p-1" >
                     <n-input v-model:value="record.officer_passport" placeholder="លេខិតឆ្លងដែន" />
                   </n-form-item>
@@ -111,7 +233,7 @@
                       multiple
                     />
                   </n-form-item>
-                  <n-form-item label="អង្គភាព" path="officer_organization" class="w-full mb-4" >
+                  <!-- <n-form-item label="អង្គភាព" path="officer_organization" class="w-full mb-4" >
                     <n-select
                       v-model:value="selectedOrganization"
                       filterable
@@ -126,7 +248,15 @@
                       placeholder="សូមជ្រើសរើសតួនាទី"
                       :options="positions"
                     />
-                  </n-form-item>
+                  </n-form-item> -->
+                  <n-form-item label="តួនាទី" class="w-full mb-4" >
+                      <n-select
+                        v-model:value="selectedOrganizationStructurePosition"
+                        filterable
+                        placeholder="សូមជ្រើសរើសតួនាទី"
+                        :options="organizationStructurePositions"
+                      />
+                    </n-form-item>
                 </n-form>
                 <div class="w-1/2 h-8"></div>  
               </div>
@@ -212,7 +342,7 @@ export default {
     const selectedCountesies = ref([])
 
     const organizations = computed( () => 
-      store.getters['organization/getRecords'].map( o => ( { label: o.name , value : o.id } ) )
+      store.getters['organizations/getRecords'].map( o => ( { label: o.name , value : o.id } ) )
     )
     const positions = computed( () => 
       store.getters['position/getRecords'].map( o => ( { label: o.name , value : o.id } ) )
@@ -220,6 +350,95 @@ export default {
     const countesies = computed( () => 
       store.getters['countesy/getRecords'].map( c => ( { label: c.name , value : c.id } ) )
     ) 
+
+    const selectedProvince = ref(null)
+    const selectedDistrict = ref(null)
+    const selectedCommune = ref(null)
+    const selectedVillage = ref(null)
+    const pobSelectedProvince = ref(null)
+    const pobSelectedDistrict = ref(null)
+    const pobSelectedCommune = ref(null)
+    const pobSelectedVillage = ref(null)
+    const provinceOptions = computed( () => {
+        return store.getters['province/records'].all.map( ( p ) => { return { label: p.name_kh , value : p.id } } )
+    })
+    const districtOptions = computed( () => {
+      console.log( "1 : " + selectedProvince.value )
+      return selectedProvince != undefined && selectedProvince.value != undefined && selectedProvince.value != null 
+          ? selectedProvince.value.districts.map( ( d ) => { return { label: d.name_kh , value : d.id } } )
+          : [{ label : 'សូមជ្រើសរើស ខេត្ត ឬ ក្រុង ជាមុនសិន' , value : null }]
+    })
+    const communeOptions = computed( () => {
+      return selectedDistrict != undefined && selectedDistrict.value != undefined && selectedDistrict.value != null 
+          ? selectedDistrict.value.communes.map( ( c ) => { return { label: c.name_kh , value : c.id } } )
+          : [{ label : 'សូមជ្រើសរើស ស្រុក ឬ ខណ្ឌ ជាមុនសិន' , value : null }]
+    })
+    const villageOptions = computed( () => {
+      return selectedCommune != undefined && selectedCommune.value != undefined && selectedCommune.value != null 
+          ? selectedCommune.value.villages.map( ( v ) => { return { label: v.name_kh , value : v.id } } )
+          : [{ label : 'សូមជ្រើសរើស ឃុំ ឬ សង្កាត់ ជាមុនសិន' , value : null }]
+    })
+    const pobProvinceOptions = computed( () => {
+        return store.getters['province/records'].all.map( ( p ) => { return { label: p.name_kh , value : p.id } } )
+    })
+    const pobDistrictOptions = computed( () => {
+        return pobSelectedProvince != undefined && pobSelectedProvince.value != undefined && pobSelectedProvince.value != null 
+            ? pobSelectedProvince.value.districts.map( ( d ) => { return { label: d.name_kh , value : d.id } } )
+            : [{ label : 'សូមជ្រើសរើស ខេត្ត ឬ ក្រុង ជាមុនសិន' , value : null }]
+    })
+    const pobCommuneOptions = computed( () => {
+        return pobSelectedDistrict != undefined && pobSelectedDistrict.value != undefined && pobSelectedDistrict.value != null 
+            ? pobSelectedDistrict.value.communes.map( ( c ) => { return { label: c.name_kh , value : c.id } } )
+            : [{ label : 'សូមជ្រើសរើស ស្រុក ឬ ខណ្ឌ ជាមុនសិន' , value : null }]
+    })
+    const pobVillageOptions = computed( () => {
+        return pobSelectedCommune != undefined && pobSelectedCommune.value != undefined && pobSelectedCommune.value != null 
+            ? pobSelectedCommune.value.villages.map( ( v ) => { return { label: v.name_kh , value : v.id } } )
+            : [{ label : 'សូមជ្រើសរើស ឃុំ ឬ សង្កាត់ ជាមុនសិន' , value : null }]
+    })
+    function setProvince(){
+      selectedProvince.value = store.getters['province/records'].all.find( p => p.id == props.record.people.address_province_id )
+      selectedDistrict.value = null
+      selectedCommune.value = null
+      selectedVillage.value = null
+    }
+
+    function setDistrict(){
+      selectedDistrict.value = selectedProvince.value.districts.find( d => d.id == props.record.people.address_district_id )
+      selectedCommune.value = null
+      selectedVillage.value = null
+    }
+
+    function setCommune(){
+      selectedCommune.value = selectedDistrict.value.communes.find( d => d.id == props.record.people.address_commune_id )
+      selectedVillage.value = null
+    }
+
+    function setVillage(){
+      selectedVillage.value = selectedCommune.value.villages.find( d => d.id == props.record.people.address_village_id )
+    }
+
+    function pobSetProvince(){
+      pobSelectedProvince.value = store.getters['province/records'].all.find( p => p.id == props.record.people.pob_province_id )
+      pobSelectedDistrict.value = null
+      pobSelectedCommune.value = null
+      pobSelectedVillage.value = null
+    }
+
+    function pobSetDistrict(){
+      pobSelectedDistrict.value = pobSelectedProvince.value.districts.find( d => d.id == props.record.people.pob_district_id )
+      pobSelectedCommune.value = null
+      pobSelectedVillage.value = null
+    }
+
+    function pobSetCommune(){
+      pobSelectedCommune.value = pobSelectedDistrict.value.communes.find( d => d.id == props.record.people.pob_commune_id )
+      pobSelectedVillage.value = null
+    }
+
+    function pobSetVillage(){
+      pobSelectedVillage.value = pobSelectedCommune.value.villages.find( d => d.id == props.record.people.pob_village_id )
+    }
     
     const dob = ref( null )
     dob.value = props.record.people.dob != '' && props.record.people.dob != undefined
@@ -285,7 +504,7 @@ export default {
         office_phone: '' ,
         dob: null ,
         nid: '' ,
-        marry_status: null ,
+        marry_status: null
       }
       props.record.code = '' ,
       props.record.orgainzation_id = null ,
@@ -348,6 +567,16 @@ export default {
         })
         return false
       }
+      if( 
+        props.record.people.nid == ""
+      ){
+        notify.warning({
+          title: 'ពិនិត្យព័ត៌មាន' ,
+          description: 'សូមបំពេញលេខអត្តសញ្ញាញបណ្ណ' ,
+          duration: 2000
+        })
+        return false
+      }
       if( parseInt( selectedOrganization.value ) <= 0 ){
         notify.warning({
           title: 'ពិនិត្យព័ត៌មាន' ,
@@ -388,8 +617,11 @@ export default {
           // 'officer_dob' : officer_dob.value != null && parseInt( officer_dob.value ) > 0 ? dateFormat( new Date(officer_dob.value) , "yyyy-mm-dd" ) : dateFormat( new Date() , "yyyy-mm-dd" ) ,
           'organization_id' : selectedOrganization.value != null ? selectedOrganization.value : 0 ,
           'position_id' : selectedPosition.value != null ? selectedPosition.value : 0 ,
+          'organization_structure_position_id' : selectedOrganizationStructurePosition.value != null ? selectedOrganizationStructurePosition.value : 0 ,
           'countesy_id' : selectedCountesies.value != null ? selectedCountesies.value[0] : 0 ,
           'officer_passport' : props.record.officer_passport ,
+          'salary_rank' : props.record.salary_rank ,
+          'officer_type' : props.record.officer_type ,
           'officer_email' : props.record.officer_email ,
           'officer_phone' : props.record.officer_phone ,
           // People
@@ -406,7 +638,15 @@ export default {
           'passport' : props.record.people.passport ,
           'marry_status' : props.record.people.marry_status ,
           'address' : props.record.people.address ,
-          'pob' : props.record.people.pob
+          'address_province_id' : parseInt( props.record.people.address_province_id ) ,
+          'address_district_id' : parseInt( props.record.people.address_district_id ) ,
+          'address_commune_id' : parseInt( props.record.people.address_commune_id ) ,
+          'address_village_id' : parseInt( props.record.people.address_village_id ) ,
+          'pob' : props.record.people.pob ,
+          'pob_province_id' : parseInt( props.record.people.pob_province_id ) ,
+          'pob_district_id' : parseInt( props.record.people.pob_district_id ) ,
+          'pob_commune_id' : parseInt( props.record.people.pob_commune_id ) ,
+          'pob_village_id' : parseInt( props.record.people.pob_village_id )
         }
       // {
       //   firstname: props.record.firstname ,
@@ -442,8 +682,151 @@ export default {
       })
       clearRecord( 0 )
     }
-  
+    const selectedOrganizationStructurePosition = ref(null)
+    const organizationStructurePositions = ref([])
+    function getPositionStructures(){
+      store.dispatch('organization/getOrganizationStructurePosition',{
+        organization_structure_id : false
+      }).then( 
+        res => {
+          if( res.data.ok ){
+            organizationStructurePositions.value = res.data.records.map( p => {
+              return {
+                label : p.organizationStructure.organization.name + ' - ' + p.position.name ,
+                value : p.id
+              }
+            })
+          }else{
+            notify.info({
+              title: 'អានព័ត៌មានតួនាទី' ,
+              content: res.data.message
+            })
+          }
+        }
+      ).catch( err => {
+        console.log( err )
+      })
+    }
+
+
+    const anks = ref([])
+    const selectedAnk = ref(null)
+    function getRankStructure(){
+       anks.value = store.getters['rank/records'].all
+    }    
+    const visayOptions = computed(()=>{
+      return anks.value.length > 0
+        ? (
+          anks.value.map( ( v ) => { return { label: v.visay , value : v.visay } } )
+        )
+        : [ { label: 'មិនមានវិស័យ' , value : 0 } ]
+    })
+    const krobkhans = ref([])
+    const selectedKrobKhan = ref(null)
+    const selectedRank = ref(null)
+    const ranks = ref([])
+    function updateKrobKhan(){
+      selectedKrobKhan.value = null
+      selectedRank.value = null
+      selectedThnak.value = null 
+      let v = anks.value.find( ( v ) => v.visay == selectedAnk.value )
+      if( v != undefined ){
+        krobkhans.value = v.krobkhans
+      }else{
+        notify.info({
+          title: 'ព័ត៌មានក្របខ័ណ្ឌ' ,
+          content : 'មិនមានព័ត៌មានក្របខ័ណ្ឌក្នុងវិស័យនេះ'  ,
+          duration: 2000
+        })
+      }
+    }
+    const krobKhanOptions = computed( () => {
+      if( krobkhans.value.length > 0 ){
+        let uniqueKrobKhans = new Array()
+        for( let i in krobkhans.value ){
+          if ( uniqueKrobKhans.indexOf( krobkhans.value[i].krobkhan + "." + krobkhans.value[i].krobkhan_name ) == -1 ){
+            uniqueKrobKhans.push( krobkhans.value[i].krobkhan + "." + krobkhans.value[i].krobkhan_name )
+          }
+        }
+        return uniqueKrobKhans.map( ( k ) => { return { label: k , value : k } } )
+      }else{
+        return [ { label: 'មិនមានក្របខ័ណ្ឌ' , value : 0 } ]
+      }
+    })
+    const rankOptions = computed( () => {
+      if( ranks.value.length > 0 ){
+        return ranks.value
+      }else{
+        return [ { label: 'មិនមានឋានន្តរស័ក្តិ' , value : 0 } ]
+      }
+    })
+    function updateRank(){
+      selectedRank.value = null
+      selectedThnak.value = null 
+      ranks.value = []
+      if( krobkhans.value.length > 0 ){
+        for( let i in krobkhans.value ){
+          if( krobkhans.value[i].krobkhan + "." + krobkhans.value[i].krobkhan_name == selectedKrobKhan.value ){
+            if ( ranks.value.find( r => r.value == krobkhans.value[i].krobkhan + "." + krobkhans.value[i].krobkhan_name + "." + krobkhans.value[i].rank ) == undefined ){
+              ranks.value.push( 
+                { 
+                  label : krobkhans.value[i].rank ,
+                  // label : krobkhans.value[i].krobkhan + "." + krobkhans.value[i].krobkhan_name + "." + krobkhans.value[i].rank ,
+                  value : krobkhans.value[i].krobkhan + "." + krobkhans.value[i].krobkhan_name + "." + krobkhans.value[i].rank
+                }
+              )
+            }
+          }
+        }
+      }else{
+        notify.info({
+          title: 'ព័ត៌មានឋានន្តរស័ក្តិ' ,
+          content : 'មិនមានព័ត៌មានឋានន្តរស័ក្តិ' ,
+          duration: 2000
+        })
+      }
+    }
+    const selectedThnak = ref(null)
+    const thnaks = ref({
+      key: '' ,
+      options: []
+    })
+    function updateThnaks(){
+      selectedThnak.value = null 
+      thnaks.value = []
+      if( krobkhans.value.length > 0 ){
+        for( let i in krobkhans.value ){
+          if( krobkhans.value[i].krobkhan + "." + krobkhans.value[i].krobkhan_name + "." + krobkhans.value[i].rank == selectedRank.value ){
+            thnaks.value.key = krobkhans.value[i].krobkhan + "." + krobkhans.value[i].krobkhan_name + "." + krobkhans.value[i].rank
+            thnaks.value.options = krobkhans.value[i].thnaks.map( t => { 
+                return { 
+                label: t.thnak , 
+                // label: krobkhans.value[i].krobkhan + "." + krobkhans.value[i].krobkhan_name + "." + krobkhans.value[i].rank + '.' + t.thnak , 
+                value : krobkhans.value[i].krobkhan + "." + krobkhans.value[i].krobkhan_name + "." + krobkhans.value[i].rank + '.' + t.thnak 
+              }
+            })
+          }
+        }
+      }else{
+        notify.info({
+          title: 'ព័ត៌មានថ្នាក់' ,
+          content : 'មិនមានព័ត៌មានថ្នាក់' ,
+          duration: 2000
+        })
+      }
+    }
+    const thnakOptions = computed( () => {
+      if( thnaks.value.options.length > 0 ){
+        console.log( thnaks.value )
+        return thnaks.value.options
+      }else{
+        return [ { label: 'មិនមានថ្នាក់' , value : 0 } ]
+      }
+    })
+
     function initial(){
+      getRankStructure()
+      getPositionStructures()
       // selectedOrganizations.value = [463]
       // selectedOrganizations.value = Array.isArray( props.record.organizations ) ? props.record.organizations.map( o => o.id ) : []
       // selectedPositions.value = Array.isArray( props.record.positions ) ? props.record.positions.map( o => o.id ) : []
@@ -469,7 +852,41 @@ export default {
       create  ,
       initial ,
       clearRecord ,
-      maskOrEscClick
+      maskOrEscClick ,
+      getPositionStructures ,
+      organizationStructurePositions ,
+      selectedOrganizationStructurePosition ,
+      provinceOptions ,
+      districtOptions ,
+      communeOptions ,
+      villageOptions ,
+      pobProvinceOptions ,
+      pobDistrictOptions ,
+      pobCommuneOptions ,
+      pobVillageOptions ,
+      setProvince ,
+      setDistrict ,
+      setCommune ,
+      setVillage ,
+      pobSetProvince ,
+      pobSetDistrict ,
+      pobSetCommune ,
+      pobSetVillage ,
+      // 
+      anks , 
+      selectedAnk ,
+      visayOptions ,
+      krobKhanOptions ,
+      selectedKrobKhan ,
+      krobkhans ,
+      updateKrobKhan ,
+      selectedRank , 
+      updateRank ,
+      rankOptions ,
+      selectedThnak , 
+      thnaks ,
+      thnakOptions ,
+      updateThnaks
     }
   }
 }

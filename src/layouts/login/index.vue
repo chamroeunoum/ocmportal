@@ -143,6 +143,7 @@ export default {
 
           message.success("សូមស្វាគមន៍ !")
           router.push('/')
+          // router.push('/hr/officer')
           // if( res.data.user.role == 1 ){
           //   this.$router.push('/dashboard')
           // }else{

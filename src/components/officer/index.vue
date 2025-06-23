@@ -1,12 +1,12 @@
 <template>
   <div class="min-h-screen absolute left-40 top-12 right-0 flex flex-wrap" >
     <!-- <router-view ></router-view> -->
-    <router-view v-slot="{ Component }">
+    <router-view v-if="$hasPermission('portal_staff_listing')" v-slot="{ Component }">
       <transition :name="$route.meta.transition || 'slide-fade'">
         <component :is="Component" />
       </transition>
     </router-view>
-    <float-top-menu />
+    <float-top-menu title="បុគ្គលិក" />
     <sidebar />
   </div>
 </template>
@@ -25,7 +25,6 @@ export default {
     ocmLogoUrl
   } ,
   setup(){
-
   }
 }
 </script>

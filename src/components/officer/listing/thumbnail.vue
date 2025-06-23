@@ -73,15 +73,15 @@
                   <div v-if="record.people != undefined && record.people != null " class="w-full text-center font-moul leading-6 tracking-wider" >{{ record.people.lastname + " " + record.people.firstname }}<br/>{{ record.people.enlastname + " " + record.people.enfirstname }}</div>
                 </div>
                 <div class="w-full flex flex-wrap justify-between text-gray-600" >
-                  <div v-if=" ( record.position != undefined && record.position != null ) || ( record.dob != undefined && record.dob != null ) " class="w-1/2 text-left text-xxs my-1 leading-5 tracking-wider" >
-                    {{ $toKhmer( dateFormat( new Date( record.people.dob ) , 'dd-mm-yyyy' ) ) }}<br/>
-                    {{ record.position.name }}
+                  <div class="w-1/2 flex flex-wrap " >
+                    <div v-if=" ( record.official_date != undefined && record.official_date != null ) " class="text-left text-xxs mt-1 leading-5 tracking-wider w-full" >{{ $toKhmer( dateFormat( new Date( record.official_date ) , 'dd-mm-yyyy' ) ) }}<br/></div>
+                    <div v-if=" ( record.position != undefined && record.position != null ) " class="text-left text-xxs leading-5 tracking-wider w-full" >{{ record.position.name }}</div>
                   </div>
                   <div v-if="record.organization != undefined && record.organization != null " class="w-1/2 text-right text-xxs my-1  leading-5 tracking-wide" v-html=" record.organization.name " ></div>
                 </div>
                 <div v-if="record.card != null && record.card != undefined && record.card.id > 0" class="absolute left-1 top-1 text-vcb-xs text-left font-bold leading-6 tracking-wider" >{{ $toKhmer( record.card.number ) }}</div>
                 <div v-if="record.card == null || record.card == undefined && ( record.organization != undefined && record.organization != null ) " class="absolute left-1 top-1 text-xxs text-left font-bold leading-6 tracking-wider" v-html=" $toKhmer( ( record.organization.prefix != null && record.organization.prefix != '' ? record.organization.prefix + '-'  : '' ) + ( record.id + '' ).padStart( 4 , '0' ) )" ></div>
-                <div v-if="record.code != null && record.code != undefined " class="absolute left-1 top-5 text-vcb-xs text-left font-bold leading-6 tracking-wider text-xxs " v-html=" $toKhmer( record.code )" ></div>
+                <div v-if="record.rank != null && record.rank != undefined " class="absolute left-1 top-5 text-vcb-xs text-left font-bold leading-6 tracking-wider text-xxs " v-html=" $toKhmer( record.rank.prefix + ' ' + record.rank.name )" ></div>
               </div>
               <thumbnail-actions-form v-bind:model="model" v-bind:record="record" :onClose="closeActions" />
             </div>
@@ -90,7 +90,7 @@
       </Transition>
       <!-- Loading -->
       <Transition name="slide-fade" >
-        <div v-if="table.loading" class="table-loading fixed flex h-screen left-0 top-10 right-0 bottom-0 bg-white bg-opacity-90 ">
+        <div v-if="locationLoading == true || table.loading == true " class="table-loading fixed flex h-screen left-0 top-10 right-0 bottom-0 bg-white bg-opacity-90 ">
           <div class="flex mx-auto items-center">
             <div class="spinner">
               <svg class="animate-spin w-16 mx-auto text-blue-500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><path d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48s21.49-48 48-48s48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48s48-21.49 48-48s-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48s48-21.49 48-48s-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48s48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48s48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48s48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48s48-21.49 48-48s-21.491-48-48-48z" fill="currentColor"></path></svg>
@@ -475,18 +475,68 @@ export default {
         console.log( err )
       })
     }
-
+    
     const filter = ref(false)    
     function toggleFilter(){
       filter.value = !filter.value
     }
+
+    function getRankStructure(){
+      if( store.getters['rank/records'].all.length <= 0 ){
+        store.dispatch('rank/structure').then( 
+          res => {
+            if( res.data.ok ){
+              store.commit('rank/setAllRecords',res.data.records)
+            }else{
+              notify.info({
+                title: 'អានព័ត៌មានតួនាទី' ,
+                content: res.data.message
+              })
+            }
+          }
+        ).catch( err => {
+          console.log( err )
+        })
+      }
+    }
+
+    const locationLoading = ref(false)
+    function getProvinces(){
+      if( store.getters['province/records'].all.length <= 0 ){
+        locationLoading.value = true
+        store.dispatch( 'province/list' ).then( res => {
+          store.commit('province/setAllRecords',res.data.records)
+          locationLoading.value = false
+        }).catch( err => {
+          console.log( err )
+        })
+      }
+    }
+
+    function getPdcv(){
+      if( store.getters['province/records'].all.length <= 0 ){
+        locationLoading.value = true
+        store.dispatch( 'province/pdcv' ).then( res => {
+          store.commit('province/setAllRecords',res.data.provinces)
+          store.commit('district/setAllRecords',res.data.districts)
+          store.commit('commune/setAllRecords',res.data.communes)
+          store.commit('villages/setAllRecords',res.data.villages)
+          locationLoading.value = false
+        }).catch( err => {
+          console.log( err )
+        })
+      }
+    }
+
     /**
      * Initial the data
      */
-    getRecords()
-    getPositions()
-    getOrganizations()
+    getRankStructure()
     getCountesies()
+    getRecords()
+    // getProvinces()
+    getPdcv()
+        
 
 
     return {
@@ -540,7 +590,8 @@ export default {
       selectedCountesies ,
       optionOrganizations ,
       selectedOrganizations ,
-      dateFormat
+      dateFormat ,
+      locationLoading
     }
   }
 }

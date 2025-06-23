@@ -2,35 +2,55 @@
     <div v-if="show" class="birth-information absolute left-0 right-0 bottom-0 top-0" >
         <Transition name="slide-fade" >
             <div v-if="record != undefined && record != null " class="absolute left-0 right-0 bottom-0 top-0 p-8 mb-0" >
-                <div class="font-moul border-b border-gray-200 w-full pb-2 mb-4 h-8 leading-6 relative" >ព័ត៌មានអត្រានុកុលដ្ឋាន
+                <div class="font-moul border-b border-gray-200 w-full pb-2 mb-4 h-8 leading-6 relative" >អត្រានុកូលដ្ឋាន
                     <div @click="formToggler" class="absolute right-0 top-0 w-32 text-center border border-gray-300 bg-gray-100 cursor-pointer p-1 rounded-full px-2 hover:bg-green-100 hover:border-green-500 duration-500" >បញ្ចូល</div>
                 </div>
                 <n-scrollbar >
                     <div class="body" >
-                        <div v-for="(certificate , index) in certificates" :key="index" class="certificate relative w-full rounded-lg shadow bg-white p-4 mb-2 " >
-                            <div class="field_name w-full p-1 " >លេខកំណើត ៖ {{ certificate.birth_number }}</div>
-                            <div class="certificate_leverl w-full p-1 " >លេខសៀវភៅ ៖ {{ certificate.book_number }}</div>
-                            <div class="start_date absolute top-4 right-4 h-8 w-48 text-right" >ឆ្នាំសិក្សា ៖ {{ $toKhmer( certificate.year ) }}</div>
-                            <div class="absolute bottom-0 right-0 w-40 flex flex-row-reverse" >
-                                <svg 
-                                @click="uploadToggler(certificate)" 
-                                class="w-6 h-6 m-2 text-blue-500 cursor-pointer"
-                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><path d="M19.35 10.04A7.49 7.49 0 0 0 12 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 0 0 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5c0-2.64-2.05-4.78-4.65-4.96zM19 18H6c-2.21 0-4-1.79-4-4c0-2.05 1.53-3.76 3.56-3.97l1.07-.11l.5-.95A5.469 5.469 0 0 1 12 6c2.62 0 4.88 1.86 5.39 4.43l.3 1.5l1.53.11A2.98 2.98 0 0 1 22 15c0 1.65-1.35 3-3 3zM8 13h2.55v3h2.9v-3H16l-4-4z" fill="currentColor"></path></svg>
-                                <svg 
-                                v-if="certificate.pdf==true"
-                                @click="togglePdfModal(certificate)"
-                                class="w-6 h-6 m-2 text-red-500 cursor-pointer"
-                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1024 1024"><path d="M531.3 574.4l.3-1.4c5.8-23.9 13.1-53.7 7.4-80.7c-3.8-21.3-19.5-29.6-32.9-30.2c-15.8-.7-29.9 8.3-33.4 21.4c-6.6 24-.7 56.8 10.1 98.6c-13.6 32.4-35.3 79.5-51.2 107.5c-29.6 15.3-69.3 38.9-75.2 68.7c-1.2 5.5.2 12.5 3.5 18.8c3.7 7 9.6 12.4 16.5 15c3 1.1 6.6 2 10.8 2c17.6 0 46.1-14.2 84.1-79.4c5.8-1.9 11.8-3.9 17.6-5.9c27.2-9.2 55.4-18.8 80.9-23.1c28.2 15.1 60.3 24.8 82.1 24.8c21.6 0 30.1-12.8 33.3-20.5c5.6-13.5 2.9-30.5-6.2-39.6c-13.2-13-45.3-16.4-95.3-10.2c-24.6-15-40.7-35.4-52.4-65.8zM421.6 726.3c-13.9 20.2-24.4 30.3-30.1 34.7c6.7-12.3 19.8-25.3 30.1-34.7zm87.6-235.5c5.2 8.9 4.5 35.8.5 49.4c-4.9-19.9-5.6-48.1-2.7-51.4c.8.1 1.5.7 2.2 2zm-1.6 120.5c10.7 18.5 24.2 34.4 39.1 46.2c-21.6 4.9-41.3 13-58.9 20.2c-4.2 1.7-8.3 3.4-12.3 5c13.3-24.1 24.4-51.4 32.1-71.4zm155.6 65.5c.1.2.2.5-.4.9h-.2l-.2.3c-.8.5-9 5.3-44.3-8.6c40.6-1.9 45 7.3 45.1 7.4zm191.4-388.2L639.4 73.4c-6-6-14.1-9.4-22.6-9.4H192c-17.7 0-32 14.3-32 32v832c0 17.7 14.3 32 32 32h640c17.7 0 32-14.3 32-32V311.3c0-8.5-3.4-16.7-9.4-22.7zM790.2 326H602V137.8L790.2 326zm1.8 562H232V136h302v216a42 42 0 0 0 42 42h216v494z" fill="currentColor"></path></svg>
-                                <svg 
-                                @click="edit(certificate)"
-                                class="w-6 h-6 m-2 text-blue-500 cursor-pointer"
-                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M4 15h5.986c-.227.3-.4.639-.51 1H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v5.232c-.326.14-.631.343-.897.609L15 9.944V4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1zm8-9.5a.5.5 0 0 1 1 0v6.444l-.88.88A.498.498 0 0 1 12 12.5v-7zm-7 2a.5.5 0 0 1 1 0v5a.5.5 0 0 1-1 0v-5zM9 9a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 1 0v-3A.5.5 0 0 0 9 9zm1.98 6.377l4.83-4.83a1.87 1.87 0 1 1 2.645 2.646l-4.83 4.829a2.197 2.197 0 0 1-1.02.578l-1.498.374a.89.89 0 0 1-1.079-1.078l.375-1.498c.096-.386.296-.74.578-1.02z" fill="currentColor"></path></g></svg>
-                                <svg 
-                                @click="destroy(certificate)"
-                                class="w-6 h-6 m-2 text-red-500 cursor-pointer"
-                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><path d="M112 112l20 320c.95 18.49 14.4 32 32 32h184c17.67 0 30.87-13.51 32-32l20-320" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M80 112h352" fill="currentColor"></path><path d="M192 112V72h0a23.93 23.93 0 0 1 24-24h80a23.93 23.93 0 0 1 24 24h0v40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M256 176v224"></path><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M184 176l8 224"></path><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M328 176l-8 224"></path></svg>
-                            </div>
-                        </div>
+                        <table class="w-full" >
+                            <thead>
+                                <tr class="w-full " >
+                                    <th class="px-1 py-2 bg-gray-200 font-btb-black " >ល.រ</th>
+                                    <th class="px-1 py-2 bg-gray-200 font-btb-black " >លេខសំបុត្រ</th>
+                                    <th class="px-1 py-2 bg-gray-200 font-btb-black " >លេខសៀវភៅ</th>
+                                    <th class="px-1 py-2 bg-gray-200 font-btb-black " >ថ្ងៃខែឆ្នាំ</th>
+                                    <th class="px-1 py-2 bg-gray-200 font-btb-black " >ឃុំ/សង្កាត់</th>
+                                    <th class="px-1 py-2 bg-gray-200 font-btb-black " >ស្រុក/ខណ្ឌ</th>
+                                    <th class="px-1 py-2 bg-gray-200 font-btb-black " >ខេត្ត/ក្រុង</th>
+                                    <th class="px-1 py-2 bg-gray-200 font-btb-black " >ប្រតិបត្តិការ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(certificate , index) in certificates" :key="index" class="certificate relative w-full rounded-lg shadow bg-white p-4 mb-2 " >
+                                    <td class="w-12 index p-1 text-center font-bold" >{{ $toKhmer( index + 1 ) }}</td>
+                                    <td class="w-24 p-1 " >{{ $toKhmer( certificate.birth_number ) }}</td>
+                                    <td class="w-24 certificate_leverl p-1 " >{{ $toKhmer( certificate.book_number ) }}</td>
+                                    <td class="w-48 " >{{ $toKhmer( certificate.year ) }}</td>
+                                    <td class="w-48 " >{{ $toKhmer( certificate.commune.name_kh ) }}</td>
+                                    <td class="w-48 " >{{ $toKhmer( certificate.district.name_kh ) }}</td>
+                                    <td class="w-48 " >{{ $toKhmer( certificate.province.name_kh ) }}</td>
+                                    <td class="flex flex-row-reverse" >
+                                        <svg 
+                                        @click="uploadToggler(certificate)" 
+                                        class="w-6 h-6 m-1 text-blue-500 cursor-pointer"
+                                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><path d="M19.35 10.04A7.49 7.49 0 0 0 12 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 0 0 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5c0-2.64-2.05-4.78-4.65-4.96zM19 18H6c-2.21 0-4-1.79-4-4c0-2.05 1.53-3.76 3.56-3.97l1.07-.11l.5-.95A5.469 5.469 0 0 1 12 6c2.62 0 4.88 1.86 5.39 4.43l.3 1.5l1.53.11A2.98 2.98 0 0 1 22 15c0 1.65-1.35 3-3 3zM8 13h2.55v3h2.9v-3H16l-4-4z" fill="currentColor"></path></svg>
+                                        <svg 
+                                        v-if="certificate.pdf==true"
+                                        @click="togglePdfModal(certificate)"
+                                        class="w-6 h-6 m-1 text-red-500 cursor-pointer"
+                                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1024 1024"><path d="M531.3 574.4l.3-1.4c5.8-23.9 13.1-53.7 7.4-80.7c-3.8-21.3-19.5-29.6-32.9-30.2c-15.8-.7-29.9 8.3-33.4 21.4c-6.6 24-.7 56.8 10.1 98.6c-13.6 32.4-35.3 79.5-51.2 107.5c-29.6 15.3-69.3 38.9-75.2 68.7c-1.2 5.5.2 12.5 3.5 18.8c3.7 7 9.6 12.4 16.5 15c3 1.1 6.6 2 10.8 2c17.6 0 46.1-14.2 84.1-79.4c5.8-1.9 11.8-3.9 17.6-5.9c27.2-9.2 55.4-18.8 80.9-23.1c28.2 15.1 60.3 24.8 82.1 24.8c21.6 0 30.1-12.8 33.3-20.5c5.6-13.5 2.9-30.5-6.2-39.6c-13.2-13-45.3-16.4-95.3-10.2c-24.6-15-40.7-35.4-52.4-65.8zM421.6 726.3c-13.9 20.2-24.4 30.3-30.1 34.7c6.7-12.3 19.8-25.3 30.1-34.7zm87.6-235.5c5.2 8.9 4.5 35.8.5 49.4c-4.9-19.9-5.6-48.1-2.7-51.4c.8.1 1.5.7 2.2 2zm-1.6 120.5c10.7 18.5 24.2 34.4 39.1 46.2c-21.6 4.9-41.3 13-58.9 20.2c-4.2 1.7-8.3 3.4-12.3 5c13.3-24.1 24.4-51.4 32.1-71.4zm155.6 65.5c.1.2.2.5-.4.9h-.2l-.2.3c-.8.5-9 5.3-44.3-8.6c40.6-1.9 45 7.3 45.1 7.4zm191.4-388.2L639.4 73.4c-6-6-14.1-9.4-22.6-9.4H192c-17.7 0-32 14.3-32 32v832c0 17.7 14.3 32 32 32h640c17.7 0 32-14.3 32-32V311.3c0-8.5-3.4-16.7-9.4-22.7zM790.2 326H602V137.8L790.2 326zm1.8 562H232V136h302v216a42 42 0 0 0 42 42h216v494z" fill="currentColor"></path></svg>
+                                        <svg 
+                                        @click="edit(certificate)"
+                                        class="w-6 h-6 m-1 text-blue-500 cursor-pointer"
+                                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M4 15h5.986c-.227.3-.4.639-.51 1H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v5.232c-.326.14-.631.343-.897.609L15 9.944V4a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1zm8-9.5a.5.5 0 0 1 1 0v6.444l-.88.88A.498.498 0 0 1 12 12.5v-7zm-7 2a.5.5 0 0 1 1 0v5a.5.5 0 0 1-1 0v-5zM9 9a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 1 0v-3A.5.5 0 0 0 9 9zm1.98 6.377l4.83-4.83a1.87 1.87 0 1 1 2.645 2.646l-4.83 4.829a2.197 2.197 0 0 1-1.02.578l-1.498.374a.89.89 0 0 1-1.079-1.078l.375-1.498c.096-.386.296-.74.578-1.02z" fill="currentColor"></path></g></svg>
+                                        <svg 
+                                        @click="destroy(certificate)"
+                                        class="w-6 h-6 m-1 text-red-500 cursor-pointer"
+                                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><path d="M112 112l20 320c.95 18.49 14.4 32 32 32h184c17.67 0 30.87-13.51 32-32l20-320" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M80 112h352" fill="currentColor"></path><path d="M192 112V72h0a23.93 23.93 0 0 1 24-24h80a23.93 23.93 0 0 1 24 24h0v40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M256 176v224"></path><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M184 176l8 224"></path><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M328 176l-8 224"></path></svg>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                         <div v-if="certificates == undefined || certificates == null || ( certificates.length <= 0 )" >
                             មិនទាន់មាន ឯកសារអត្រានុកុលដ្ឋាន នៅឡើយ
                         </div>
@@ -42,7 +62,7 @@
                         <n-scrollbar>
                             <div class="form-panel border border-gray-200 rounded-md m-4  bg-white shadow w-2/3 mx-auto " >
                                 <div class="w-full p-4 " >
-                                    <div class="relative w-full mb-4 border-b border-gray-200 pb-2 font-moul " >ព័ត៌មាន អត្រានុកុលដ្ឋាន
+                                    <div class="relative w-full mb-4 border-b border-gray-200 pb-2 font-moul " >ព័ត៌មានអត្រានុកុលដ្ឋាន
                                         <svg 
                                         class="w-7 h-7 text-green-500 absolute right-0 -top-2 cursor-pointer " 
                                         @click="save"
@@ -55,28 +75,29 @@
                                     <n-form class="flex flex-wrap w-full " >
                                         <div class="w-1/2 p-4 " >
                                             <div class=" border border-gray-200 bg-white shadow p-4 rounded-lg flex flex-wrap" >
-                                                <div class="w-full mb-4 border-b border-gray-200 pb-2 font-moul " >លេខសៀវភៅ អត្រានុកុលដ្ឋាន</div>
-                                                <n-form-item label="លេខចុះ" class="w-1/2 p-1" >
-                                                    <n-input v-model:value="birthCertificate.birth_number" placeholder="លេខចុះ" />
+                                                <div class="w-full mb-4 border-b border-gray-200 pb-2 font-moul " >សំបុត្រកំណើត/បញ្ជាក់កំណើត</div>
+                                                <n-form-item label="លេខសំបុត្រ" class="w-1/2 p-1" >
+                                                    <n-input v-model:value="birthCertificate.birth_number" placeholder="លេខសំបុត្រ" />
+                                                </n-form-item>
+                                                <n-form-item label="ថ្ងៃខែឆ្នាំ" class="w-1/2 p-1" >
+                                                    <n-date-picker type="date" v-model:value="year" format="dd-MM-yyyy" placeholder="ថ្ងៃខែឆ្នាំ" />
                                                 </n-form-item>
                                                 <n-form-item label="លេខសៀវភៅ" class="w-1/2 p-1" >
                                                     <n-input v-model:value="birthCertificate.book_number" placeholder="លេខសៀវភៅ" />
                                                 </n-form-item>
-                                                <n-form-item label="ឆ្នាំចុះលេខ" class="w-1/2 p-1" >
-                                                    <n-input v-model:value="birthCertificate.year" placeholder="ឆ្នាំចុះលេខ" />
-                                                </n-form-item>
-                                                <n-form-item label="ថ្ងៃ ខែ ឆ្នាំ ចុះលេខ" class="w-1/2 p-1" >
+                                                
+                                                <n-form-item label="ថ្ងៃខែឆ្នាំចុះលេខ" class="w-1/2 p-1" >
                                                     <n-date-picker v-model:value="issuedDate" type="date" clearable format="dd-MM-yyyy" placeholder="ថ្ងៃ ខែ ឆ្នាំ ចុះលេខ" />
                                                 </n-form-item>
-                                                <n-form-item label="ឈ្មោះអ្នកចុះហត្ថលេខា" class="w-full p-1" >
+                                                <!-- <n-form-item label="ឈ្មោះអ្នកចុះហត្ថលេខា" class="w-full p-1" >
                                                     <n-input v-model:value="birthCertificate.signed_name" placeholder="ឈ្មោះអ្នកចុះហត្ថលេខា" />
-                                                </n-form-item>
+                                                </n-form-item> -->
                                             </div>
                                         </div> 
 
                                         <div class="w-1/2 p-4 " >
                                             <div class=" border border-gray-200 bg-white shadow p-4 rounded-lg flex flex-wrap" >
-                                                <div class="w-full mb-4 border-b border-gray-200 pb-2 font-moul" >ទីតាំងធ្វើ លិខិតអត្រានុកុលដ្ឋាន</div>
+                                                <div class="w-full mb-4 border-b border-gray-200 pb-2 font-moul" >ទីតាំងផ្តល់សំបុត្រកំណើត/បញ្ជាក់កំណើត</div>
                                                 <n-form-item label="ខេត្ត ក្រុង" class="w-1/2 p-1" >
                                                     <n-select 
                                                         v-model:value="birthCertificate.province_id" 
@@ -108,15 +129,15 @@
                                                     </n-select>
                                                 </n-form-item>
 
-                                                <n-form-item-row label="ទីតាំងដែលធ្វើលិខិត" class="w-full p-1" >
+                                                <!-- <n-form-item-row label="ទីតាំងដែលធ្វើលិខិត" class="w-full p-1" >
                                                     <n-input placeholder="ទីតាំងដែលធ្វើលិខិត" class="text-left" 
                                                     v-model:value="birthCertificate.issued_location" 
                                                     type="textarea" show-count maxlength="5000" />
-                                                </n-form-item-row>
+                                                </n-form-item-row> -->
                                             </div>
                                         </div>
 
-                                        <div class="w-full p-4 border border-gray-200 rounded-md m-4 flex flex-wrap bg-white shadow " >
+                                        <!-- <div class="w-full p-4 border border-gray-200 rounded-md m-4 flex flex-wrap bg-white shadow " >
                                             <div class="w-full mb-4 border-b border-gray-200 pb-2 font-moul" >ព័ត័មានសាមីខ្លួន</div>
                                             <n-form-item label="គោត្តនាម" class="w-1/2 p-1" >
                                                 <n-input v-model:value="birthCertificate.lastname" placeholder="គោត្តនាម ខ្មែរ" />
@@ -194,9 +215,9 @@
                                                 <n-input v-model:value="birthCertificate.wedding_number_id" placeholder="លេខសំបុត្រអាពាហ៍ពិពាហ៍" class="w-full" />
                                             </n-form-item>
                                             
-                                        </div>
-                                        <div class="parent-panel w-full flex flex-wrap p-2" >
-                                            <!-- Father information -->
+                                        </div> -->
+                                        <!-- <div class="parent-panel w-full flex flex-wrap p-2" >
+                                            
                                             <div class="w-1/2 p-2 " >
                                                 <div class="border border-gray-200 bg-white shadow p-4 rounded-lg flex flex-wrap" >
                                                     <div class="w-full mb-4 border-b border-gray-200 pb-2 font-moul" >ព័ត័មាន ឪពុក</div>
@@ -239,7 +260,7 @@
                                                     </n-form-item-row>
                                                 </div>
                                             </div>
-                                            <!-- Mother information -->
+                                            
                                             <div class="w-1/2 p-2 " >
                                                 <div class="border border-gray-200 bg-white shadow p-4 rounded-lg flex flex-wrap " >
                                                     <div class="w-full mb-4 border-b border-gray-200 pb-2 font-moul" >ព័ត័មាន ម្ដាយ</div>
@@ -282,7 +303,7 @@
                                                     </n-form-item-row>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </n-form>
                                 </div> 
                             </div>
@@ -382,8 +403,6 @@ import PdfPreview from './pdfpreview.vue'
             const notify = useNotification()
             const dialog = useDialog()
 
-            console.log( props.record )
-
             const model = reactive({
                 name: 'birthcertificate' ,
                 module: 'birthcertificates' ,
@@ -414,6 +433,7 @@ import PdfPreview from './pdfpreview.vue'
             const motherDateOfBirth = ref( new Date().getTime() )
             const fatherDateOfBirth = ref( new Date().getTime() )
             const issuedDate = ref( new Date().getTime() )
+            const year = ref( new Date().getTime() )
 
             const birthCertificate = reactive({
                 'people_id' : props.record.id ,
@@ -468,6 +488,7 @@ import PdfPreview from './pdfpreview.vue'
                     fatherDateOfBirth.value = ( new Date() ).getTime()
                     motherDateOfBirth.value = ( new Date() ).getTime()
                     issuedDate.value = ( new Date() ).getTime()
+                    year.value = ( new Date() ).getTime()
                     birthCertificate.people_id = props.record.id ,
                     birthCertificate.birth_number = ''
                     birthCertificate.book_number = ''
@@ -533,7 +554,6 @@ import PdfPreview from './pdfpreview.vue'
                 }else{
                     selectedCertificate.value = certificate
                 }
-                console.log( selectedCertificate.value )
             }
 
             const pdfToggle = ref(false)
@@ -544,9 +564,11 @@ import PdfPreview from './pdfpreview.vue'
 
             function getCertificates(){
                 store.dispatch(model.name + '/list',{
-                search : '' ,
-                page: 1 , 
-                perPage : 100
+                    search : '' ,
+                    page: 1 , 
+                    perPage : 100 ,
+                    people_id: props.record.people_id ,
+                    wedding_certificate_id : 0 
                 }).then( res => {
                     store.commit( model.name + '/setRecords', res.data.records );
                 }).catch( err => {
@@ -563,10 +585,10 @@ import PdfPreview from './pdfpreview.vue'
                     // Update
                     ? {
                         id: selectedCertificate.value.id ,
-                        'people_id' : props.record.id ,
+                        'people_id' : props.record.people_id ,
                         'birth_number' : birthCertificate.birth_number ,
                         'book_number' : birthCertificate.book_number ,
-                        'year' : birthCertificate.year ,
+                        'year' : year.value != undefined && year.value != null && year.value > 0 ? dateFormat( new Date( year.value ) , 'yyyy-mm-dd' ) : dateFormat( new Date( ) , 'yyyy-mm-dd' ) ,
                         'province_id' : selectedProvince != undefined && selectedProvince.value != null ? selectedProvince.value.id : 0 ,
                         'district_id' : selectedDistrict != undefined && selectedDistrict.value != null ? selectedDistrict.value.id : 0 ,
                         'commune_id' : selectedCommune != undefined && selectedCommune.value != null ? selectedCommune.value.id : 0 ,
@@ -582,7 +604,7 @@ import PdfPreview from './pdfpreview.vue'
                         'issued_date' : issuedDate.value != undefined && issuedDate.value != null && issuedDate.value > 0 ? dateFormat( new Date( issuedDate.value ) , 'yyyy-mm-dd' ) : dateFormat( new Date( ) , 'yyyy-mm-dd' ) ,
                         'issued_location' : birthCertificate.issued_location ,
                         'signed_name' : birthCertificate.signed_name ,
-                        'wedding_certificate_id' : birthCertificate.wedding_certificate_id ,
+                        'wedding_certificate_id' : parseInt( birthCertificate.wedding_certificate_id ) > 0 ? parseInt( birthCertificate.wedding_certificate_id ) : 0 ,
                         // Father 
                         'father_firstname' : birthCertificate.father_firstname ,
                         'father_lastname' : birthCertificate.father_lastname ,
@@ -605,7 +627,7 @@ import PdfPreview from './pdfpreview.vue'
                         'people_id' : props.record.id ,
                         'birth_number' : birthCertificate.birth_number ,
                         'book_number' : birthCertificate.book_number ,
-                        'year' : birthCertificate.year ,
+                        'year' : year.value != undefined && year.value != null && year.value > 0 ? dateFormat( new Date( year.value ) , 'yyyy-mm-dd' ) : dateFormat( new Date( ) , 'yyyy-mm-dd' ) ,
                         'province_id' : selectedProvince != undefined && selectedProvince.value != null ? selectedProvince.value.id : 0 ,
                         'district_id' : selectedDistrict != undefined && selectedDistrict.value != null ? selectedDistrict.value.id : 0 ,
                         'commune_id' : selectedCommune != undefined && selectedCommune.value != null ? selectedCommune.value.id : 0 ,
@@ -621,7 +643,7 @@ import PdfPreview from './pdfpreview.vue'
                         'issued_date' : issuedDate.value != undefined && issuedDate.value != null && issuedDate.value > 0 ? dateFormat( new Date( issuedDate.value ) , 'yyyy-mm-dd' ) : dateFormat( new Date( ) , 'yyyy-mm-dd' ) ,
                         'issued_location' : birthCertificate.issued_location ,
                         'signed_name' : birthCertificate.signed_name ,
-                        'wedding_certificate_id' : birthCertificate.wedding_certificate_id ,
+                        'wedding_certificate_id' : parseInt( birthCertificate.wedding_certificate_id ) > 0 ? parseInt( birthCertificate.wedding_certificate_id ) : 0 ,
                         // Father 
                         'father_firstname' : birthCertificate.father_firstname ,
                         'father_lastname' : birthCertificate.father_lastname ,
@@ -644,7 +666,8 @@ import PdfPreview from './pdfpreview.vue'
                 }).catch( err => {
                     console.log( err )
                 })
-                // formHelper.value = false
+                formHelper.value = false
+                uploadHelper.value = false
             }
 
             function loadLocationAndSelectThem(){
@@ -661,6 +684,7 @@ import PdfPreview from './pdfpreview.vue'
                 fatherDateOfBirth.value = selectedCertificate.value.father_dob != undefined && selectedCertificate.value.father_dob != null && selectedCertificate.value.father_dob.length >0 ? ( new Date( selectedCertificate.value.father_dob ) ).getTime() : ( new Date() ).getTime()
                 motherDateOfBirth.value = selectedCertificate.value.mother_dob != undefined && selectedCertificate.value.mother_dob != null && selectedCertificate.value.mother_dob.length >0 ? ( new Date( selectedCertificate.value.mother_dob ) ).getTime() : ( new Date() ).getTime()
                 issuedDate.value = selectedCertificate.value.issued_date != undefined && selectedCertificate.value.issued_date != null && selectedCertificate.value.issued_date.length >0 ? ( new Date( selectedCertificate.value.issued_date ) ).getTime() : ( new Date() ).getTime()
+                year.value = selectedCertificate.value.year != undefined && selectedCertificate.value.year != null && selectedCertificate.value.year.length >0 ? ( new Date( selectedCertificate.value.year ) ).getTime() : ( new Date() ).getTime()
                 birthCertificate.people_id = props.record.id ,
                 birthCertificate.birth_number = selectedCertificate.value.birth_number
                 birthCertificate.book_number = selectedCertificate.value.book_number
@@ -855,6 +879,7 @@ import PdfPreview from './pdfpreview.vue'
                 birthCertificate ,
                 dateOfBirth , 
                 issuedDate ,
+                year ,
                 /**
                  * Visible or invisible form
                  */

@@ -89,7 +89,7 @@ export default {
      * Variables
      */    
     var model = reactive( {
-      name: "organizations" ,
+      name: "organization" ,
       title: "QR វត្តមាន នៃក្រសួងស្ថាប័ន"
     })
 

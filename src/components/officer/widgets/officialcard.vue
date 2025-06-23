@@ -38,7 +38,7 @@
                             <td class="leading-3  font-btb-black " style=" font-size: 0.55rem; color: #000000; " ><span style="font-size: 0.55rem; color: #000000; " class="font-moul" >ភេទ</span>&nbsp;៖&nbsp;{{ record.people.gender == 1 ? "ប្រុស" : "ស្រី" }}</td>
                           </tr>
                           <tr>
-                            <td class="text-left font-moul align-top" style="width: 2cm;  vertical-align: top;color: #000000; "  >អាសយដ្ឋាន<span style="float: right; font-size: 0.55rem; color: #000000; " >៖</span>៖</td>
+                            <td class="text-left font-moul align-top" style="width: 2cm;  vertical-align: top;color: #000000; "  >អាសយដ្ឋាន<span style="float: right; font-size: 0.55rem; color: #000000; " >៖</span></td>
                             <td  colspan="2" class="leading-3 font-btb-black" style=" font-size: 0.55rem; line-height: 0.8rem; color: #000000; ">{{ $toKhmer( record.people.address ) }}</td>
                           </tr>
                           <tr>
@@ -69,12 +69,12 @@
               </table>
             </div> 
           </div>
-          <div class="absolute right-0 -top-8 bg-white rounded-md" >
+          <div v-if="$hasPermission('portal_staff_save_official_officier_card')" class="absolute right-0 -top-8 bg-white rounded-md" >
             <svg class="w-6 h-6 p-1 cursor-pointer" 
             @click="saveOfficialCard" 
             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none"><path d="M3 5.75A2.75 2.75 0 0 1 5.75 3h9.964a3.25 3.25 0 0 1 2.299.952l2.035 2.035c.61.61.952 1.437.952 2.299v9.964A2.75 2.75 0 0 1 18.25 21H5.75A2.75 2.75 0 0 1 3 18.25V5.75zM5.75 4.5c-.69 0-1.25.56-1.25 1.25v12.5c0 .69.56 1.25 1.25 1.25H6v-5.25A2.25 2.25 0 0 1 8.25 12h7.5A2.25 2.25 0 0 1 18 14.25v5.25h.25c.69 0 1.25-.56 1.25-1.25V8.286c0-.465-.184-.91-.513-1.238l-2.035-2.035a1.75 1.75 0 0 0-.952-.49V7.25a2.25 2.25 0 0 1-2.25 2.25h-4.5A2.25 2.25 0 0 1 7 7.25V4.5H5.75zm10.75 15v-5.25a.75.75 0 0 0-.75-.75h-7.5a.75.75 0 0 0-.75.75v5.25h9zm-8-15v2.75c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75V4.5h-6z" fill="currentColor"></path></g></svg>
           </div>
-          <div class="absolute right-8 -top-8 bg-white rounded-md" >
+          <div v-if="$hasPermission('portal_staff_print_card')" class="absolute right-8 -top-8 bg-white rounded-md" >
             <a v-if="record!=undefined" :href="getPrintCardUrl(record)" target="_blank_" >
               <svg class="w-6 h-6 p-1 cursor-pointer" 
               xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M28 9h-3V3H7v6H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h3v6h18v-6h3a2 2 0 0 0 2-2V11a2 2 0 0 0-2-2zM9 5h14v4H9zm14 22H9V17h14zm5-6h-3v-6H7v6H4V11h24z" fill="currentColor"></path></svg>

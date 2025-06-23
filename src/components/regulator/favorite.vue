@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen ">
+  <div v-if="$hasPermission('portal_regulator_favorite')"  class="min-h-screen ">
     <div class="absolute left-40 top-12 right-0 bottom-0 " >
       <div class="flex w-full border-b z-50 bg-gray-100 " >
         <div class="flex w-full pl-4 py-2 title " >
@@ -172,7 +172,7 @@
         </div>
       </Transition>
     </div>
-    <float-top-menu />
+    <float-top-menu title="ឯកសារចំណូលចិត្ត" />
     <sidebar />
     <!-- Folder modal selection -->
     <n-modal v-model:show="showFolderModal" @on-after-leave="showFolderModal.value=false" >

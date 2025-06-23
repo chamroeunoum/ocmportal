@@ -5,9 +5,9 @@
           <!-- Member Form -->
           <div class=" flex-none min-h-screen absolute left-0 top-0 bottom-0 w-96" >
             <!-- List members -->
-            <div v-if="regulators.length" class="w-full absolute left-0 top-12 right-0 bottom-0 overflow-y-auto p-2" >
+            <div v-if="regulators.length && $hasPermission('portal_meeting_link_regulator')" class="w-full absolute left-0 top-12 right-0 bottom-0 overflow-y-auto p-2" >
               <div  v-for="(regulator,index) in regulators" :key="index" class="relative p-1 border-b border-gray-200 cursor-pointer hover:bg-gray-100 duration-300" >
-                <div class="member_name" @click="toggleMeetingRegulators(regulator)" >
+                <div class="member_name" @click=" $hasPermission('portal_meeting_link_regulator') ? toggleMeetingRegulators(regulator) : '' " >
                   <strong>{{(index + 1 )}}</strong>{{  ". " + ( regulator.type != undefined ? regulator.type.desp : '' ) + " - " + regulator.fid + " - " + regulator.year }}
                   <div class="py-1 line-clamp-2" v-html="regulator.objective" ></div>
                 </div>
@@ -22,15 +22,15 @@
               </Transition>
             </div>
             <!-- Search box -->
-            <div class="absolute left-0 top-0 right-0 h-12 p-2 border-b border-gray-200 " >
+            <div v-if="$hasPermission('portal_meeting_link_regulator')" class="absolute left-0 top-0 right-0 h-12 p-2 border-b border-gray-200 " >
               <n-input type="text" v-model:value="regulatorSearch" @keyup.enter="getRegulators" class="w-full" placeholder="ស្វែងរកឯកសារគតិយុត្តសម្រាប់កិច្ចប្រជុំ..." />
             </div>
           </div>
           <!-- Selected Members -->
-          <div class="border-l border-gray-200 absolute left-96 top-0 right-0 bottom-0" >
+          <div :class=" ' border-l border-gray-200 absolute top-0 right-0 bottom-0 ' + ( $hasPermission('portal_meeting_link_regulator') ? ' left-96 ' : ' left-0 ' ) " >
             <div class="absolute left-0 top-12 right-0 bottom-0 overflow-y-auto p-2" >
               <div v-for="(regulator,index) in selectedRegulators" :key="index" class="relative p-2 pr-8 border-b border-gray-200 cursor-pointer hover:bg-gray-100 duration-300" >
-                <div class="member_name line-clamp-3" @click="toggleMeetingRegulators(regulator)" v-html=" '<strong>' + (index + 1 ) + '</strong>' + '. ' + ( regulator.type != undefined ? regulator.type.desp : '' ) + ' - ' + regulator.fid + ' - ' + regulator.year + ' , ' + regulator.objective" ></div>
+                <div class="member_name line-clamp-3" @click=" $hasPermission('portal_meeting_link_regulator') ? toggleMeetingRegulators(regulator) : '' " v-html=" '<strong>' + (index + 1 ) + '</strong>' + '. ' + ( regulator.type != undefined ? regulator.type.desp : '' ) + ' - ' + regulator.fid + ' - ' + regulator.year + ' , ' + regulator.objective" ></div>
                 <svg v-if="regulator.pdf==true" @click="previewRegulators(regulator)"  class="absolute top-2 right-1 w-5 text-red-500 cursor-pointer" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M30 18v-2h-6v10h2v-4h3v-2h-3v-2h4z" fill="currentColor"></path><path d="M19 26h-4V16h4a3.003 3.003 0 0 1 3 3v4a3.003 3.003 0 0 1-3 3zm-2-2h2a1.001 1.001 0 0 0 1-1v-4a1.001 1.001 0 0 0-1-1h-2z" fill="currentColor"></path><path d="M11 16H6v10h2v-3h3a2.003 2.003 0 0 0 2-2v-3a2.002 2.002 0 0 0-2-2zm-3 5v-3h3l.001 3z" fill="currentColor"></path><path d="M22 14v-4a.91.91 0 0 0-.3-.7l-7-7A.909.909 0 0 0 14 2H4a2.006 2.006 0 0 0-2 2v24a2 2 0 0 0 2 2h16v-2H4V4h8v6a2.006 2.006 0 0 0 2 2h6v2zm-8-4V4.4l5.6 5.6z" fill="currentColor"></path></svg>
               </div>
             </div>

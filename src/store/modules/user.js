@@ -35,7 +35,7 @@ const actions = {
   //   return await crud.list(import.meta.env.VITE_API_SERVER+"/"+state.model.name,params)
   // },
   async read ({ state, commit, rootState },params) {
-    return await crud.read(import.meta.env.VITE_API_SERVER+"/"+state.model.name+"/"+params.id)
+    return await crud.read(import.meta.env.VITE_API_SERVER+"/"+state.model.name+"/"+params.id+'/read')
   },
   async update ({ state, commit, rootState },params) {
     return await crud.update(import.meta.env.VITE_API_SERVER+"/"+state.model.name+"/authenticated",params)
@@ -82,8 +82,10 @@ const actions = {
   async total ({ state, commit, rootState },params) {
     return await crud.read(import.meta.env.VITE_API_SERVER+"/dashboard/"+state.model.name+"/total")
   },
+  async uploadProfilePicture({ state, commit, rootState },formData) {    
+    return await crud.upload(import.meta.env.VITE_API_SERVER+"/"+state.model.name+"/profile/photo/change",formData)
+  },
 }
-
 // mutations
 const mutations = {
   // increment (state) {

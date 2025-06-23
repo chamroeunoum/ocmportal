@@ -84,7 +84,7 @@
                 </div>
               </div>
               <!-- User current location in the map -->
-              <Transition name="slide-fade" >
+              <!-- <Transition name="slide-fade" >
                 <div class="hidden w-full p-1 my-4 mx-auto" 
                   v-if="currentGeolocation.lat != null && currentGeolocation.lat != undefined && currentGeolocation.lng != null && currentGeolocation.lng != undefined "
                   >
@@ -100,7 +100,7 @@
                     </GoogleMap>
                   </div>
                 </div>
-              </Transition>
+              </Transition> -->
             </div>
           </div>
         </div>
@@ -171,7 +171,9 @@
         </n-tooltip>
       </div>
     </Transition>
-    <Footer />
+    <div class="w-full fixed left-0 bottom-0 right-0 " >
+      <Footer />
+    </div>
   </div>
 </template>
 <script>
@@ -225,7 +227,7 @@ export default {
      * Variables
      */    
     var model = reactive( {
-      name: "organizations" ,
+      name: "organization" ,
       title: "QR វត្តមាន នៃក្រសួងស្ថាប័ន"
     })
 
@@ -447,7 +449,6 @@ export default {
       checkAttendant ,
       tabChange ,
       tabValueChange ,
-      toKhmer ,
       currentGeolocation ,
       /**
        * Camera Moduls

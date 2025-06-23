@@ -1,12 +1,11 @@
 <template>
   <div class="absolute left-40 top-12 right-0 flex flex-wrap" >
-    <!-- <router-view ></router-view> -->
-    <router-view v-slot="{ Component }">
+    <router-view v-if="$hasPermission('portal_meeting_listing')" v-slot="{ Component }">
       <transition :name="$route.meta.transition || 'slide-fade'">
         <component :is="Component" :model="model" />
       </transition>
     </router-view>
-    <float-top-menu />
+    <float-top-menu title="កិច្ចប្រជុំ" />
     <sidebar />
   </div>
 </template>

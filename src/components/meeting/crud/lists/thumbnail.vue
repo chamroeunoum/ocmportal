@@ -286,7 +286,7 @@
       </div>
       <div class="flex-grow action-buttons flex-row-reverse flex">
         <div class="ml-2 flex flex-wrap">
-          <n-tooltip trigger="hover">
+          <n-tooltip v-if=" $hasPermission('portal_meeting_creating') " trigger="hover">
             <template #trigger>
               <svg class="w-8 h-8 cursor-pointer text-blue-500 duration-300" @click="showCreateModal" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M9 12h6"></path><path d="M12 9v6"></path></g></svg>
             </template>
@@ -316,11 +316,11 @@
           </n-tooltip>
           <n-tooltip trigger="hover">
             <template #trigger>
-              <router-link target='_blank' to="/tvtemplate3" >
+              <a target='_blank' href="https://meeting.ocm.gov.kh/#/tvtemplate3" >
                 <svg 
                 class="mx-2 w-8 h-8 p-1 bg-white cursor-pointer text-blue-500 duration-300"
                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><path data-v-781535bd="" d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 13H3V6c0-.55.45-1 1-1h16c.55 0 1 .45 1 1v10z" fill="currentColor"></path></svg>
-              </router-link>
+              </a>
             </template>
             កាលវិភាគប្រជុំ
           </n-tooltip>

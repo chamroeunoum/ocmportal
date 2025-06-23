@@ -4,23 +4,23 @@
       <div class="w-11/12 min-h-screen relative border border-gray-300 bg-gray-50" >
         <div class="w-96 min-h-screen absolute left-0 top-0 bottom-0" >
           <!-- List prengs -->
-          <div class="absolute left-0 top-12 bottom-0 right-0" >
+          <div v-if="$hasPermission('portal_metting_others_reference')" class="absolute left-0 top-12 bottom-0 right-0" >
             <div v-for="(otherDocument,index) in selectedOtherDocuments" :key="index" class="relative p-1 border-b border-gray-200 cursor-pointer hover:bg-gray-100 duration-300" >
               <div class="meetingSeichdeyPreeng p-1 pr-8 w-full" @click="previewOtherDocuments(otherDocument)" >
                 <strong>{{ ( index + 1 )}}</strong> . {{ otherDocument.name }}
               </div>
-              <svg @click="removeOtherDocument(otherDocument)" class="w-6 absolute top-2 right-0 text-red-500  cursor-pointer" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"></path><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12"></path><path d="M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"></path></g></svg>
+              <svg v-if="$hasPermission('portal_meeting_other_documents')" @click="removeOtherDocument(otherDocument)" class="w-6 absolute top-2 right-0 text-red-500  cursor-pointer" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"></path><path d="M10 11v6"></path><path d="M14 11v6"></path><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12"></path><path d="M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"></path></g></svg>
             </div>
           </div>
           <!-- Search box -->
-          <div class="absolute left-0 top-0 right-0 h-10 p-2 font-moul border-b border-gray-200 leading-7 " >
+          <div v-if="$hasPermission('portal_metting_others_reference')" class="absolute left-0 top-0 right-0 h-10 p-2 font-moul border-b border-gray-200 leading-7 " >
             ឯកសារយោង
             <svg @click="otherDocumentUploadVariables.show=!otherDocumentUploadVariables.show" class="w-10 absolute right-0 top-0 cursor-pointer hover:text-blue-600 duration-300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><path d="M19.35 10.04A7.49 7.49 0 0 0 12 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 0 0 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5c0-2.64-2.05-4.78-4.65-4.96zM19 18H6c-2.21 0-4-1.79-4-4c0-2.05 1.53-3.76 3.56-3.97l1.07-.11l.5-.95A5.469 5.469 0 0 1 12 6c2.62 0 4.88 1.86 5.39 4.43l.3 1.5l1.53.11A2.98 2.98 0 0 1 22 15c0 1.65-1.35 3-3 3zM8 13h2.55v3h2.9v-3H16l-4-4z" fill="currentColor"></path></svg>
             <n-drawer v-model:show="otherDocumentUploadVariables.show" placement="right" :width="500" :onAfterLeave="clearOtherDocumentUpload" >
               <n-drawer-content >
                 <template #header >
                   បញ្ចូលឯកសារយោង
-                  <div @click="uploadOtherDocuments" class="w-24 h-8 p-2 absolute right-2 top-2 text-center border border-green-600 rounded text-green-700 cursor-pointer " >រក្សារទុក</div>
+                  <div v-if="$hasPermission('portal_meeting_other_documents')" @click="uploadOtherDocuments" class="w-24 h-8 p-2 absolute right-2 top-2 text-center border border-green-600 rounded text-green-700 cursor-pointer " >រក្សារទុក</div>
                 </template>
                 <input type="file" multiple @change="fileChangeOtherDocuments" class="hidden" id="otherDocument" />
                 <div class="border rounded border-gray-200 w-full text-sm text-center " >

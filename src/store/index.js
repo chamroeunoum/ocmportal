@@ -1,7 +1,6 @@
 import { createStore, createLogger } from 'vuex'
 import auth from './modules/authentication'
 import user from './modules/user'
-import officer from './modules/officer'
 import organization from './modules/organization'
 import position from './modules/position'
 import countesy from './modules/countesy'
@@ -21,6 +20,32 @@ import meetingPosition from './modules/meeting//position'
 import meetingRoom from './modules/meeting/room'
 import meetingType from './modules/meeting/type'
 
+import attendant from './modules/attendant'
+import officer from './modules/officer'
+import officerjobbackground from './modules/officer/officerjobbackground'
+import officerrankbycertificate from './modules/officer/officerrankbycertificate'
+import officerrankbyworking from './modules/officer/officerrankbyworking'
+import officerpendingwork from './modules/officer/officerpendingwork'
+import officermedalhistory from './modules/officer/officermedalhistory'
+import officerpenaltyhistory from './modules/officer/officerpaneltyhistory'
+import rank from './modules/officer/rank'
+
+// Location
+import province from './modules/location/province'
+import district from './modules/location/district'
+import commune from './modules/location/commune'
+import village from './modules/location/village'
+
+import people from './modules/people/people'
+import certificate from './modules/people/certificate'
+import niccertificate from './modules/people/niccertificate'
+import passport from './modules/people/passport'
+import birthcertificate from './modules/people/birthcertificate'
+import achievement from './modules/people/achievement'
+import weddingcertificate from './modules/people/weddingcertificate'
+import childcertificate from './modules/people/childcertificate'
+import spokenlanguage from './modules/people/spokenlanguage'
+
 const debug = process.env.NODE_ENV !== 'production'
 
 export default createStore({
@@ -39,6 +64,7 @@ export default createStore({
   modules: {
     auth ,
     user ,
+    attendant ,
     officer ,
     organization ,
     position , 
@@ -59,8 +85,30 @@ export default createStore({
     meetingPosition ,
     meetingRoom ,
     meetingType ,
+    // People
+    people,
+    certificate ,
+    niccertificate ,
+    birthcertificate ,
+    achievement ,
+    passport,
+    weddingcertificate ,
+    childcertificate ,
+    spokenlanguage ,
     // Officer
-    officer
+    officer,
+    officerjobbackground ,
+    officerrankbycertificate ,
+    officerrankbyworking ,
+    officerpendingwork ,
+    officermedalhistory ,
+    officerpenaltyhistory ,
+    rank ,
+    // Province , District , Commune , Village
+    province ,
+    district ,
+    commune ,
+    village ,
   },
   strict: debug,
   plugins: debug ? 

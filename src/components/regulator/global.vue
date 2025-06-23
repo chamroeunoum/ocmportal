@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen " >
+  <div v-if="$hasPermission('portal_regulator')"  class="min-h-screen " >
     <div class="absolute left-40 top-12 right-0 bottom-0 " >
       <div class="flex w-full border-b z-50 bg-gray-100 " >
         <div class="flex w-full pl-4 py-2 title " >

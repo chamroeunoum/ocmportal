@@ -3,7 +3,7 @@
       <n-modal v-bind:show="show" :on-esc="maskOrEscClick" :on-mask-click="maskOrEscClick"  :on-after-enter="initial" transform-origin="center">
         <div class="flex flex-wrap w-11/12 font-pvh text-xl p-0 bg-gray-50 min-h-screen" >
           <!-- Member Form -->
-          <div class="flex-none w-96 min-h-full relative" >
+          <div v-if="$hasPermission('portal_meeting_attendant')" class="flex-none w-96 min-h-full relative" >
             <!-- List members -->
             <div class="absolute left-0 top-12 right-0 bottom-0 overflow-y-auto p-4 " >
               <div v-for="(person,index) in people" :key="index" class="flex flex-wrap border-b border-gray-200 cursor-pointer hover:bg-gray-100 duration-300" @click="toggleMeetingMembers(person)" >
@@ -38,7 +38,7 @@
                   {{ ( meetingMember.member.email != undefined && meetingMember.member.email.length > 0 ? meetingMember.member.email : '' ) }}
                 </div>
                 <!-- Button remove member from meeting list -->
-                <n-tooltip trigger="hover">
+                <n-tooltip v-if="$hasPermission('portal_meeting_attendant')" trigger="hover">
                   <template #trigger>
                     <svg class="absolute top-2 right-2 w-5 cursor-pointer text-red-500 duration-300 "
                       @click="toggleMeetingMembers(meetingMember.member)" 
@@ -47,7 +47,7 @@
                   លុបសមាសភាព
                 </n-tooltip>
                 <!-- Button check attend -->
-                <n-tooltip trigger="hover">
+                <n-tooltip v-if="$hasPermission('portal_meeting_attendant')" trigger="hover">
                   <template #trigger>
                     <svg :class=" ' absolute top-2 right-10 w-5 cursor-pointer text-gray-400 hover:text-green-700 duration-300 ' + ( meetingMember.attendant != undefined ? ' text-green-700 ' : '' ) "
                       @click="toggleMeetingMemberAttendant(meetingMember)"
@@ -63,17 +63,19 @@
                 </n-tooltip>
 
                 <n-popselect
+                  v-if="$hasPermission('portal_meeting_attendant')"
                   v-model:value="meetingMember.role"
                   :options="meetingMemberRoles"
                   size="small"
                   scrollable
                   @update:value="updateMemberGroupAndRole(meetingMember)"
                 >
-                <n-button class="mr-1 text-xs" >
-                  {{ meetingMemberRoles.find( (r) => r.value == meetingMember.role ).label }}
-                </n-button>  
+                  <n-button class="mr-1 text-xs" >
+                    {{ meetingMemberRoles.find( (r) => r.value == meetingMember.role ).label }}
+                  </n-button>  
                 </n-popselect>
                 <n-popselect
+                  v-if="$hasPermission('portal_meeting_attendant')"
                   v-model:value="meetingMember.group"
                   :options="meetingMemberGroups"
                   size="small"
@@ -82,10 +84,23 @@
                 >
                   <n-button class=" text-xs" >{{ meetingMemberGroups.find( (g) => g.value == meetingMember.group ).label }}</n-button>  
                 </n-popselect>
+                <div class="flex flex-wrap " >
+                  <div class="mr-2" v-if="!$hasPermission('portal_meeting_attendant')" >ជា {{ meetingMemberRoles.find( (r) => r.value == meetingMember.role ).label }}</div>
+                  <div class="mr-2" v-if="!$hasPermission('portal_meeting_attendant')" > , {{ meetingMemberGroups.find( (g) => g.value == meetingMember.group ).label }}</div>
+                  <div class=" w-full" v-if="!$hasPermission('portal_meeting_attendant')" >
+                    {{( 
+                    meetingMember.attendant != undefined && meetingMember.attendant != null ? (
+                      meetingMember.member != undefined && meetingMember.attendant.people_id != meetingMember.member.id
+                        ? "ជំនួសដោយ ៖ " + meetingMember.attendant.member.lastname + " " + meetingMember.attendant.member.firstname
+                        : 'មកផ្ទាល់' 
+                    ) : 'អវត្តមានក្នុងកិច្ចប្រជុំ' 
+                  )}}
+                  </div>
+                </div>
               </div>
             </div>
             <div class="absolute left-0 top-0 right-0 h-12 p-2 bg-gray-50 selected_members text-center font-moul border-b border-gray-200" >បញ្ជីសមាសភាពប្រជុំ
-              <svg @click="memberAddDrawer.show=!memberAddDrawer.show" class="absolute top-1 right-2 w-10 cursor-pointer text-blue-500  " xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M9 12h6"></path><path d="M12 9v6"></path></g></svg>
+              <!-- <svg v-if="$hasPermission('portal_meeting_attendant')" @click="memberAddDrawer.show=!memberAddDrawer.show" class="absolute top-1 right-2 w-10 cursor-pointer text-blue-500  " xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M9 12h6"></path><path d="M12 9v6"></path></g></svg> -->
             </div>
             <n-drawer v-model:show="memberAddDrawer.show" placement="right" :width="768" >
               <n-drawer-content >

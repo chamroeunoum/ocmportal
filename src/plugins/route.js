@@ -9,6 +9,18 @@ import GlobalSearchComponent from '../components/regulator/global.vue'
 import RegulatorFavoriteComponent from '../components/regulator/favorite.vue'
 
 /**
+ * Attendant Components
+ */
+import AttendantCrud from './../components/attendant/index.vue'
+import AttendantListCrud from './../components/attendant/list.vue'
+import AttendantMonthlyCrud from './../components/attendant/monthly.vue'
+import MyAttendant from './../components/attendant/myattendant.vue'
+
+import QRComponent from './../components/qrcodes/index.vue'
+import QRListComponent from './../components/qrcodes/list.vue'
+import QRCheckinComponent from './../components/qrcodes/checkin.vue'
+
+/**
  * Folder Section
  */
 import FolderComponent from './../components/regulator/folder/index.vue'
@@ -28,6 +40,8 @@ import PasswordChangeComponent from './../components/user/password_change.vue'
  */
 import OfficerCrud from './../components/officer/index.vue'
 import OfficerThumbnailCrud from './../components/officer/listing/thumbnail.vue'
+import PrintOfficerProfileComponent from './../layouts/staff/printprofile.vue'
+
 
 /**
  * Card Officer
@@ -183,6 +197,73 @@ export const getRoutes = () => {
                 ]
             },
             {
+                name: 'Attendant' ,
+                path: '/hr/attendant',
+                component: AttendantCrud ,
+                meta: { 
+                    transition: 'slide-right' ,
+                    requiresAuth: true,
+                    is_admin : true
+                },
+                permissions: [
+                    'portal_attendant'
+                ],
+                children: [
+                    {
+                        name: "AttendantList" ,
+                        path: '' ,
+                        component: AttendantListCrud
+                    },
+                    {
+                        name: 'AttendantMonthly' ,
+                        path: ':date/month/:userId/user' ,
+                        component: AttendantMonthlyCrud
+                    },
+                    {
+                        name: 'MyAttendant' ,
+                        path: 'my' ,
+                        component: MyAttendant
+                    },
+                    {
+                        name: 'QRListComponent' ,
+                        path: 'qrlist' ,
+                        component: QRListComponent
+                    },
+                    {
+                        name: 'QRCheckinComponent' ,
+                        path: 'qrcheckin' ,
+                        component: QRCheckinComponent
+                    }
+                    
+                ]
+            },
+            {
+                name: 'QRCodes' ,
+                path: '/hr/attendant/qrcodes',
+                component: QRComponent ,
+                meta: { 
+                    transition: 'slide-right' ,
+                    requiresAuth: true,
+                    is_admin : true
+                },
+                permissions: [
+                    'portal_attendant_qrcodes'
+                ],
+                children: [
+                    {
+                        name: "QRCodesList" ,
+                        path: '' ,
+                        component: QRListComponent
+                    },
+                    {
+                        name: 'QRCheckin' ,
+                        path: 'checkin/:id' ,
+                        component: QRCheckinComponent
+                    }
+                    
+                ]
+            },
+            {
                 name: 'Officer' ,
                 path: '/hr/officer',
                 component: OfficerCrud ,
@@ -244,6 +325,17 @@ export const getRoutes = () => {
                 ],
             },
             {
+                name: 'PrintOfficerProfile',
+                path: '/officer/print/profile/:id',
+                component: PrintOfficerProfileComponent ,
+                meta: {
+                    // transition: 'fade'
+                },
+                permissions: [
+                    'portal_regulator'
+                ]
+            },
+            {
                 name: 'QrCheckinAndCheckoutComponent',
                 path: '/officer/checkinout/:id',
                 component: QrCheckinAndCheckoutComponent ,
@@ -251,7 +343,8 @@ export const getRoutes = () => {
                     // transition: 'fade'
                 },
                 permissions: [
-                    'portal_attendant_checkin_checkout'
+                    // 'portal_attendant_checkin_checkout'
+                    'portal'
                 ],
             },
             {
@@ -262,7 +355,8 @@ export const getRoutes = () => {
                     // transition: 'fade'
                 },
                 permissions: [
-                    'portal_staff_checkin_checkout_camera'
+                    // 'portal_staff_checkin_checkout_camera'
+                    'portal'
                 ],
             },
             {
@@ -375,7 +469,73 @@ export const getRoutes = () => {
                 permissions: [
                     'portal_auth_login'
                 ],
-            }
+            },
+            {
+                name: 'QrCheckinAndCheckoutComponent',
+                path: '/officer/checkinout/:id',
+                component: QrCheckinAndCheckoutComponent ,
+                meta: {
+                    // transition: 'fade'
+                },
+                permissions: [
+                    'portal_auth_login'
+                ],
+            },
+            {
+                name: 'QrCheckinAndCheckoutCameraComponent',
+                path: '/officer/checkinout/:id/camera',
+                component: QrCheckinAndCheckoutCameraComponent ,
+                meta: {
+                    // transition: 'fade'
+                },
+                permissions: [
+                    'portal_auth_login'
+                ],
+            },
+            {
+                name: 'ScheduleMeetingTV1Component',
+                path: '/tvtemplate1',
+                component: ScheduleMeetingTV1Component ,
+                meta: {
+                    // transition: 'fade'
+                },
+                permissions: [
+                    // 'portal'
+                ],
+            },
+            {
+                name: 'ScheduleMeetingTV2Component',
+                path: '/tvtemplate2',
+                component: ScheduleMeetingTV2Component ,
+                meta: {
+                    // transition: 'fade'
+                },
+                permissions: [
+                    // 'portal'
+                ],
+            },
+            {
+                name: 'ScheduleMeetingTV3Component',
+                path: '/tvtemplate3',
+                component: ScheduleMeetingTV3Component ,
+                meta: {
+                    // transition: 'fade'
+                },
+                permissions: [
+                    // 'portal'
+                ],
+            },
+            {
+                name: 'ScheduleMeetingTV4Component',
+                path: '/tvtemplate4',
+                component: ScheduleMeetingTV4Component ,
+                meta: {
+                    // transition: 'fade'
+                },
+                permissions: [
+                    // 'portal'
+                ],
+            },
             // , {
             //     name: "Welcome" ,
             //     path: '/welcome' , 
@@ -391,5 +551,8 @@ export const getRoutes = () => {
         // will match everything and put it under `$route.params.pathMatch`
         { path: '/:pathMatch(.*)*', name: 'NotFound', component: Page404 }    
     )
+
+    console.log( routers )
+
     return routers
 }
