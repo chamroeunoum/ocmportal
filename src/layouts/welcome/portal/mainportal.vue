@@ -3,11 +3,11 @@
     <div class="portal-panel mx-auto" >
       <Transition name="slide-fade" >
         <div v-if="visibleHelper" class="text-center mt-8 " >
-          <div class="my-2 font-moul text-gray-700 text-3xl ">ច្រកសេវារួម ទីស្ដីការគណៈរដ្ឋមន្ត្រី</div>
+          <div class="my-2 font-moul text-gray-700 text-3xl ">{{ $store.state.system.name }}</div>
           <!-- <div class="w-20 mx-auto mt-4">
             <img :src="logo" class="w-full" >
-          </div> -->
-          <!-- <div class="my-2 font-moul text-yellow-500">ទីស្ដីការគណៈរដ្ឋមន្ត្រី</div>
+          </div>
+          <div class="my-2 font-moul text-yellow-500">ទីស្ដីការគណៈរដ្ឋមន្ត្រី</div>
           <div class="my-2 text-4xl font-tacteing" >3</div>
           <div class="my-2 text-2xl ">{{ $store.state.system.name }} នៃ {{ $store.state.company.name }}</div> -->
         </div>
@@ -30,8 +30,8 @@
             </div> -->
             <div v-if="$hasPermission('portal_staff')" class="portal-service-item">
                 <div @click="routeTo('hr/officer' ) " class='portal-service-content' >
-                    <svg class="portal-service-icon text-green-700 " xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zM7.07 18.28c.43-.9 3.05-1.78 4.93-1.78s4.51.88 4.93 1.78C15.57 19.36 13.86 20 12 20s-3.57-.64-4.93-1.72zm11.29-1.45c-1.43-1.74-4.9-2.33-6.36-2.33s-4.93.59-6.36 2.33A7.95 7.95 0 0 1 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8c0 1.82-.62 3.49-1.64 4.83zM12 6c-1.94 0-3.5 1.56-3.5 3.5S10.06 13 12 13s3.5-1.56 3.5-3.5S13.94 6 12 6zm0 5c-.83 0-1.5-.67-1.5-1.5S11.17 8 12 8s1.5.67 1.5 1.5S12.83 11 12 11z" fill="currentColor"></path></svg>
-                    <div class="portal-service-label font-moul" >ធនធានមនុស្ស</div>
+                    <svg class="portal-service-icon text-green-700 " xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 28 28"><g fill="none"><path d="M17.254 11a2.25 2.25 0 0 1 2.25 2.25v6.249a5.501 5.501 0 0 1-11.002 0V13.25a2.25 2.25 0 0 1 2.25-2.25h6.502zm0 1.5h-6.502a.75.75 0 0 0-.75.75v6.249a4.001 4.001 0 0 0 8.002 0V13.25a.75.75 0 0 0-.75-.75zM4.25 11h4.156a3.243 3.243 0 0 0-.817 1.5H4.25a.75.75 0 0 0-.75.75v5.249a3.001 3.001 0 0 0 4.238 2.735c.133.49.324.956.564 1.392A4.501 4.501 0 0 1 2 18.499V13.25A2.25 2.25 0 0 1 4.25 11zm19.5 0A2.25 2.25 0 0 1 26 13.25v5.25a4.5 4.5 0 0 1-6.298 4.127l.056-.102c.214-.406.387-.837.511-1.289A3 3 0 0 0 24.5 18.5v-5.25a.75.75 0 0 0-.749-.75h-3.333A3.242 3.242 0 0 0 19.6 11h4.151zM14 3a3.5 3.5 0 1 1 0 7a3.5 3.5 0 0 1 0-7zm8.003 1a3 3 0 1 1 0 6a3 3 0 0 1 0-6zM5.997 4a3 3 0 1 1 0 6a3 3 0 0 1 0-6zM14 4.5a2 2 0 1 0 0 4a2 2 0 0 0 0-4zm8.003 1a1.5 1.5 0 1 0 0 3a1.5 1.5 0 0 0 0-3zm-16.006 0a1.5 1.5 0 1 0 0 3a1.5 1.5 0 0 0 0-3z" fill="currentColor"></path></g></svg>
+                    <div class="portal-service-label font-moul" >មន្ត្រីរាជការមុខងារសាធារណៈ</div>
                 </div>
             </div>
             <!-- <div v-if="$hasPermission('portal_regulator')" class="portal-service-item">

@@ -1,7 +1,7 @@
 <template>
   
-  <div class="w-full pt-8" >
-    <div class="top-8 p-4 w-full min-h-screen">
+  <div class="w-full pt-12 pl-40 " >
+    <div class="top-8 p-4 w-full min-h-screen ">
       <Transition name="slide-fade" >
         <div  v-if="transitionHelper" class="bg-white passwordChange p-8 sm:w-2/3 md:w-3/5 lg:w-2/5 w-4/5 mx-auto shadow rounded-lg mb-8 relative">
           <div class="my-4">
@@ -27,8 +27,8 @@
       </Transition>
     </div>
     <!-- Title of crud -->
-    <window-bar :title="'ប្ដូរពាក្យសម្ងាត់'" :icon="0" />
-    <BottomMenuFloatItems />
+    <float-top-menu v-bind:title="title" />
+    <sidebar />
   </div>
 </template>
 <script >
@@ -38,17 +38,15 @@ import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import { useNotification } from 'naive-ui'
 import TopMenu from './../menu/topmenu-floattop.vue'
-import FooterComponent from './../footer/copy-right.vue'
-import BottomMenuFloatItems from '@components/menu/bottommenu-float-items.vue'
-import WindowBar from '@components/widgets/WindowBar.vue'
+import FloatTopMenu from '@components/menu/topmenu-float-items.vue'
+import Sidebar from '@components/widgets/Sidebar.vue'
 
   export default {
     name: 'Profile' ,
     components: {
-      BottomMenuFloatItems ,
-      // FooterComponent ,
-      TopMenu ,
-      WindowBar
+      FloatTopMenu ,
+      Sidebar ,
+      TopMenu
     },
     setup(){
       const router = useRouter()
@@ -57,7 +55,8 @@ import WindowBar from '@components/widgets/WindowBar.vue'
       const user = ref(null)
       const base64Avatar = ref(null)
       const transitionHelper = ref(false)
-      
+      const title = ref('ប្ដូរពាក្យសម្ងាត់គណនី')
+
       if( isAuth() ){
         user.value = getUser()
         setTimeout( function(){
@@ -155,7 +154,8 @@ import WindowBar from '@components/widgets/WindowBar.vue'
         rules ,
         changePassword ,
         transitionHelper ,
-        localProfile
+        localProfile ,
+        title
       }
     }
 

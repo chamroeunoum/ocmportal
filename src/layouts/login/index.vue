@@ -2,16 +2,16 @@
     <div class="relative flex min-h-screen place-items-center " :style=" ' background-image: url( ' + pkachan + ' ); ' " >
       <Transition name="slide-fade" >
       <div v-if="toggleLoginForm" class="w-96 mx-auto p-8 bg-white shadow-lg h-auto border border-gray-100 rounded-md ">
-        <div class="w-20 mx-auto mt-0 p-1">
+        <div class="w-14 mx-auto mt-0 p-1">
           <img src="./../../assets/logo.svg" class="w-full" >
         </div>
         <div class="text-center h-6 " >
           <div class="mb-1 font-moul text-yellow-500">ទីស្ដីការគណៈរដ្ឋមន្ត្រី</div>
           <div class="mb-1 text-4xl font-tacteing h-6 leading-4 hidden" >3</div>
           <div class="mb-1 font-moul hidden">{{ store.state.company.name }}</div>
-          <div class="mb-1 font-moul hidden">នាយកដ្ឋានរដ្ឋបាល និងធនធានមនុស្ស</div>
+          <div class="mb-1 font-moul hidden">នាយកដ្ឋានធនធានមនុស្ស</div>
         </div>
-        <div class="w-full mx-auto leading-6 text-center font-moul mb-4 ">{{ store.state.system.name }}</div>
+        <div class="w-full mx-auto leading-6 text-center font-moul mb-4 my-2 ">{{ store.state.system.name }}</div>
         <div class="mx-auto mt-1 w-full" >
           <div class="w-full mx-auto my-8 text-left hidden">ចូលប្រព័ន្ធ</div>
           <n-form>

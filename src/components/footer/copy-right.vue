@@ -15,7 +15,7 @@
       </div>
       <div class="w-full font-moul text-center leading-9 text-xs" >ក្រោមការណែនាំដ៏ខ្ពង់ខ្ពស់របស់<br/>ឧបនាយករដ្ឋមន្ត្រី រដ្ឋមន្ត្រីទទួលបន្ទុកទីស្ដីការគណៈរដ្ឋមន្ត្រី</div>
       <div class="font-tacteing w-full text-center h-4 leading-4 text-4xl" >6</div>
-      <div class="w-full text-center font-moul leading-9 text-xs" >{{ systemName }}<br/>អភិវឌ្ឍន៍ដោយក្រុមការងារ<br/>នៃ<br/>អគ្គនាយកដ្ឋានបរិវត្តកម្មឌីជីថល<br/>កំណែប្រែ ១.០</div>        
+      <div class="w-full text-center font-moul leading-9 text-xs" >{{ systemName }}<br/>អភិវឌ្ឍន៍ដោយ<br/>អគ្គនាយកដ្ឋានបរិវត្តកម្មឌីជីថល<br/>កំណែប្រែ ១.០</div>        
       <FrameCorner4Component />
     </div>
   </n-modal>

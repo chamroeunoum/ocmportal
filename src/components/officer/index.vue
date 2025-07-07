@@ -6,7 +6,7 @@
         <component :is="Component" />
       </transition>
     </router-view>
-    <float-top-menu title="បុគ្គលិក" />
+    <float-top-menu title="មន្ត្រីរាជការមុខងារសាធារណៈ" />
     <sidebar />
   </div>
 </template>

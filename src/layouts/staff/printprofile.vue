@@ -753,7 +753,7 @@ import dateFormat from 'dateformat'
 </script>
 <style scoped >
   .birth-information * {
-    font-size: 0.8rem ;
+    font-size: 0.7rem ;
   }
   table tr td , table tr th  {
     padding: 5px 0px ; 
