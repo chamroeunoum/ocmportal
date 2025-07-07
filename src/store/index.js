@@ -54,7 +54,7 @@ export default createStore({
       name: 'ទីស្ដីការគណៈរដ្ឋមន្ត្រី'
     },
     system: {
-      name: 'ច្រកសេវារួម'
+      name: 'ប្រព័ន្ធជីវប្រវត្តិមន្ត្រីរាជការ'
     },
     activePage: {
       title: ''

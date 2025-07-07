@@ -66,22 +66,27 @@
                       <n-input v-model:value="user.people.username" placeholder="ឈ្មោះគណនីប្រើប្រាស់" class="text-left" />
                     </n-form-item> -->
                     <n-form-item label="ត្រកូល" path="lastname" class="w-11/12" >
-                      <n-input v-model:value="user.people.lastname" placeholder="នាមត្រកូល" class="text-left" />
+                      <!-- <n-input v-model:value="user.people.lastname" placeholder="នាមត្រកូល" class="text-left" /> -->
+                       <div class="p-2 border border-gray-200 rounded w-full text-left min-h-9 " >{{ user.people.lastname }}</div>
                     </n-form-item>
                     <n-form-item label="ឈ្មោះ" path="firstname" class="w-11/12" >
-                      <n-input v-model:value="user.people.firstname" placeholder="នាមខ្លួន" class="text-left"  />
+                      <!-- <n-input v-model:value="user.people.firstname" placeholder="នាមខ្លួន" class="text-left"  /> -->
+                       <div class="p-2 border border-gray-200 rounded w-full text-left min-h-9 " >{{ user.people.firstname }}</div>
                     </n-form-item>
                     <n-form-item label="ត្រកូល (អង់គ្លេស)" path="enlastname" class="w-11/12" >
-                      <n-input v-model:value="user.people.enlastname" placeholder="នាមត្រកូល" class="text-left"  />
+                      <!-- <n-input v-model:value="user.people.enlastname" placeholder="នាមត្រកូល" class="text-left"  /> -->
+                      <div class="p-2 border border-gray-200 rounded w-full text-left min-h-9 " >{{ user.people.enlastname }}</div>
                     </n-form-item>
                     <n-form-item label="ឈ្មោះ (អង់គ្លេស)" path="enfirstname" class="w-11/12" >
-                      <n-input v-model:value="user.people.enfirstname" placeholder="នាមខ្លួន" class="text-left"  />
+                      <!-- <n-input v-model:value="user.people.enfirstname" placeholder="នាមខ្លួន" class="text-left"  /> -->
+                      <div class="p-2 border border-gray-200 rounded w-full text-left min-h-9 " >{{ user.people.enfirstname }}</div>
                     </n-form-item>
                     <n-form-item label="ថ្ងៃ ខែ ឆ្នាំ កំណើត" path="dob" class="w-11/12" >
-                      <n-date-picker v-model:value="peopleDob" type="date" placeholder="ថ្ងៃ ខែ ឆ្នាំ កំណើត" class="w-full" />
+                      <!-- <n-date-picker v-model:value="peopleDob" type="date" placeholder="ថ្ងៃ ខែ ឆ្នាំ កំណើត" class="w-full" /> -->
+                      <div class="p-2 border border-gray-200 rounded w-full text-left min-h-9 " >{{ dateFormat( new Date( peopleDob ) , 'dd-mm-yyyy' ) }}</div>
                     </n-form-item>
                     <n-form-item label="ភេទ" path="gender" class="w-11/12 " >
-                      <n-radio-group v-model:value="user.people.gender" class="text-left" >
+                      <n-radio-group v-model:value="user.people.gender" class="text-left" :disabled="true" >
                         <n-space>
                           <n-radio
                             v-for="gender in [{label:'ស្រី',value:0},{label:'ប្រុស',value:1}]"
@@ -91,9 +96,10 @@
                           />
                         </n-space>
                       </n-radio-group>
+                      <!-- <div class="p-2 border border-gray-200 rounded w-full text-left " >{{ user.people.gender == 0 ? 'ស្រី' : 'ប្រុស' }}</div> -->
                     </n-form-item>
                     <n-form-item label="នៅលីវ ឬ រៀបការរួច" path="marry" class="w-11/12 text-left" >
-                      <n-radio-group v-model:value="user.people.marry_status" class="" >
+                      <n-radio-group v-model:value="user.people.marry_status" class="" :disabled="true" >
                         <n-space>
                           <n-radio
                           v-for="status in [{label:'នៅលីវ',value:'single'},{label:'រៀបការរួច',value:'married'},{label:'ពោះមាយ / មេមាយ',value:'divorced'}]"
@@ -103,40 +109,48 @@
                           />
                         </n-space>
                       </n-radio-group>
+                      <!-- <div class="p-2 border border-gray-200 rounded w-full text-left " >{{ user.people.marry_status == 'single' ? 'នៅលីវ' : ( user.people.marry_status == 'married' ? 'រៀបការរួច' : ( user.people.marry_status == 'divorced' ? 'ពោះមាយ / មេមាយ' : '' ) ) }}</div> -->
                     </n-form-item>
                   </div>
                   <div class="">
                     <n-form-item-row label="ទូរស័ព្ទដៃ">
-                      <n-input placeholder="ទូរស័ព្ទ" class="text-left w-11/12" v-model:value="user.people.mobile_phone"  />
+                      <!-- <n-input placeholder="ទូរស័ព្ទ" class="text-left w-11/12" v-model:value="user.people.mobile_phone"  /> -->
+                      <div class="p-2 border border-gray-200 rounded w-full text-left min-h-9 " >{{ user.people.mobile_phone }}</div>
                     </n-form-item-row>
                     <n-form-item-row label="ទូរស័ព្ទនៅផ្ទះ">
-                      <n-input placeholder="ទូរស័ព្ទ" class="text-left w-11/12" v-model:value="user.people.office_phone"  />
+                      <!-- <n-input placeholder="ទូរស័ព្ទ" class="text-left w-11/12" v-model:value="user.people.office_phone"  /> -->
+                      <div class="p-2 border border-gray-200 rounded w-full text-left min-h-9 " >{{ user.people.office_phone }}</div>
                     </n-form-item-row>
                     <n-form-item-row label="អ៊ីមែល" >
-                      <n-input placeholder="អ៊ីមែល" class="text-left w-11/12" v-model:value="user.people.email"  />
+                      <!-- <n-input placeholder="អ៊ីមែល" class="text-left w-11/12" v-model:value="user.people.email"  /> -->
+                      <div class="p-2 border border-gray-200 rounded w-full text-left min-h-9 " >{{ user.people.email }}</div>
                     </n-form-item-row>
                     <n-form-item-row label="អត្តសញ្ញាណបណ្ណ" >
-                      <n-input placeholder="អត្តសញ្ញាណបណ្ណ" class="text-left w-11/12" v-model:value="user.people.nid"  />
+                      <!-- <n-input placeholder="អត្តសញ្ញាណបណ្ណ" class="text-left w-11/12" v-model:value="user.people.nid"  /> -->
+                      <div class="p-2 border border-gray-200 rounded w-full text-left min-h-9 " >{{ user.people.nid }}</div>
                     </n-form-item-row>
                     <n-form-item-row label="លិខិតឆ្លងដែន" >
-                      <n-input placeholder="លិខិតឆ្លងដែន" class="text-left w-11/12" v-model:value="user.people.passport"  />
+                      <!-- <n-input placeholder="លិខិតឆ្លងដែន" class="text-left w-11/12" v-model:value="user.people.passport"  /> -->
+                      <div class="p-2 border border-gray-200 rounded w-full text-left min-h-9 " >{{ user.people.passport }}</div>
                     </n-form-item-row>
                     <n-form-item-row label="អសយដ្ឋានបច្ចុប្បន្ន" >
-                      <n-input 
+                      <!-- <n-input 
                         placeholder="អសយដ្ឋានបច្ចុប្បន្ន" 
                         class="text-left" 
                         v-model:value="user.people.address" 
-                        type="textarea" show-count maxlength="5000" />
+                        type="textarea" show-count maxlength="5000" /> -->
+                        <div class="p-2 border border-gray-200 rounded w-full text-left min-h-9 " >{{ user.people.address }}</div>
                     </n-form-item-row>
                     <n-form-item-row label="ទីកន្លែងកំណើត" >
-                      <n-input placeholder="ទីកន្លែងកំណើត" class="text-left" 
+                      <!-- <n-input placeholder="ទីកន្លែងកំណើត" class="text-left" 
                       v-model:value="user.people.pob" 
-                      type="textarea" show-count maxlength="5000" />
+                      type="textarea" show-count maxlength="5000" /> -->
+                      <div class="p-2 border border-gray-200 rounded w-full text-left min-h-9 " >{{ user.people.pob }}</div>
                     </n-form-item-row>
                   </div>
                 </n-form>
                 <div class="w-full py-2 text-left" >
-                  <n-button class="" @click="saveProfile" type="primary" >រក្សារទុក</n-button>
+                  <!-- <n-button class="" @click="saveProfile" type="primary" >រក្សារទុក</n-button> -->
                 </div>
               </div>
             </n-tab-pane>
@@ -151,24 +165,30 @@
                 >
                   <div class="" >
                     <n-form-item label="ថ្ងៃខែឆ្នាំពេញសិទ្ធិ(តាំងស៊ុប)" path="officer_dob" class="w-11/12" >
-                      <n-date-picker disabled v-model:value="officerDate" type="date" placeholder="ថ្ងៃ ខែ ឆ្នាំ កំណើត" class="w-full" />
+                      <!-- <n-date-picker disabled v-model:value="officerDate" type="date" placeholder="ថ្ងៃ ខែ ឆ្នាំ កំណើត" class="w-full" /> -->
+                      <div class="p-2 border border-gray-200 rounded w-full text-left min-h-9 " >{{ dateFormat( new Date( officerDate ) , 'dd-mm-yyyy' ) }}</div>
                     </n-form-item>
                     <n-form-item label="អត្តលេខ" path="code" class="w-11/12" >
-                      <n-input disabled v-model:value="user.officer.code" placeholder="អត្តលេខ" />
+                      <!-- <n-input disabled v-model:value="user.officer.code" placeholder="អត្តលេខ" /> -->
+                       <div class="p-2 border border-gray-200 rounded w-full text-left min-h-9 " >{{ user.officer.code }}</div>
                     </n-form-item>
                     <n-form-item label="ទូរស័ព្ទ" path="phone" class="w-11/12" >
-                      <n-input v-model:value="user.officer.phone" placeholder="ទូរស័ព្ទ" />
+                      <!-- <n-input v-model:value="user.officer.phone" placeholder="ទូរស័ព្ទ" /> -->
+                       <div class="p-2 border border-gray-200 rounded w-full text-left min-h-9 " >{{ user.officer.phone }}</div>
                     </n-form-item>
                     <n-form-item label="អ៊ីមែល" path="email" class="w-11/12" >
-                      <n-input v-model:value="user.officer.email" placeholder="អ៊ីមែល" />
+                      <!-- <n-input v-model:value="user.officer.email" placeholder="អ៊ីមែល" /> -->
+                       <div class="p-2 border border-gray-200 rounded w-full text-left min-h-9 " >{{ user.officer.email }}</div>
                     </n-form-item>
                     <n-form-item label="លេខិតឆ្លងដែន" path="passport" class="w-11/12" >
-                      <n-input v-model:value="user.officer.passport" placeholder="លេខិតឆ្លងដែន" />
+                      <!-- <n-input v-model:value="user.officer.passport" placeholder="លេខិតឆ្លងដែន" /> -->
+                       <div class="p-2 border border-gray-200 rounded w-full text-left min-h-9 " >{{ user.officer.passport }}</div>
                     </n-form-item>
                   </div>
                   <div class="" >
                     <n-form-item label="ងារ" path="countesy" class="w-11/12" >
                       <n-select
+                        :disabled="true"
                         v-model:value="selectedCountesies"
                         filterable
                         placeholder="សូមជ្រើសរើសងារ"
@@ -178,6 +198,7 @@
                     </n-form-item>
                     <n-form-item label="តួនាទី" path="position" class="w-11/12" >
                       <n-select
+                      :disabled="true"
                         v-model:value="selectedPosition"
                         filterable
                         placeholder="សូមជ្រើសរើសតួនាទី"
@@ -186,6 +207,7 @@
                     </n-form-item>
                     <n-form-item label="អង្គភាព" path="organization" class="w-11/12" >
                       <n-select
+                      :disabled="true"
                         v-model:value="selectedOrganization"
                         filterable
                         placeholder="សូមជ្រើសរើសអង្គភាព"
@@ -195,7 +217,7 @@
                   </div>
                 </n-form>
                 <div class="w-full py-2 text-left" >
-                  <n-button class="" @click="saveOfficer" type="primary" >រក្សារទុក</n-button>
+                  <!-- <n-button class="" @click="saveOfficer" type="primary" >រក្សារទុក</n-button> -->
                 </div>
               </div>
             </n-tab-pane>
@@ -208,17 +230,20 @@
                 label-width="120"
                 >
                   <n-form-item-row label="ឈ្មោះគណនី" >
-                    <n-input placeholder="ឈ្មោះគណនី" class="text-left" v-model:value="user.username" />
+                    <!-- <n-input placeholder="ឈ្មោះគណនី" class="text-left" v-model:value="user.username" /> -->
+                     <div class="p-2 border border-gray-200 rounded w-full text-left min-h-9 " >{{ user.username }}</div>
                   </n-form-item-row>
                   <n-form-item-row label="អ៊ីមែល" >
-                    <n-input placeholder="អ៊ីមែល" class="text-left" disabled v-model:value="user.email" />
+                    <!-- <n-input placeholder="អ៊ីមែល" class="text-left" disabled v-model:value="user.email" /> -->
+                     <div class="p-2 border border-gray-200 rounded w-full text-left min-h-9 " >{{ user.email }}</div>
                   </n-form-item-row>
                   <n-form-item-row label="ទូរស័ព្ទ">
-                    <n-input placeholder="ទូរស័ព្ទ" class="text-left" v-model:value="user.phone" />
+                    <!-- <n-input placeholder="ទូរស័ព្ទ" class="text-left" v-model:value="user.phone" /> -->
+                     <div class="p-2 border border-gray-200 rounded w-full text-left min-h-9 " >{{ user.phone }}</div>
                   </n-form-item-row>
                 </n-form>
                 <div class="w-full py-2 text-left" >
-                  <n-button class="" @click="saveAccount" type="primary" >រក្សារទុក</n-button>
+                  <!-- <n-button class="" @click="saveAccount" type="primary" >រក្សារទុក</n-button> -->
                 </div>
               </div>
             </n-tab-pane>
@@ -693,7 +718,8 @@ import Sidebar from '@components/widgets/Sidebar.vue'
         positions ,
         organizations ,
         countesies ,
-        title
+        title ,
+        dateFormat 
       }
     }
 
