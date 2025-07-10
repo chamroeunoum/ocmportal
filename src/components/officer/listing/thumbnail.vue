@@ -520,7 +520,7 @@ export default {
           store.commit('province/setAllRecords',res.data.provinces)
           store.commit('district/setAllRecords',res.data.districts)
           store.commit('commune/setAllRecords',res.data.communes)
-          store.commit('villages/setAllRecords',res.data.villages)
+          store.commit('village/setAllRecords',res.data.villages)
           locationLoading.value = false
         }).catch( err => {
           console.log( err )

@@ -39,7 +39,7 @@
                     <n-date-picker v-model:value="dob" type="date" format="dd-MM-yyyy" placeholder="ថ្ងៃ ខែ ឆ្នាំ កំណើត" class="w-full" />
                   </n-form-item>
                   <n-form-item label="" class="w-3/12 p-1 " >
-                    <n-radio-group v-model:value="record.people.gender" class="mx-auto" >
+                    <n-radio-group v-model:value="record.people.gender" class="mx-auto" name="gender" >
                       <n-space>
                         <n-radio
                           v-for="gender in [{label:'ស្រី',value:0},{label:'ប្រុស',value:1}]"
@@ -51,7 +51,7 @@
                     </n-radio-group>
                   </n-form-item>
                   <n-form-item label="" class="w-5/12 p-1" >
-                    <n-radio-group v-model:value="record.people.marry_status" class="mx-auto" >
+                    <n-radio-group v-model:value="record.people.marry_status" class="mx-auto" name="marry">
                       <n-space>
                         <n-radio
                         v-for="status in [{label:'នៅលីវ',value:'single'},{label:'រៀបការរួច',value:'married'},{label:'លះលែង',value:'divorced'}]"
@@ -366,19 +366,18 @@ export default {
         return store.getters['province/records'].all.map( ( p ) => { return { label: p.name_kh , value : p.id } } )
     })
     const districtOptions = computed( () => {
-      console.log( "1 : " + selectedProvince.value )
       return selectedProvince != undefined && selectedProvince.value != undefined && selectedProvince.value != null 
-          ? selectedProvince.value.districts.map( ( d ) => { return { label: d.name_kh , value : d.id } } )
+          ? store.getters['district/records'].all.filter( ( d ) => d.province_id == selectedProvince.value.id ).map( ( d ) => { return { label: d.name_kh , value : d.id } } )
           : [{ label : 'សូមជ្រើសរើស ខេត្ត ឬ ក្រុង ជាមុនសិន' , value : null }]
     })
     const communeOptions = computed( () => {
       return selectedDistrict != undefined && selectedDistrict.value != undefined && selectedDistrict.value != null 
-          ? selectedDistrict.value.communes.map( ( c ) => { return { label: c.name_kh , value : c.id } } )
+          ? store.getters['commune/records'].all.filter( ( d ) => d.district_id == selectedDistrict.value.id ).map( ( d ) => { return { label: d.name_kh , value : d.id } } )
           : [{ label : 'សូមជ្រើសរើស ស្រុក ឬ ខណ្ឌ ជាមុនសិន' , value : null }]
     })
     const villageOptions = computed( () => {
       return selectedCommune != undefined && selectedCommune.value != undefined && selectedCommune.value != null 
-          ? selectedCommune.value.villages.map( ( v ) => { return { label: v.name_kh , value : v.id } } )
+          ? store.getters['village/records'].all.filter( ( d ) => d.commune_id == selectedCommune.value.id ).map( ( d ) => { return { label: d.name_kh , value : d.id } } )
           : [{ label : 'សូមជ្រើសរើស ឃុំ ឬ សង្កាត់ ជាមុនសិន' , value : null }]
     })
     const pobProvinceOptions = computed( () => {
@@ -386,17 +385,20 @@ export default {
     })
     const pobDistrictOptions = computed( () => {
         return pobSelectedProvince != undefined && pobSelectedProvince.value != undefined && pobSelectedProvince.value != null 
-            ? pobSelectedProvince.value.districts.map( ( d ) => { return { label: d.name_kh , value : d.id } } )
+            // ? pobSelectedProvince.value.districts.map( ( d ) => { return { label: d.name_kh , value : d.id } } )
+            ? store.getters['district/records'].all.filter( ( d ) => d.province_id == pobSelectedProvince.value.id ).map( ( d ) => { return { label: d.name_kh , value : d.id } } )
             : [{ label : 'សូមជ្រើសរើស ខេត្ត ឬ ក្រុង ជាមុនសិន' , value : null }]
     })
     const pobCommuneOptions = computed( () => {
         return pobSelectedDistrict != undefined && pobSelectedDistrict.value != undefined && pobSelectedDistrict.value != null 
-            ? pobSelectedDistrict.value.communes.map( ( c ) => { return { label: c.name_kh , value : c.id } } )
+            // ? pobSelectedDistrict.value.communes.map( ( c ) => { return { label: c.name_kh , value : c.id } } )
+            ? store.getters['commune/records'].all.filter( ( d ) => d.district_id == pobSelectedDistrict.value.id ).map( ( d ) => { return { label: d.name_kh , value : d.id } } )
             : [{ label : 'សូមជ្រើសរើស ស្រុក ឬ ខណ្ឌ ជាមុនសិន' , value : null }]
     })
     const pobVillageOptions = computed( () => {
         return pobSelectedCommune != undefined && pobSelectedCommune.value != undefined && pobSelectedCommune.value != null 
-            ? pobSelectedCommune.value.villages.map( ( v ) => { return { label: v.name_kh , value : v.id } } )
+            // ? pobSelectedCommune.value.villages.map( ( v ) => { return { label: v.name_kh , value : v.id } } )
+            ? store.getters['village/records'].all.filter( ( d ) => d.commune_id == pobSelectedCommune.value.id ).map( ( d ) => { return { label: d.name_kh , value : d.id } } )
             : [{ label : 'សូមជ្រើសរើស ឃុំ ឬ សង្កាត់ ជាមុនសិន' , value : null }]
     })
     function setProvince(){
@@ -407,18 +409,18 @@ export default {
     }
 
     function setDistrict(){
-      selectedDistrict.value = selectedProvince.value.districts.find( d => d.id == props.record.people.address_district_id )
+      selectedDistrict.value = store.getters['district/records'].all.find( d => d.id == props.record.people.address_district_id )
       selectedCommune.value = null
       selectedVillage.value = null
     }
 
     function setCommune(){
-      selectedCommune.value = selectedDistrict.value.communes.find( d => d.id == props.record.people.address_commune_id )
+      selectedCommune.value = store.getters['commune/records'].all.find( d => d.id == props.record.people.address_commune_id )
       selectedVillage.value = null
     }
 
     function setVillage(){
-      selectedVillage.value = selectedCommune.value.villages.find( d => d.id == props.record.people.address_village_id )
+      selectedVillage.value = store.getters['village/records'].all.find( d => d.id == props.record.people.address_village_id )
     }
 
     function pobSetProvince(){
@@ -429,18 +431,18 @@ export default {
     }
 
     function pobSetDistrict(){
-      pobSelectedDistrict.value = pobSelectedProvince.value.districts.find( d => d.id == props.record.people.pob_district_id )
+      pobSelectedDistrict.value = store.getters['district/records'].all.find( d => d.id == props.record.people.pob_district_id )
       pobSelectedCommune.value = null
       pobSelectedVillage.value = null
     }
 
     function pobSetCommune(){
-      pobSelectedCommune.value = pobSelectedDistrict.value.communes.find( d => d.id == props.record.people.pob_commune_id )
+      pobSelectedCommune.value = store.getters['commune/records'].all.find( d => d.id == props.record.people.pob_commune_id )
       pobSelectedVillage.value = null
     }
 
     function pobSetVillage(){
-      pobSelectedVillage.value = pobSelectedCommune.value.villages.find( d => d.id == props.record.people.pob_village_id )
+      pobSelectedVillage.value = store.getters['village/records'].all.find( d => d.id == props.record.people.pob_village_id )
     }
     
     const dob = ref( null )
@@ -663,10 +665,14 @@ export default {
           'email' : props.record.people.email ,
           'mobile_phone' : props.record.people.mobile_phone ,
           'office_phone' : props.record.people.office_phone ,
-          'dob' : props.record.people.dob ,
+          'dob' : dob.value != null ? dateFormat( new Date(dob.value) , "yyyy-mm-dd" ) : dateFormat( new Date() , "yyyy-mm-dd" ) ,
           'nid' : props.record.people.nid ,
           'passport' : props.record.people.passport ,
           'marry_status' : props.record.people.marry_status ,
+          'body_condition' : parseInt( props.record.people.body_condition ),
+          'body_condition_desp' : props.record.people.body_condition_desp ,
+          'nationality' : props.record.people.nationality ,
+          'national' : props.record.people.national ,
           'address' : props.record.people.address ,
           'address_province_id' : parseInt( props.record.people.address_province_id ) ,
           'address_district_id' : parseInt( props.record.people.address_district_id ) ,
