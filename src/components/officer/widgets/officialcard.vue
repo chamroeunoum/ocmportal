@@ -43,11 +43,19 @@
                           </tr>
                           <tr>
                             <td class="text-left font-moul align-top" style="width: 2cm;  vertical-align: top;color: #000000; "  >អង្គភាព<span style="float: right; font-size: 0.55rem; color: #000000; " >៖</span></td>
-                            <td  colspan="2" class="leading-3  font-btb-black" style=" font-size: 0.55rem; line-height: 0.8rem; color: #000000; ">{{ record.organization.name }}</td>
+                            <td  colspan="2" class="leading-3  font-btb-black" style=" font-size: 0.55rem; line-height: 0.8rem; color: #000000; ">{{ 
+                            record.jobs!=undefined && record.jobs.length>0
+                              ? record.jobs[0].organizationStructurePosition.organizationStructure.organization.name 
+                              : record.organization.name 
+                            }}</td>
                           </tr>
                           <tr>
                             <td class="text-left font-moul align-top" style="width: 2cm;  vertical-align: top;color: #000000; "  >មុខងារ<span style="float: right; font-size: 0.55rem; color: #000000; " >៖</span></td>
-                            <td  colspan="2" class="leading-3  font-btb-black" style=" font-size: 0.55rem; line-height: 0.8rem; color: #000000; " >{{ record.position.name }}</td>
+                            <td  colspan="2" class="leading-3  font-btb-black" style=" font-size: 0.55rem; line-height: 0.8rem; color: #000000; " >{{ 
+                            record.jobs!=undefined && record.jobs.length>0
+                              ? record.jobs[0].organizationStructurePosition.position.name 
+                              : record.position.name 
+                            }}</td>
                           </tr>
                         </tbody>
                       </table>
