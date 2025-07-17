@@ -77,10 +77,10 @@
                     <div v-if=" ( record.official_date != undefined && record.official_date != null ) " class="text-left text-xxs mt-1 leading-5 tracking-wider w-full" >{{ $toKhmer( dateFormat( new Date( record.official_date ) , 'dd-mm-yyyy' ) ) }}<br/></div>
                     <div v-if=" ( record.position != undefined && record.position != null ) " class="text-left text-xxs leading-5 tracking-wider w-full" >{{ record.position.name }}</div>
                   </div>
-                  <div v-if="record.organization != undefined && record.organization != null " class="w-1/2 text-right text-xxs my-1  leading-5 tracking-wide" v-html=" record.organization.name " ></div>
+                  <div v-if="record.organization != undefined && record.organization != null && record.organization" class="w-1/2 text-right text-xxs my-1  leading-5 tracking-wide" v-html=" record.organization.name " ></div>
                 </div>
                 <div v-if="record.card != null && record.card != undefined && record.card.id > 0" class="absolute left-1 top-1 text-vcb-xs text-left font-bold leading-6 tracking-wider" >{{ $toKhmer( record.card.number ) }}</div>
-                <div v-if="record.card == null || record.card == undefined && ( record.organization != undefined && record.organization != null ) " class="absolute left-1 top-1 text-xxs text-left font-bold leading-6 tracking-wider" v-html=" $toKhmer( ( record.organization.prefix != null && record.organization.prefix != '' ? record.organization.prefix + '-'  : '' ) + ( record.id + '' ).padStart( 4 , '0' ) )" ></div>
+                <div v-if="(record.card == null || record.card == undefined ) && ( record.organization != undefined && record.organization != null ) " class="absolute left-1 top-1 text-xxs text-left font-bold leading-6 tracking-wider" v-html=" $toKhmer( ( record.organization != undefined && record.organization.prefix != null && record.organization.prefix != '' ? record.organization.prefix + '-'  : '' ) + ( record.id + '' ).padStart( 4 , '0' ) )" ></div>
                 <div v-if="record.rank != null && record.rank != undefined " class="absolute left-1 top-5 text-vcb-xs text-left font-bold leading-6 tracking-wider text-xxs " v-html=" $toKhmer( record.rank.prefix + ' ' + record.rank.name )" ></div>
               </div>
               <thumbnail-actions-form v-bind:model="model" v-bind:record="record" :onClose="closeActions" />

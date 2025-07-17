@@ -34,7 +34,7 @@
                           </tr>
                           <tr>
                             <td class="text-left font-moul align-top" style="width: 2cm;  vertical-align: top; color: #000000; "  >ថ្ងៃខែឆ្នាំកំណើត<span style="float: right; font-size: 0.55rem; color: #000000; " >៖</span></td>
-                            <td class="leading-3  font-btb-black " style=" font-size: 0.55rem; font-weight: 900; color: #000000; "  >{{ getDate( record.people.dob ) }}</td>
+                            <td class="leading-3  font-btb-black " style=" font-size: 0.55rem; color: #000000; "  >{{ getDate( record.people.dob ) }}</td>
                             <td class="leading-3  font-btb-black " style=" font-size: 0.55rem; color: #000000; " ><span style="font-size: 0.55rem; color: #000000; " class="font-moul" >ភេទ</span>&nbsp;៖&nbsp;{{ record.people.gender == 1 ? "ប្រុស" : "ស្រី" }}</td>
                           </tr>
                           <tr>

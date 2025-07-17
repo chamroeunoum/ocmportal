@@ -30,20 +30,44 @@
                       </tr>
                       <tr>
                         <td class="text-left font-moul align-top" style="width: 2cm;  vertical-align: top; color: #000000; "  >ថ្ងៃខែឆ្នាំកំណើត<span style="float: right; font-size: 0.55rem; color: #000000; " >៖</span></td>
-                        <td class="leading-3  font-btb-black text-left" style=" font-size: 0.55rem; font-weight: 900; color: #000000; "  >{{ getDate( officer.people.dob ) }}</td>
+                        <td class="leading-3  font-btb-black text-left" style=" font-size: 0.55rem; color: #000000; "  >{{ getDate( officer.people.dob ) }}</td>
                         <td class="leading-3  font-btb-black " style=" font-size: 0.55rem; color: #000000; " ><span style="font-size: 0.55rem; color: #000000; " class="font-moul" >ភេទ</span>&nbsp;៖&nbsp;{{ officer.people.gender == 1 ? "ប្រុស" : "ស្រី" }}</td>
                       </tr>
                       <tr>
-                        <td class="text-left font-moul align-top" style="width: 2cm;  vertical-align: top;color: #000000; "  >អាសយដ្ឋាន<span style="float: right; font-size: 0.55rem; color: #000000; " >៖</span>៖</td>
+                        <td class="text-left font-moul align-top" style="width: 2cm;  vertical-align: top;color: #000000; "  >អាសយដ្ឋាន<span style="float: right; font-size: 0.55rem; color: #000000; " >៖</span></td>
                         <td  colspan="2" class="leading-3 font-btb-black text-left" style=" font-size: 0.55rem; line-height: 0.8rem; color: #000000; ">{{ $toKhmer( officer.people.address ) }}</td>
                       </tr>
-                      <tr>
+                      <!-- <tr>
                         <td class="text-left font-moul align-top" style="width: 2cm;  vertical-align: top;color: #000000; "  >អង្គភាព<span style="float: right; font-size: 0.55rem; color: #000000; " >៖</span></td>
                         <td  colspan="2" class="leading-3  font-btb-black text-left" style=" font-size: 0.55rem; line-height: 0.8rem; color: #000000; ">{{ officer.organization.name }}</td>
                       </tr>
                       <tr>
                         <td class="text-left font-moul align-top" style="width: 2cm;  vertical-align: top;color: #000000; "  >មុខងារ<span style="float: right; font-size: 0.55rem; color: #000000; " >៖</span></td>
                         <td  colspan="2" class="leading-3  font-btb-black text-left" style=" font-size: 0.55rem; line-height: 0.8rem; color: #000000; " >{{ officer.position.name }}</td>
+                      </tr> -->
+                      <tr>
+                        <td class="text-left font-moul align-top" style="width: 2cm;  vertical-align: top;color: #000000; "  >អង្គភាព<span style="float: right; font-size: 0.55rem; color: #000000; " >៖</span></td>
+                        <td  colspan="2" class="text-left leading-3  font-btb-black" style=" font-size: 0.55rem; line-height: 0.8rem; color: #000000; ">{{ 
+                        officer.job!=undefined 
+                          ? (
+                            officer.job.organization_structure_position != undefined && officer.job.organization_structure_position.organization_structure != undefined && officer.job.organization_structure_position.organization_structure.organization != undefined
+                              ? officer.job.organization_structure_position.organization_structure.organization.name 
+                              : officer.organization.name                             
+                          )
+                          : officer.organization.name 
+                        }}</td>
+                      </tr>
+                      <tr>
+                        <td class="text-left font-moul align-top" style="width: 2cm;  vertical-align: top;color: #000000; "  >មុខងារ<span style="float: right; font-size: 0.55rem; color: #000000; " >៖</span></td>
+                        <td  colspan="2" class="text-left leading-3  font-btb-black" style=" font-size: 0.55rem; line-height: 0.8rem; color: #000000; " >{{ 
+                        officer.job!=undefined 
+                          ? (
+                            officer.job.organization_structure_position != undefined && officer.job.organization_structure_position.position != undefined
+                            ? officer.job.organization_structure_position.position.name 
+                            : officer.position.name 
+                          )
+                          : officer.position.name 
+                        }}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -124,10 +148,12 @@ import { getDate } from '@utils/khmer.js'
         if( route.params != undefined && route.params != null && parseInt( route.params.id ) > 0 ) {
           store.dispatch('officer/read',{id:parseInt( route.params.id )}).then( res => {
             if( res.data.ok == true ){
+              console.log( res.data.record )
               // officer.value = res.data.record
               if( res.data.record != undefined && res.data.record.public_key != undefined && res.data.record.public_key.length > 0 ){
                 // window.location.replace( 'https://hr.ocm.gov.kh/#/officer/card/'+res.data.record.public_key )
                 officer.value = res.data.record
+                console.log( officer.value )
                 // if( officer.value != null && parseInt( officer.value.id ) > 0 ){
                 //   readRecord()
                 // }
