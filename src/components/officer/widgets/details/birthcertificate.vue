@@ -77,13 +77,13 @@
                                             <div class=" border border-gray-200 bg-white shadow p-4 rounded-lg flex flex-wrap" >
                                                 <div class="w-full mb-4 border-b border-gray-200 pb-2 font-moul " >សំបុត្រកំណើត/បញ្ជាក់កំណើត</div>
                                                 <n-form-item label="លេខសំបុត្រ" class="w-1/2 p-1" >
-                                                    <n-input v-model:value="birthCertificate.birth_number" placeholder="លេខសំបុត្រ" />
+                                                    <n-input type="number" v-model:value="birthCertificate.birth_number" placeholder="លេខសំបុត្រ" />
                                                 </n-form-item>
                                                 <n-form-item label="ថ្ងៃខែឆ្នាំ" class="w-1/2 p-1" >
                                                     <n-date-picker type="date" v-model:value="year" format="dd-MM-yyyy" placeholder="ថ្ងៃខែឆ្នាំ" />
                                                 </n-form-item>
                                                 <n-form-item label="លេខសៀវភៅ" class="w-1/2 p-1" >
-                                                    <n-input v-model:value="birthCertificate.book_number" placeholder="លេខសៀវភៅ" />
+                                                    <n-input type="number" v-model:value="birthCertificate.book_number" placeholder="លេខសៀវភៅ" />
                                                 </n-form-item>
                                                 
                                                 <n-form-item label="ថ្ងៃខែឆ្នាំចុះលេខ" class="w-1/2 p-1" >
@@ -420,12 +420,12 @@ import PdfPreview from './pdfpreview.vue'
             })
             const districtOptions = computed( () => {
                 return selectedProvince != undefined && selectedProvince.value != undefined && selectedProvince.value != null 
-                    ? selectedProvince.value.districts.map( ( d ) => { return { label: d.name_kh , value : d.id } } )
+                    ? store.getters['district/records'].all.filter( d => d.province_id == selectedProvince.value.id ).map( ( d ) => { return { label: d.name_kh , value : d.id } } )
                     : [{ label : 'សូមជ្រើសរើស ខេត្ត ឬ ក្រុង ជាមុនសិន' , value : null }]
             })
             const communeOptions = computed( () => {
                 return selectedDistrict != undefined && selectedDistrict.value != undefined && selectedDistrict.value != null 
-                    ? selectedDistrict.value.communes.map( ( c ) => { return { label: c.name_kh , value : c.id } } )
+                    ? store.getters['commune/records'].all.filter( c => c.district_id == selectedDistrict.value.id ).map( ( c ) => { return { label: c.name_kh , value : c.id } } )
                     : [{ label : 'សូមជ្រើសរើស ឃុំ ឬ សង្កាត់ ជាមុនសិន' , value : null }]
             })
 
@@ -436,7 +436,7 @@ import PdfPreview from './pdfpreview.vue'
             const year = ref( new Date().getTime() )
 
             const birthCertificate = reactive({
-                'people_id' : props.record.id ,
+                'people_id' : props.record.people_id ,
                 'birth_number' : '' ,
                 'book_number' : '' , 
                 'year' : '' ,
@@ -489,7 +489,7 @@ import PdfPreview from './pdfpreview.vue'
                     motherDateOfBirth.value = ( new Date() ).getTime()
                     issuedDate.value = ( new Date() ).getTime()
                     year.value = ( new Date() ).getTime()
-                    birthCertificate.people_id = props.record.id ,
+                    birthCertificate.people_id = props.record.people_id ,
                     birthCertificate.birth_number = ''
                     birthCertificate.book_number = ''
                     birthCertificate.year = ''
@@ -537,13 +537,13 @@ import PdfPreview from './pdfpreview.vue'
             }
 
             function setDistrict(){
-                selectedDistrict.value = selectedProvince.value.districts.find( d => d.id == birthCertificate.district_id )
+                selectedDistrict.value = store.getters['district/records'].all.find( d => d.id == birthCertificate.district_id )
                 selectedCommune.value = null
                 birthCertificate.commune_id = null
             }
 
             function setCommune(){
-                selectedCommune.value = selectedDistrict.value.communes.find( d => d.id == birthCertificate.commune_id )
+                selectedCommune.value = store.getters['commune/records'].all.find( d => d.id == birthCertificate.commune_id )
             }
 
             const uploadHelper = ref(false)
@@ -624,7 +624,7 @@ import PdfPreview from './pdfpreview.vue'
                     }
                     // Create
                     : {
-                        'people_id' : props.record.id ,
+                        'people_id' : props.record.people_id ,
                         'birth_number' : birthCertificate.birth_number ,
                         'book_number' : birthCertificate.book_number ,
                         'year' : year.value != undefined && year.value != null && year.value > 0 ? dateFormat( new Date( year.value ) , 'yyyy-mm-dd' ) : dateFormat( new Date( ) , 'yyyy-mm-dd' ) ,
@@ -685,7 +685,7 @@ import PdfPreview from './pdfpreview.vue'
                 motherDateOfBirth.value = selectedCertificate.value.mother_dob != undefined && selectedCertificate.value.mother_dob != null && selectedCertificate.value.mother_dob.length >0 ? ( new Date( selectedCertificate.value.mother_dob ) ).getTime() : ( new Date() ).getTime()
                 issuedDate.value = selectedCertificate.value.issued_date != undefined && selectedCertificate.value.issued_date != null && selectedCertificate.value.issued_date.length >0 ? ( new Date( selectedCertificate.value.issued_date ) ).getTime() : ( new Date() ).getTime()
                 year.value = selectedCertificate.value.year != undefined && selectedCertificate.value.year != null && selectedCertificate.value.year.length >0 ? ( new Date( selectedCertificate.value.year ) ).getTime() : ( new Date() ).getTime()
-                birthCertificate.people_id = props.record.id ,
+                birthCertificate.people_id = props.record.people_id ,
                 birthCertificate.birth_number = selectedCertificate.value.birth_number
                 birthCertificate.book_number = selectedCertificate.value.book_number
                 birthCertificate.year = selectedCertificate.value.year

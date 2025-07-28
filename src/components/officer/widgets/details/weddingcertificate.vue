@@ -628,14 +628,10 @@ import PdfPreview from './pdfpreview.vue'
                 return store.getters['province/records'].all.map( ( p ) => { return { label: p.name_kh , value : p.id } } )
             })
             const districtOptions = computed( () => {
-                return selectedProvince != undefined && selectedProvince.value != undefined && selectedProvince.value != null 
-                    ? selectedProvince.value.districts.map( ( d ) => { return { label: d.name_kh , value : d.id } } )
-                    : [{ label : 'សូមជ្រើសរើស ខេត្ត ឬ ក្រុង ជាមុនសិន' , value : null }]
+                return store.getters['district/records'].all.map( ( d ) => { return { label: d.name_kh , value : d.id } } )
             })
             const communeOptions = computed( () => {
-                return selectedDistrict != undefined && selectedDistrict.value != undefined && selectedDistrict.value != null 
-                    ? selectedDistrict.value.communes.map( ( c ) => { return { label: c.name_kh , value : c.id } } )
-                    : [{ label : 'សូមជ្រើសរើស ឃុំ ឬ សង្កាត់ ជាមុនសិន' , value : null }]
+                return store.getters['commune/records'].all.map( ( c ) => { return { label: c.name_kh , value : c.id } } )
             })
 
             const spouseDateOfBirth = ref( new Date().getTime() )

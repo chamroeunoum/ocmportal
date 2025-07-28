@@ -305,20 +305,21 @@
                           :options="organizations"
                         />
                       </n-form-item>
-                      <n-form-item label="តួនាទី" path="position" class="w-full mb-4" >
-                        <n-select
-                          v-model:value="selectedPosition"
-                          filterable
-                          placeholder="សូមជ្រើសរើសតួនាទី"
-                          :options="positions"
-                        />
-                      </n-form-item> -->
+                       -->
                       <n-form-item label="តួនាទី" class="w-full mb-4" >
                         <n-select
                           v-model:value="selectedOrganizationStructurePosition"
                           filterable
                           placeholder="សូមជ្រើសរើសតួនាទី"
                           :options="organizationStructurePositions"
+                        />
+                      </n-form-item>
+                      <n-form-item label="ឋានៈស្មើ" path="position" class="w-full mb-4" >
+                        <n-select
+                          v-model:value="selectedUnofficialPosition"
+                          filterable
+                          placeholder="សូមជ្រើសរើសឋានៈស្មើ"
+                          :options="positions"
                         />
                       </n-form-item>
                       <Transition name="slide-fade" >
@@ -616,6 +617,7 @@ export default {
     const selectedOrganization = ref(null)
     const selectedOrganizationStructurePosition = ref(null)
     const selectedPosition = ref(null)
+    const selectedUnofficialPosition = ref(null)
     const selectedCountesies = ref([])
 
     const organizationStructurePositions = ref([])
@@ -692,6 +694,7 @@ export default {
           'organization_structure_position_id' : selectedOrganizationStructurePosition.value != null ? selectedOrganizationStructurePosition.value : 0 ,
           'organization_id' : selectedOrganization.value != null ? selectedOrganization.value : 0 ,
           'position_id' : selectedPosition.value != null ? selectedPosition.value : 0 ,
+          'unofficial_position_id' : parseInt( selectedUnofficialPosition.value ) > 0 ? selectedUnofficialPosition.value : 0 ,
           'countesy_id' : selectedCountesies.value != null ? selectedCountesies.value[0] : 0 ,
           'passport' : props.record.passport ,
           'email' : props.record.email ,
@@ -1179,6 +1182,7 @@ export default {
 
       selectedOrganization.value = props.record.organization != null && props.record.organization != undefined ? props.record.organization.id : null
       selectedPosition.value = props.record.position != null && props.record.position != undefined ? props.record.position.id : null
+      selectedUnofficialPosition.value = props.record.current_job != null && props.record.current_job != undefined ? props.record.current_job.unofficial_position_id : null
       selectedCountesies.value = props.record.countesy != null && props.record.countesy != undefined ? [props.record.countesy.id] : null
       selectedOrganizationStructurePosition.value = props.record.current_job != null && props.record.current_job != undefined
         ? props.record.current_job.organization_structure_position_id 
@@ -1202,6 +1206,7 @@ export default {
       selectedOrganization ,
       organizations ,
       selectedPosition ,
+      selectedUnofficialPosition ,
       positions ,
       selectedCountesies ,
       countesies ,

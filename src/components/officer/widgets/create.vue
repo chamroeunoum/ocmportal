@@ -244,22 +244,23 @@
                       :options="organizations"
                     />
                   </n-form-item>
+                   -->
                   <n-form-item label="តួនាទី" class="w-full mb-4" >
                     <n-select
-                      v-model:value="selectedPosition"
+                      v-model:value="selectedOrganizationStructurePosition"
                       filterable
                       placeholder="សូមជ្រើសរើសតួនាទី"
+                      :options="organizationStructurePositions"
+                    />
+                  </n-form-item>
+                  <n-form-item label="ឋានៈស្មើ" class="w-full mb-4" >
+                    <n-select
+                      v-model:value="selectedUnofficialPosition"
+                      filterable
+                      placeholder="សូមជ្រើសរើសឋានៈស្មើ"
                       :options="positions"
                     />
-                  </n-form-item> -->
-                  <n-form-item label="តួនាទី" class="w-full mb-4" >
-                      <n-select
-                        v-model:value="selectedOrganizationStructurePosition"
-                        filterable
-                        placeholder="សូមជ្រើសរើសតួនាទី"
-                        :options="organizationStructurePositions"
-                      />
-                    </n-form-item>
+                  </n-form-item>
                 </n-form>
                 <div class="w-1/2 h-8"></div>  
               </div>
@@ -342,12 +343,16 @@ export default {
 
     const selectedOrganization = ref(null)
     const selectedPosition = ref(null)
+    const selectedUnofficialPosition = ref(null)
     const selectedCountesies = ref([])
 
     const organizations = computed( () => 
       store.getters['organization/getRecords'].map( o => ( { label: o.name , value : o.id } ) )
     )
     const positions = computed( () => 
+      store.getters['position/getRecords'].map( o => ( { label: o.name , value : o.id } ) )
+    )
+    const unofficialPositions = computed( () => 
       store.getters['position/getRecords'].map( o => ( { label: o.name , value : o.id } ) )
     ) 
     const countesies = computed( () => 
@@ -586,13 +591,22 @@ export default {
           duration: 2000
         })
       }
-      if( parseInt( selectedPosition.value) <= 0 ){
+      
+      if( parseInt( selectedOrganizationStructurePosition.value) <= 0 ){
         notify.warning({
           title: 'ពិនិត្យព័ត៌មាន' ,
           description: 'សូមជ្រើសរើសតួនាទី' ,
           duration: 2000
         })
       }
+      // if( parseInt( selectedPosition.value) <= 0 ){
+      //   notify.warning({
+      //     title: 'ពិនិត្យព័ត៌មាន' ,
+      //     description: 'សូមជ្រើសរើសតួនាទី' ,
+      //     duration: 2000
+      //   })
+      // }
+
       if( props.record.people.mobile_phone == "" && props.record.people.email == "" ){
         notify.warning({
           title: 'ពិនិត្យព័ត៌មាន' ,
@@ -647,7 +661,8 @@ export default {
           'official_date' : official_date.value != null && parseInt( official_date.value ) > 0 ? dateFormat( new Date(official_date.value) , "yyyy-mm-dd" ) : dateFormat( new Date() , "yyyy-mm-dd" ) ,
           'unofficial_date' : unofficial_date.value != null && parseInt( unofficial_date.value ) > 0 ? dateFormat( new Date(unofficial_date.value) , "yyyy-mm-dd" ) : dateFormat( new Date() , "yyyy-mm-dd" ) ,
           'organization_id' : selectedOrganization.value != null ? selectedOrganization.value : 0 ,
-          'position_id' : selectedPosition.value != null ? selectedPosition.value : 0 ,
+          'position_id' : parseInt( selectedPosition.value ) > 0 ? selectedPosition.value : 0 ,
+          'unofficial_position_id' : parseInt( selectedUnofficialPosition.value ) > 0 ? selectedUnofficialPosition.value : 0 ,
           'organization_structure_position_id' : selectedOrganizationStructurePosition.value != null ? selectedOrganizationStructurePosition.value : 0 ,
           'countesy_id' : selectedCountesies.value != null ? selectedCountesies.value[0] : 0 ,
           'officer_passport' : props.record.officer_passport ,
@@ -883,7 +898,9 @@ export default {
       selectedOrganization ,
       organizations ,
       selectedPosition ,
+      selectedUnofficialPosition ,
       positions ,
+      unofficialPositions ,
       selectedCountesies ,
       countesies ,
       dob ,

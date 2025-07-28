@@ -531,6 +531,7 @@ export default {
     /**
      * Initial the data
      */
+    getPositions()
     getRankStructure()
     getCountesies()
     getRecords()
