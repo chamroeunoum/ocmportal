@@ -374,28 +374,28 @@ import PdfPreview from './pdfpreview.vue'
                     return false
                 }
                 store.dispatch( model.name + '/' + ( selectedCertificate.value != null && selectedCertificate.value.id > 0 ? 'update' : 'create' ) , 
-                selectedCertificate.value != null && selectedCertificate.value.id > 0 
-                    ? {
-                        id: selectedCertificate.value.id ,
-                        people_id : props.record.people_id ,
-                        field_name : educationCertificate.field_name ,
-                        start_date : dateFormat( new Date( educationCertificateStart.value ) , 'dd-mm-yyyy' ) ,
-                        end_date : dateFormat( new Date( educationCertificateEnd.value ) , 'dd-mm-yyyy' ) ,
-                        location : educationCertificate.location ,
-                        place_name : educationCertificate.place_name ,
-                        certificate_group_id : educationCertificate.certificate_group_id ,
-                        certificate_note : parseInt( educationCertificate.certificate_group_id ) == 3 || parseInt( educationCertificate.certificate_group_id ) == 8 ? educationCertificate.certificate_note : '' 
-                    }
-                    : {
-                        people_id : props.record.people_id ,
-                        field_name : educationCertificate.field_name ,
-                        start_date : dateFormat( new Date( educationCertificateStart.value ) , 'dd-mm-yyyy' ) ,
-                        end_date : dateFormat( new Date( educationCertificateEnd.value ) , 'dd-mm-yyyy' ) ,
-                        location : educationCertificate.location ,
-                        place_name : educationCertificate.place_name ,
-                        certificate_group_id : educationCertificate.certificate_group_id ,
-                        certificate_note : parseInt( educationCertificate.certificate_group_id ) == 3 || parseInt( educationCertificate.certificate_group_id ) == 8 ? educationCertificate.certificate_note : '' 
-                    }
+                    selectedCertificate.value != null && selectedCertificate.value.id > 0 
+                        ? {
+                            id: selectedCertificate.value.id ,
+                            people_id : props.record.people_id ,
+                            field_name : educationCertificate.field_name ,
+                            start_date : dateFormat( new Date( educationCertificateStart.value ) , 'dd-mm-yyyy' ) ,
+                            end_date : dateFormat( new Date( educationCertificateEnd.value ) , 'dd-mm-yyyy' ) ,
+                            location : educationCertificate.location ,
+                            place_name : educationCertificate.place_name ,
+                            certificate_group_id : educationCertificate.certificate_group_id ,
+                            certificate_note : parseInt( educationCertificate.certificate_group_id ) == 3 || parseInt( educationCertificate.certificate_group_id ) == 8 ? educationCertificate.certificate_note : '' 
+                        }
+                        : {
+                            people_id : props.record.people_id ,
+                            field_name : educationCertificate.field_name ,
+                            start_date : dateFormat( new Date( educationCertificateStart.value ) , 'dd-mm-yyyy' ) ,
+                            end_date : dateFormat( new Date( educationCertificateEnd.value ) , 'dd-mm-yyyy' ) ,
+                            location : educationCertificate.location ,
+                            place_name : educationCertificate.place_name ,
+                            certificate_group_id : educationCertificate.certificate_group_id ,
+                            certificate_note : parseInt( educationCertificate.certificate_group_id ) == 3 || parseInt( educationCertificate.certificate_group_id ) == 8 ? educationCertificate.certificate_note : '' 
+                        }
                 ).then( res => {
                     getCertificates()
                 }).catch( err => {

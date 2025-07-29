@@ -250,14 +250,14 @@
                       :options="organizationStructurePositions"
                     />
                   </n-form-item>
-                  <n-form-item label="ឋានៈស្មើ" path="officer_position" class="w-full mb-4" >
+                  <!-- <n-form-item label="ឋានៈស្មើ" path="officer_position" class="w-full mb-4" >
                     <n-select
                       v-model:value="selectedUnofficialPosition"
                       filterable
                       placeholder="សូមជ្រើសរើសឋានៈស្មើ"
                       :options="positions"
                     />
-                  </n-form-item>
+                  </n-form-item> -->
                 </n-form>
                 <div class="w-1/2 h-8"></div>  
               </div>
@@ -699,7 +699,9 @@ export default {
       }).then( 
         res => {
           if( res.data.ok ){
-            organizationStructurePositions.value = res.data.records.map( p => {
+            organizationStructurePositions.value = res.data.records.filter( p => {
+              return p.organizationStructure != undefined
+            }).map( p => {
               return {
                 label : p.organizationStructure.organization.name + ' - ' + p.position.name ,
                 value : p.id

@@ -314,14 +314,14 @@
                           :options="organizationStructurePositions"
                         />
                       </n-form-item>
-                      <n-form-item label="ឋានៈស្មើ" path="position" class="w-full mb-4" >
+                      <!-- <n-form-item label="ឋានៈស្មើ" path="position" class="w-full mb-4" >
                         <n-select
                           v-model:value="selectedUnofficialPosition"
                           filterable
                           placeholder="សូមជ្រើសរើសឋានៈស្មើ"
                           :options="positions"
                         />
-                      </n-form-item>
+                      </n-form-item> -->
                       <Transition name="slide-fade" >
                         <div 
                         v-if="record.organizationPeople != null && record.organizationPeople != undefined && record.organizationPeople.length > 0 "
@@ -876,7 +876,9 @@ export default {
       }).then( 
         res => {
           if( res.data.ok ){
-            organizationStructurePositions.value = res.data.records.map( p => {
+            organizationStructurePositions.value = res.data.records.filter( p => {
+              return p.organizationStructure != undefined
+            }).map( p => {
               return {
                 label : p.organizationStructure.organization.name + ' - ' + p.position.name ,
                 value : p.id
