@@ -416,7 +416,7 @@ import PdfPreview from './pdfpreview.vue'
             weddingCertificates.value = ( props.record != undefined && props.record != null ) && 
                 ( props.record.people != undefined && props.record.people != null ) && 
                 ( props.record.people.weddingCertificates != undefined && props.record.people.weddingCertificates != null && props.record.people.weddingCertificates.length > 0 )
-                    ? props.record.people.weddingCertificates.map( ( wc ) => { return { label: "សៀវភៅ ៖ " + wc.book_number + " , ល.អា. " + wc.wedding_number + " : ប្ដី. " + wc.husband_lastname + " " + wc.husband_firstname + " , ប្រពន្ធ. " + wc.wife_lastname + " " + wc.wife_firstname , value : wc.id } } )
+                    ? props.record.people.weddingCertificates.map( ( wc ) => { return { label: "សៀវភៅ ៖ " + wc.book_number + " , ល.អា. " + wc.wedding_number + " : " + props.record.people.lastname + " " + props.record.people.firstname + " , " + wc.spouse_lastname + " " + wc.spouse_firstname , value : wc.id } } )
                     : []
 
             const model = reactive({
@@ -436,12 +436,12 @@ import PdfPreview from './pdfpreview.vue'
             })
             const districtOptions = computed( () => {
                 return selectedProvince != undefined && selectedProvince.value != undefined && selectedProvince.value != null 
-                    ? selectedProvince.value.districts.map( ( d ) => { return { label: d.name_kh , value : d.id } } )
+                    ? store.getters['district/records'].all.filter( d => d.province_id == selectedProvince.value.id ).map( ( d ) => { return { label: d.name_kh , value : d.id } } )
                     : [{ label : 'សូមជ្រើសរើស ខេត្ត ឬ ក្រុង ជាមុនសិន' , value : null }]
             })
             const communeOptions = computed( () => {
                 return selectedDistrict != undefined && selectedDistrict.value != undefined && selectedDistrict.value != null 
-                    ? selectedDistrict.value.communes.map( ( c ) => { return { label: c.name_kh , value : c.id } } )
+                    ? store.getters['commune/records'].all.filter( c => c.district_id == selectedDistrict.value.id ).map( ( c ) => { return { label: c.name_kh , value : c.id } } )
                     : [{ label : 'សូមជ្រើសរើស ឃុំ ឬ សង្កាត់ ជាមុនសិន' , value : null }]
             })
 
@@ -557,13 +557,13 @@ import PdfPreview from './pdfpreview.vue'
             }
 
             function setDistrict(){
-                selectedDistrict.value = selectedProvince.value.districts.find( d => d.id == birthCertificate.district_id )
+                selectedDistrict.value = store.getters['district/records'].all.find( d => d.id == birthCertificate.district_id )
                 selectedCommune.value = null
                 birthCertificate.commune_id = null
             }
 
             function setCommune(){
-                selectedCommune.value = selectedDistrict.value.communes.find( d => d.id == birthCertificate.commune_id )
+                selectedCommune.value = store.getters['commune/records'].all.find( d => d.id == birthCertificate.commune_id )
             }
 
             const uploadHelper = ref(false)
@@ -745,8 +745,8 @@ import PdfPreview from './pdfpreview.vue'
                 // birthCertificate.mother_pob = selectedCertificate.value.mother_pob
             
                 selectedProvince.value = store.getters['province/records'].all.find( p => p.id == birthCertificate.province_id )
-                selectedDistrict.value = selectedProvince.value.districts.find( d => d.id == birthCertificate.district_id )
-                selectedCommune.value = selectedDistrict.value.communes.find( d => d.id == birthCertificate.commune_id )
+                selectedDistrict.value = store.getters['district/records'].all.find( d => d.id == birthCertificate.district_id )
+                selectedCommune.value = store.getters['commune/records'].all.find( d => d.id == birthCertificate.commune_id )
                 
                 formHelper.value = true
             }

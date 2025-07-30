@@ -228,9 +228,7 @@ import PdfPreview from './pdfpreview.vue'
             const formHelper = ref(false)
             function formToggler() {
                 formHelper.value = !formHelper.value
-                if( formHelper.value == true ){
-                    
-                }else{
+                if( formHelper.value == false ){
                     officerjobbackground.id = props.record.id
                     officerjobbackground.officer_id = props.record.officer_id
                     officerjobbackground.organization = '' 
@@ -244,6 +242,7 @@ import PdfPreview from './pdfpreview.vue'
 
                     start.value = new Date().getTime()
                     end.value = new Date().getTime()
+                    selectedLanguage.value = null
                 }
             }
 
@@ -268,7 +267,7 @@ import PdfPreview from './pdfpreview.vue'
                 search : '' ,
                 page: 1 , 
                 perPage : 100 ,
-                officer_id: props.record.officer_id
+                officer_id: props.record.id
                 }).then( res => {
                     store.commit( model.name + '/setRecords', res.data.records );
                 }).catch( err => {
@@ -311,7 +310,7 @@ import PdfPreview from './pdfpreview.vue'
                 }).catch( err => {
                     console.log( err )
                 })
-                formHelper.value = false
+                formToggler()
                 uploadHelper.value = false
             }
 

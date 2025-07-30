@@ -317,10 +317,8 @@ import PdfPreview from './pdfpreview.vue'
 
             const formHelper = ref(false)
             function formToggler() {
-                formHelper.value = !formHelper.value
-                if( formHelper.value == true ){
-                    
-                }else{
+                formHelper.value = formHelper.value == true ? false : true
+                if( formHelper.value == false ){
                     educationCertificateStart.value = ( new Date() ).getTime()
                     educationCertificateEnd.value = ( new Date() ).getTime()
                     educationCertificate.people_id = props.record.people_id
@@ -332,6 +330,8 @@ import PdfPreview from './pdfpreview.vue'
                     educationCertificate.certificate_group_id = null
                     educationCertificate.pdf = '' 
                     educationCertificate.certificate_note = ''
+                    selectedCertificate.value = null
+                    selectedEducationLevelKey.value = null
                 }
             }
 
@@ -401,7 +401,7 @@ import PdfPreview from './pdfpreview.vue'
                 }).catch( err => {
                     console.log( err )
                 })
-                formHelper.value = false
+                formToggler
                 uploadHelper.value = false
             }
 
@@ -414,7 +414,7 @@ import PdfPreview from './pdfpreview.vue'
                     }
                 }
 
-                selectedCertificate.value = cert                
+                selectedCertificate.value = cert
                 educationCertificate.field_name = selectedCertificate.value.field_name
                 educationCertificate.location = selectedCertificate.value.location
                 educationCertificate.place_name = selectedCertificate.value.place_name

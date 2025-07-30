@@ -481,9 +481,7 @@ import PdfPreview from './pdfpreview.vue'
             const formHelper = ref(false)
             function formToggler() {
                 formHelper.value = !formHelper.value
-                if( formHelper.value == true ){
-                    
-                }else{
+                if( formHelper.value == false ){
                     dateOfBirth.value = ( new Date() ).getTime()
                     fatherDateOfBirth.value = ( new Date() ).getTime()
                     motherDateOfBirth.value = ( new Date() ).getTime()
@@ -526,7 +524,7 @@ import PdfPreview from './pdfpreview.vue'
                     birthCertificate.mother_dob = ''
                     birthCertificate.mother_nationality = ''
                     birthCertificate.mother_pob = ''
-
+                    selectedCertificate.value = null
                 }
             }
 
@@ -666,7 +664,7 @@ import PdfPreview from './pdfpreview.vue'
                 }).catch( err => {
                     console.log( err )
                 })
-                formHelper.value = false
+                formToggler()
                 uploadHelper.value = false
             }
 
@@ -720,8 +718,8 @@ import PdfPreview from './pdfpreview.vue'
                 birthCertificate.mother_pob = selectedCertificate.value.mother_pob
             
                 selectedProvince.value = store.getters['province/records'].all.find( p => p.id == birthCertificate.province_id )
-                selectedDistrict.value = selectedProvince.value.districts.find( d => d.id == birthCertificate.district_id )
-                selectedCommune.value = selectedDistrict.value.communes.find( d => d.id == birthCertificate.commune_id )
+                selectedDistrict.value = store.getters['district/records'].all.find( d => d.id == birthCertificate.district_id )
+                selectedCommune.value = store.getters['commune/records'].all.find( d => d.id == birthCertificate.commune_id )
                 
                 formHelper.value = true
             }

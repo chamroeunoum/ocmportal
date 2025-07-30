@@ -282,16 +282,14 @@ import PdfPreview from './pdfpreview.vue'
                 }).catch( err => {
                     console.log( err )
                 })
-                formHelper.value = false
+                formToggler()
                 uploadHelper.value = false
             }
 
             const formHelper = ref(false)
             function formToggler() {
                 formHelper.value = !formHelper.value
-                if( formHelper.value == true ){
-                    
-                }else{
+                if( formHelper.value == false ){
                     nicStart.value = ( new Date() ).getTime()
                     nicEnd.value = ( new Date() ).getTime()
                     nic.number = ''
@@ -300,6 +298,7 @@ import PdfPreview from './pdfpreview.vue'
                     nic.start = ''
                     nic.end = ''
                     nic.desp = ''
+                    selectedNic.value = null
                 }
             }
 
@@ -441,7 +440,7 @@ import PdfPreview from './pdfpreview.vue'
                             description: 'លុបបានរួចរាល់។' ,
                             duration: 3000
                         })
-                        getCertificates()
+                        getNics()
                         }else{
                         notify.success({
                             title: 'លុបកម្រិតសិក្សា' ,

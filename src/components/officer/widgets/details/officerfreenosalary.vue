@@ -25,7 +25,7 @@
                                     <td class="w-24 p-1 " >{{ $toKhmer( officernosalary.start ) }}</td>
                                     <td class="w-24 certificate_leverl p-1 uppercase text-center" >{{ $toKhmer( officernosalary.end ) }}</td>
                                     <td class="w-48 uppercase text-center" >{{ ( officernosalary.organization ) }}</td>
-                                    <td class="w-48 uppercase text-center" >{{ ( officernosalary.total_months ) }}</td>
+                                    <td class="w-48 uppercase text-center" >{{ ( $toKhmer( officernosalary.total_months ) ) }}</td>
                                     <!-- <td class="w-48 uppercase text-center" >{{ ( officernosalary.position ) }}</td> -->
                                     <td class="flex w-28" >
                                         <svg 
@@ -81,7 +81,7 @@
                                             <n-input v-model:value="officernosalary.organization" placeholder="ក្រសួង-ស្ថាប័ន" />
                                         </n-form-item>
                                         <n-form-item label="ចំនួនខែសរុប" class="w-1/2 p-1" >
-                                            <n-input v-model:value="officernosalary.total_months" placeholder="ចំនួនខែសរុប" />
+                                            <n-input-number v-model:value="officernosalary.total_months" placeholder="ចំនួនខែសរុប" />
                                         </n-form-item>
                                         <!-- <n-form-item label="មុខតំណែង" class="w-1/2 p-1" >
                                             <n-input v-model:value="officernosalary.position" placeholder="មុខតំណែង" />
@@ -205,9 +205,7 @@ import PdfPreview from './pdfpreview.vue'
             const formHelper = ref(false)
             function formToggler() {
                 formHelper.value = !formHelper.value
-                if( formHelper.value == true ){
-                    
-                }else{
+                if( formHelper.value == false ){
                     officernosalary.id = props.record.id
                     officernosalary.officer_id = props.record.officer_id
                     officernosalary.organization = '' 
@@ -218,6 +216,7 @@ import PdfPreview from './pdfpreview.vue'
                     officernosalary.pdf = '' 
                     start.value = new Date().getTime()
                     end.value = new Date().getTime()
+                    selectedFreenosalary.value = null   
                 }
             }
 
@@ -238,11 +237,12 @@ import PdfPreview from './pdfpreview.vue'
             }
 
             function getOfficerFreenosalary(){
+                console.log( props.record )
                 store.dispatch(model.name + '/list',{
                 search : '' ,
                 page: 1 , 
                 perPage : 100 ,
-                officer_id: props.record.officer_id ,
+                officer_id: props.record.id ,
                 type: 1 
                 }).then( res => {
                     store.commit( model.name + '/setRecords', res.data.records );
@@ -284,7 +284,7 @@ import PdfPreview from './pdfpreview.vue'
                 }).catch( err => {
                     console.log( err )
                 })
-                formHelper.value = false
+                formToggler()
                 uploadHelper.value = false
             }
 

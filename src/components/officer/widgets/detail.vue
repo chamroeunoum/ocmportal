@@ -599,7 +599,7 @@ export default {
           page: 1 , 
           perPage : 100
         }).then( res => {
-            store.commit( 'rank/setRecords', res.data.records )
+            store.commit( 'rank/setAllRecords', res.data.records )
         }).catch( err => {
             console.log( err )
         })

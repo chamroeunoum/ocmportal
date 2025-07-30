@@ -292,7 +292,7 @@ import PdfPreview from './pdfpreview.vue'
                 nic.distinguishing_mark = selectedNic.value.distinguishing_mark
                 nic.emergency_contact_person = selectedNic.value.emergency_contact_person
                 nic.address = selectedNic.value.address
-                nic.type = parseInt( selectedNic.value.type ) > 0 ? parseINt( selectedNic.value ) : 0 
+                nic.type = parseInt( selectedNic.value.type ) > 0 ? parseInt( selectedNic.value.type ) : 0 
                 nic.country_code = selectedNic.value.country_code
                 nic.nationality = selectedNic.value.nationality
                 nic.gender = selectedNic.value.gender
@@ -355,16 +355,14 @@ import PdfPreview from './pdfpreview.vue'
                 }).catch( err => {
                     console.log( err )
                 })
-                formHelper.value = false
+                formToggler()
                 uploadHelper.value = false
             }
 
             const formHelper = ref(false)
             function formToggler() {
                 formHelper.value = !formHelper.value
-                if( formHelper.value == true ){
-                    
-                }else{
+                if( formHelper.value == false ){
                     nic_effective_date.value = ( new Date() ).getTime()
                     nic_expired_date.value = ( new Date() ).getTime()
                     nic.number = ''
@@ -372,6 +370,7 @@ import PdfPreview from './pdfpreview.vue'
                     nic.effective_date = ''
                     nic.expired_date = ''
                     nic.desp = ''
+                    selectedNic.value = null
                 }
             }
 

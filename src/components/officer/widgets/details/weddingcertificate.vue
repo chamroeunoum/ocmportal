@@ -628,10 +628,14 @@ import PdfPreview from './pdfpreview.vue'
                 return store.getters['province/records'].all.map( ( p ) => { return { label: p.name_kh , value : p.id } } )
             })
             const districtOptions = computed( () => {
-                return store.getters['district/records'].all.map( ( d ) => { return { label: d.name_kh , value : d.id } } )
+                return selectedProvince != undefined && selectedProvince.value != undefined && selectedProvince.value != null 
+                    ? store.getters['district/records'].all.filter( d => d.province_id == selectedProvince.value.id ).map( ( d ) => { return { label: d.name_kh , value : d.id } } )
+                    : [{ label : 'សូមជ្រើសរើស ខេត្ត ឬ ក្រុង ជាមុនសិន' , value : null }]
             })
             const communeOptions = computed( () => {
-                return store.getters['commune/records'].all.map( ( c ) => { return { label: c.name_kh , value : c.id } } )
+                return selectedDistrict != undefined && selectedDistrict.value != undefined && selectedDistrict.value != null 
+                    ? store.getters['commune/records'].all.filter( c => c.district_id == selectedDistrict.value.id ).map( ( c ) => { return { label: c.name_kh , value : c.id } } )
+                    : [{ label : 'សូមជ្រើសរើស ឃុំ ឬ សង្កាត់ ជាមុនសិន' , value : null }]
             })
 
             const spouseDateOfBirth = ref( new Date().getTime() )
@@ -697,9 +701,7 @@ import PdfPreview from './pdfpreview.vue'
             const formHelper = ref(false)
             function formToggler() {
                 formHelper.value = !formHelper.value
-                if( formHelper.value == true ){
-                    
-                }else{
+                if( formHelper.value == false ) {
                     spouseDateOfBirth.value = ( new Date() ).getTime()
                     spouseFatherDateOfBirth.value = ( new Date() ).getTime()
                     spouseMotherDateOfBirth.value = ( new Date() ).getTime()
@@ -784,6 +786,7 @@ import PdfPreview from './pdfpreview.vue'
                     // weddingCertificate.wife_mother_nationality = ''
                     // weddingCertificate.wife_mother_pob = ''
 
+                    selectedCertificate.value = null
                 }
             }
 
@@ -794,13 +797,13 @@ import PdfPreview from './pdfpreview.vue'
             }
 
             function setDistrict(){
-                selectedDistrict.value = selectedProvince.value.districts.find( d => d.id == weddingCertificate.district_id )
+                selectedDistrict.value = store.getters['district/records'].all.find( d => d.id == weddingCertificate.district_id )
                 selectedCommune.value = null
                 weddingCertificate.commune_id = null
             }
 
             function setCommune(){
-                selectedCommune.value = selectedDistrict.value.communes.find( d => d.id == weddingCertificate.commune_id )
+                selectedCommune.value = store.getters['commune/records'].all.find( d => d.id == weddingCertificate.commune_id )
             }
 
             const uploadHelper = ref(false)
@@ -997,7 +1000,7 @@ import PdfPreview from './pdfpreview.vue'
                 }).catch( err => {
                     console.log( err )
                 })
-                formHelper.value = false
+                formToggler()
                 uploadHelper.value = false
             }
 
@@ -1091,8 +1094,8 @@ import PdfPreview from './pdfpreview.vue'
                 // weddingCertificate.wife_mother_pob = selectedCertificate.value.wife_mother_pob
             
                 selectedProvince.value = store.getters['province/records'].all.find( p => p.id == weddingCertificate.province_id )
-                selectedDistrict.value = selectedProvince.value.districts.find( d => d.id == weddingCertificate.district_id )
-                selectedCommune.value = selectedDistrict.value.communes.find( d => d.id == weddingCertificate.commune_id )
+                selectedDistrict.value = store.getters['district/records'].all.find( d => d.id == weddingCertificate.district_id )
+                selectedCommune.value = store.getters['commune/records'].all.find( d => d.id == weddingCertificate.commune_id )
                 
                 formHelper.value = true
             }

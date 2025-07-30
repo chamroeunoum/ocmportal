@@ -196,7 +196,7 @@ import PdfPreview from './pdfpreview.vue'
             })
 
             const ranks = computed( () => {
-                return store.getters['rank/getRecords'].map( (r) =>  { 
+                return store.getters['rank/records'].all.map( (r) =>  { 
                     return {
                         label: r.desp , value: r.id 
                     }
@@ -220,9 +220,7 @@ import PdfPreview from './pdfpreview.vue'
             const formHelper = ref(false)
             function formToggler() {
                 formHelper.value = !formHelper.value
-                if( formHelper.value == true ){
-                    
-                }else{
+                if( formHelper.value == false ){
                     officerRank.id = 0
                     officerRank.officer_id = props.record.id
                     officerRank.organization = '' 
@@ -232,7 +230,7 @@ import PdfPreview from './pdfpreview.vue'
                     officerRank.rank_id = null
                     officerRank.previous_rank_id = null
                     officerRank.pdf = '' 
-
+                    selectedRank.value = null   
                     date.value = new Date().getTime()
                 }
             }
@@ -299,7 +297,7 @@ import PdfPreview from './pdfpreview.vue'
                 }).catch( err => {
                     console.log( err )
                 })
-                formHelper.value = false
+                formToggler()
                 uploadHelper.value = false
             }
 
