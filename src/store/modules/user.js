@@ -47,7 +47,7 @@ const actions = {
     return await crud.update(import.meta.env.VITE_API_SERVER+"/"+state.model.name+"/people/update",params)
   },
   async passwordChange ({ state, commit, rootState },params) {
-    return await crud.update(import.meta.env.VITE_API_SERVER+"/authentication/password/change",params)
+    return await crud.update(import.meta.env.VITE_API_SERVER+'/'+state.model.name+"/password/change",params)
   },
   async checkUsername({ state, commit, rootState },params) {
     return await crud.read(import.meta.env.VITE_API_SERVER+"/"+state.model.name+"/username/exist?username="+params.username)

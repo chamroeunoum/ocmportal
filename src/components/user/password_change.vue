@@ -117,6 +117,7 @@ import Sidebar from '@components/widgets/Sidebar.vue'
             return false
         }
         store.dispatch('user/passwordChange',{
+            id: getUser().id ,
             email: getUser().email ,
             password: model.password
         }).then( res => {
