@@ -8,7 +8,7 @@
               <template #icon>
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M3 5a2 2 0 0 1 2-2h8.379a2 2 0 0 1 1.414.586l1.621 1.621A2 2 0 0 1 17 6.621V15a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5zm2-1a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1v-4.5A1.5 1.5 0 0 1 6.5 10h7a1.5 1.5 0 0 1 1.5 1.5V16a1 1 0 0 0 1-1V6.621a1 1 0 0 0-.293-.707l-1.621-1.621A1 1 0 0 0 13.379 4H13v2.5A1.5 1.5 0 0 1 11.5 8h-4A1.5 1.5 0 0 1 6 6.5V4H5zm2 0v2.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5V4H7zm7 12v-4.5a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0-.5.5V16h8z" fill="currentColor"></path></g></svg>
               </template>
-              រក្សារទុក
+              រក្សាទុក
             </n-button>
           </template>
           <!-- Form edit account -->
@@ -39,8 +39,8 @@
                         <n-form-item label="ឈ្មោះ (អង់គ្លេស)" class="w-6/12 p-1" >
                           <n-input v-model:value="record.people.enfirstname" placeholder="នាមខ្លួន" />
                         </n-form-item>
-                        <n-form-item label="ថ្ងៃ ខែ ឆ្នាំ កំណើត" class="w-full p-1" >
-                          <n-date-picker v-model:value="dob" type="date" format="dd-MM-yyyy"  placeholder="ថ្ងៃ ខែ ឆ្នាំ កំណើត" class="w-1/2" />
+                        <n-form-item label="ថ្ងៃខែឆ្នាំកំណើត" class="w-full p-1" >
+                          <n-date-picker v-model:value="dob" type="date" format="dd-MM-yyyy"  placeholder="ថ្ងៃខែឆ្នាំកំណើត" class="w-1/2" />
                         </n-form-item>
                         <n-form-item label="ជនជាតិ" class="w-1/3 p-1" >
                             <n-radio-group v-model:value="record.people.national" name="national">
@@ -110,8 +110,8 @@
                         <n-form-item label="លេខអត្តសញ្ញាណបណ្ណ" class="w-1/2 p-1" >
                           <n-input v-model:value="record.people.nid" placeholder="លេខអត្តសញ្ញាណបណ្ណ" />
                         </n-form-item>
-                        <n-form-item label="អ៊ីមែល" class="w-1/2 p-1" >
-                          <n-input v-model:value="record.people.email" placeholder="អ៊ីមែល" />
+                        <n-form-item label="អ៉ីមែល" class="w-1/2 p-1" >
+                          <n-input v-model:value="record.people.email" placeholder="អ៉ីមែល" />
                         </n-form-item>
                         <n-form-item label="ទូរសព្ទផ្ទាល់ខ្លួន" class="w-1/2 p-1" >
                           <n-input v-model:value="record.people.mobile_phone" placeholder="ទូរសព្ទផ្ទាល់ខ្លួន" />
@@ -233,11 +233,17 @@
                       <n-form-item label="អត្តលេខ" class="w-6/12 p-1" >
                         <n-input v-model:value="record.code" placeholder="អត្តលេខ" />
                       </n-form-item>
-                      <n-form-item label="ថ្ងៃ ខែ ឆ្នាំ ចូលបម្រើការកម្មសិក្សារ" class="w-6/12 p-1" >
-                        <n-date-picker v-model:value="unofficial_date" format="dd-MM-yyyy" type="date" placeholder="ថ្ងៃខែឆ្នាំ ចូលបម្រើការ" class="w-full" />
+                      <!-- <n-form-item label="ថ្ងៃខែឆ្នាំចូលបម្រើការកម្មសិក្សា" class="w-6/12 p-1" >
+                        <n-date-picker v-model:value="unofficial_date" format="dd-MM-yyyy" type="date" placeholder="ថ្ងៃខែឆ្នាំចូលបម្រើការ" class="w-full" />
+                      </n-form-item> -->
+                      <n-form-item label="ថ្ងៃខែឆ្នាំចូលក្របខ័ណ្ឌ" class="w-6/12 p-1" >
+                        <n-date-picker v-model:value="unofficial_date" format="dd-MM-yyyy" type="date" placeholder="ថ្ងៃខែឆ្នាំចូលក្របខ័ណ្ឌ" class="w-full" />
                       </n-form-item>
-                      <n-form-item label="ថ្ងៃ ខែ ឆ្នាំ ចូលពេញសិទ្ធិ (តាំងស៊ុប)" class="w-6/12 p-1" >
-                        <n-date-picker v-model:value="official_date" format="dd-MM-yyyy" type="date" placeholder="ថ្ងៃ ខែ ឆ្នាំ តាំងស៊ុប" class="w-full" />
+                      <!-- <n-form-item label="ថ្ងៃខែឆ្នាំចូលពេញសិទ្ធិ (តាំងស៊ប់)" class="w-6/12 p-1" >
+                        <n-date-picker v-model:value="official_date" format="dd-MM-yyyy" type="date" placeholder="ថ្ងៃខែឆ្នាំតាំងស៊ប់" class="w-full" />
+                      </n-form-item> -->
+                      <n-form-item label="ថ្ងៃខែឆ្នាំតាំងស៊ប់" class="w-6/12 p-1" >
+                        <n-date-picker v-model:value="official_date" format="dd-MM-yyyy" type="date" placeholder="ថ្ងៃខែឆ្នាំតាំងស៊ប់" class="w-full" />
                       </n-form-item>
                       <n-form-item label="ទូរសព្ទ" class="w-1/2 p-1" >
                         <n-input v-model:value="record.phone" placeholder="ទូរសព្ទ" />
@@ -245,20 +251,20 @@
                       <div v-if="record.code != undefined && record.code.length > 0 " class="w-full mb-4 " >
                         <div class="w-full py-2 " >ក្របខ័ណ្ឌ</div>
                         <div class="flex flex-wrap border border-gray-200 p-4 " >
-                          <n-form-item label="ប្រភេទអង្គ" class="w-1/2 p-1" >
+                          <n-form-item label="អង្គ" class="w-1/2 p-1" >
                             <n-select
                               v-model:value="selectedAnk"
                               filterable
-                              placeholder="ប្រភេទអង្គ"
+                              placeholder="អង្គ"
                               :options="ankOptions"
                               @update:value="updateKrobKhan"
                             />
                           </n-form-item>
-                          <n-form-item label="ប្រភេទក្របខ័ណ្ឌ" class="w-1/2 p-1" >
+                          <n-form-item label="ក្របខ័ណ្ឌ" class="w-1/2 p-1" >
                             <n-select
                               v-model:value="selectedKrobKhan"
                               filterable
-                              placeholder="ប្រភេទក្របខ័ណ្ឌ"
+                              placeholder="ក្របខ័ណ្ឌ"
                               :options="krobKhanOptions"
                               @update:value="updateRank"
                             />
@@ -285,8 +291,8 @@
                       <n-form-item label="លិខិតឆ្លងដែន" class="w-1/2 p-1" >
                         <n-input v-model:value="record.passport" placeholder="លិខិតឆ្លងដែន" />
                       </n-form-item>
-                      <n-form-item label="អ៊ីមែល" class="w-1/2 p-1" >
-                        <n-input v-model:value="record.email" placeholder="អ៊ីមែល" />
+                      <n-form-item label="អ៉ីមែល" class="w-1/2 p-1" >
+                        <n-input v-model:value="record.email" placeholder="អ៉ីមែល" />
                       </n-form-item>
                       <n-form-item label="ងារ" class="w-full mb-4" >
                         <n-select
@@ -360,7 +366,7 @@
                           </n-form-item>
 
                           <n-form-item label="ថ្ងៃខែឆ្នាំកំណើត" class="w-1/3 p-1" >
-                              <n-date-picker v-model:value="fatherDob" type="date" clearable format="dd-MM-yyyy" placeholder="ថ្ងៃ ខែ ឆ្នាំ កំណើត" class="w-full" />
+                              <n-date-picker v-model:value="fatherDob" type="date" clearable format="dd-MM-yyyy" placeholder="ថ្ងៃខែឆ្នាំកំណើត" class="w-full" />
                           </n-form-item>
                           <n-form-item label="លេខអត្តសញ្ញាណបណ្ណ" class="w-1/3 p-1" >
                               <n-input v-model:value="record.people.father_nid" placeholder="លេខអត្តសញ្ញាណបណ្ណ" />
@@ -435,7 +441,7 @@
                           </n-form-item>
 
                           <n-form-item label="ថ្ងៃខែឆ្នាំកំណើត" class="w-1/3 p-1" >
-                              <n-date-picker v-model:value="motherDob" type="date" clearable format="dd-MM-yyyy" placeholder="ថ្ងៃ ខែ ឆ្នាំ កំណើត" class="w-full" />
+                              <n-date-picker v-model:value="motherDob" type="date" clearable format="dd-MM-yyyy" placeholder="ថ្ងៃខែឆ្នាំកំណើត" class="w-full" />
                           </n-form-item>
                           <n-form-item label="លេខអត្តសញ្ញាណបណ្ណ" class="w-1/3 p-1" >
                               <n-input v-model:value="record.people.mother_nid" placeholder="លេខអត្តសញ្ញាណបណ្ណ" />
@@ -534,8 +540,8 @@
                       <n-form-item label="ទូរសព្ទ" class="w-1/2 p-1" >
                         <n-input v-model:value="record.people.emergency_phone" placeholder="ទូរសព្ទ" />
                       </n-form-item>
-                      <n-form-item label="អ៊ីមែល" class="w-full p-1" >
-                        <n-input v-model:value="record.people.emergency_email" placeholder="អ៊ីមែល" />
+                      <n-form-item label="អ៉ីមែល" class="w-full p-1" >
+                        <n-input v-model:value="record.people.emergency_email" placeholder="អ៉ីមែល" />
                       </n-form-item>
                       <n-form-item label="អាសយដ្ឋាន" class="w-full p-1" >
                         <n-input v-model:value="record.people.emergency_address" placeholder="អាសយដ្ឋាន" />
@@ -790,15 +796,15 @@ export default {
     ).then( res => {
         if( res.data.ok ){
           notify.success({
-            title: 'រក្សារទុកព័ត៌មាន' ,
+            title: 'រក្សាទុកព័ត៌មាន' ,
             description: res.data.message ,
             duration: 2000
           })
           clearRecord( 1 )
         }else{
           notify.error({
-            title: 'រក្សារទុកព័ត៌មាន' ,
-            description: 'មានបញ្ហាក្នុងពេលរក្សារទុកព័ត៌មាន។' ,
+            title: 'រក្សាទុកព័ត៌មាន' ,
+            description: 'មានបញ្ហាក្នុងពេលរក្សាទុកព័ត៌មាន។' ,
             duration: 2000
           })
         }
@@ -825,14 +831,14 @@ export default {
         }).then( res => {
           if( res.data.ok ){
             notify.success({
-              title: 'រក្សារទុកព័ត៌មាន' ,
+              title: 'រក្សាទុកព័ត៌មាន' ,
               description: res.data.message ,
               duration: 2000
             })
           }else{
             notify.error({
-              title: 'រក្សារទុកព័ត៌មាន' ,
-              description: 'មានបញ្ហាក្នុងពេលរក្សារទុកព័ត៌មាន។' ,
+              title: 'រក្សាទុកព័ត៌មាន' ,
+              description: 'មានបញ្ហាក្នុងពេលរក្សាទុកព័ត៌មាន។' ,
               duration: 2000
             })
           }
@@ -908,7 +914,6 @@ export default {
         return store.getters['province/records'].all.map( ( p ) => { return { label: p.name_kh , value : p.id } } )
     })
     const districtOptions = computed( () => {
-      console.log( "1 : " + selectedProvince.value )
       // return selectedProvince != undefined && selectedProvince.value != undefined && selectedProvince.value != null  && selectedProvince.value.districts != undefined && selectedProvince.value.districts.length > 0
       //     ? selectedProvince.value.districts.map( ( d ) => { return { label: d.name_kh , value : d.id } } )
       //     : [{ label : 'សូមជ្រើសរើស ខេត្ត ឬ ក្រុង ជាមុនសិន' , value : null }]
@@ -1034,7 +1039,7 @@ export default {
       selectedKrobKhan.value = null
       selectedRank.value = null
       selectedThnak.value = null 
-      let v = anks.value.find( ( v ) => v.ank == selectedAnk.value )
+      let v = anks.value.find( ( val ) => val.ank == selectedAnk.value )
       if( v != undefined ){
         krobkhans.value = v.krobkhans
         if( krobkhanHandleUpdateCounter.value <= 1 ) {
@@ -1147,7 +1152,6 @@ export default {
     }
     const thnakOptions = computed( () => {
       if( thnaks.value.options.length > 0 ){
-        console.log( thnaks.value )
         return thnaks.value.options
       }else{
         return [ { label: 'មិនមានថ្នាក់' , value : 0 } ]
@@ -1159,7 +1163,6 @@ export default {
     const motherDob = ref( ( new Date() ).getTime() )
     const krobkhanHandleUpdateCounter = ref(0)
     function initial(){
-      console.log( props.record )
       getRankStructure()
       getPositionStructures( false )
       // getRecord()

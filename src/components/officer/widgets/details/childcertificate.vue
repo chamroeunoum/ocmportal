@@ -152,8 +152,8 @@
                                                 <n-input v-model:value="birthCertificate.enfirstname" placeholder="នាម អង់គ្លេស" />
                                             </n-form-item>
 
-                                            <n-form-item label="ថ្ងៃ ខែ ឆ្នាំ កំណើត" class="w-1/2 p-1" >
-                                                <n-date-picker v-model:value="dateOfBirth" type="date" clearable format="dd-MM-yyyy" placeholder="ថ្ងៃ ខែ ឆ្នាំ កំណើត" />
+                                            <n-form-item label="ថ្ងៃខែឆ្នាំកំណើត" class="w-1/2 p-1" >
+                                                <n-date-picker v-model:value="dateOfBirth" type="date" clearable format="dd-MM-yyyy" placeholder="ថ្ងៃខែឆ្នាំកំណើត" />
                                             </n-form-item>
 
                                             <n-form-item label="ភេទ" class="w-1/2 p-1" >

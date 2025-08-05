@@ -14,8 +14,8 @@
                                     <th class="px-1 py-2 bg-gray-200 font-btb-black " >ថ្ងៃខែឆ្នាំចាប់ផ្ដើម</th>
                                     <th class="px-1 py-2 bg-gray-200 font-btb-black " >ថ្ងៃខែឆ្នាំបញ្ចប់</th>
                                     <th class="px-1 py-2 bg-gray-200 font-btb-black " >ក្រសួង-ស្ថាប័ន</th>
-                                    <!-- <th class="px-1 py-2 bg-gray-200 font-btb-black " >ចំនួនខែ</th> -->
-                                    <th class="px-1 py-2 bg-gray-200 font-btb-black " >មុខតំណែង</th>
+                                    <th class="px-1 py-2 bg-gray-200 font-btb-black " >ចំនួនខែ</th>
+                                    <!-- <th class="px-1 py-2 bg-gray-200 font-btb-black " >មុខតំណែង</th> -->
                                     <th class="px-1 py-2 bg-gray-200 font-btb-black w-28" >ប្រតិបត្តិការ</th>
                                 </tr>
                             </thead>
@@ -25,8 +25,8 @@
                                     <td class="w-24 p-1 " >{{ $toKhmer( officernosalary.start ) }}</td>
                                     <td class="w-24 certificate_leverl p-1 uppercase text-center" >{{ $toKhmer( officernosalary.end ) }}</td>
                                     <td class="w-48 uppercase text-center" >{{ ( officernosalary.organization ) }}</td>
-                                    <!-- <td class="w-48 uppercase text-center" >{{ ( officernosalary.total_months ) }}</td> -->
-                                    <td class="w-48 uppercase text-center" >{{ ( officernosalary.position ) }}</td>
+                                    <td class="w-48 uppercase text-center" >{{ $toKhmer( officernosalary.total_months ) }}</td>
+                                    <!-- <td class="w-48 uppercase text-center" >{{ ( officernosalary.position ) }}</td> -->
                                     <td class="flex w-28" >
                                         <svg 
                                         @click="uploadToggler(officernosalary)" 
@@ -80,12 +80,12 @@
                                         <n-form-item label="ក្រសួង-ស្ថាប័ន" class="w-1/2 p-1" >
                                             <n-input v-model:value="officernosalary.organization" placeholder="ក្រសួង-ស្ថាប័ន" />
                                         </n-form-item>
-                                        <!-- <n-form-item label="ចំនួនខែសរុប" class="w-1/2 p-1" >
+                                        <n-form-item label="ចំនួនខែសរុប" class="w-1/2 p-1" >
                                             <n-input v-model:value="officernosalary.total_months" placeholder="ចំនួនខែសរុប" />
-                                        </n-form-item> -->
-                                        <n-form-item label="មុខតំណែង" class="w-1/2 p-1" >
-                                            <n-input v-model:value="officernosalary.position" placeholder="មុខតំណែង" />
                                         </n-form-item>
+                                        <!-- <n-form-item label="មុខតំណែង" class="w-1/2 p-1" >
+                                            <n-input v-model:value="officernosalary.position" placeholder="មុខតំណែង" />
+                                        </n-form-item> -->
                                     </n-form>
                                 </div> 
                             </div>

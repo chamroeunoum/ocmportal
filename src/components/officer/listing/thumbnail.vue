@@ -37,7 +37,7 @@
                 មន្ត្រីមានអត្តលេខ
               </div>
             </template>
-            បញ្ចូលព័ត៌មានមន្ត្រី
+            មន្ត្រីរាជការមុខងារសាធារណៈ
           </n-tooltip>
           <n-tooltip v-if="$hasPermission('portal_staff_creating')" trigger="hover">
             <template #trigger>
@@ -46,7 +46,7 @@
                 មន្ត្រីគ្មានអត្តលេខ
               </div>
             </template>
-            បញ្ចូលព័ត៌មានមិនមែនមន្ត្រី
+            មន្ត្រីនយោបាយ
           </n-tooltip>
           <!-- 
           <n-tooltip trigger="hover">

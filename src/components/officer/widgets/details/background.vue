@@ -397,7 +397,7 @@
                                                         <tr>
                                                             <td class="border-b border-gray-100 p-2 " >ថ្ងៃខែឆ្នាំចូលបម្រើក្របខណ្ឌរដ្ឋ ៖ </td>
                                                             <td class="border-b border-gray-100 p-2 " >{{ officer.unofficial_date != undefined && officer.unofficial_date.length > 0 ? $toKhmer( dateFormat( new Date( officer.unofficial_date ) , 'dd-mm-yyyy' ) ) : '' }}</td>
-                                                            <td class="border-b border-gray-100 p-2 " >ថ្ងៃខែឆ្នាំតាំងស៊ុប់ក្នុងក្របខ័ណ្ឌរដ្ឋ ៖ </td>
+                                                            <td class="border-b border-gray-100 p-2 " >ថ្ងៃខែឆ្នាំតាំងស៊ប់ក្នុងក្របខ័ណ្ឌរដ្ឋ ៖ </td>
                                                             <td class="border-b border-gray-100 p-2 " >{{ officer.official_date != undefined && officer.official_date.length > 0 ? $toKhmer( dateFormat( new Date( officer.official_date ) , 'dd-mm-yyyy' ) ) : '' }}</td>
                                                         </tr>
                                                         <tr>

@@ -297,7 +297,7 @@ import PdfPreview from './pdfpreview.vue'
                 officernosalary.id = selectedFreenosalary.value.id
                 officernosalary.officer_id = selectedFreenosalary.value.officer_id
                 officernosalary.organization = selectedFreenosalary.value.organization 
-                officernosalary.total_months = selectedFreenosalary.value.total_months
+                officernosalary.total_months = parseInt( selectedFreenosalary.value.total_months )
                 // officernosalary.position = selectedFreenosalary.value.position
 
                 start.value = selectedFreenosalary.value.start != undefined && selectedFreenosalary.value.start != null && selectedFreenosalary.value.start.length > 0 ?( new Date( selectedFreenosalary.value.start ) ).getTime() : ( new Date( ) ).getTime()

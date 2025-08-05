@@ -8,7 +8,7 @@
               <template #icon>
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M3 5a2 2 0 0 1 2-2h8.379a2 2 0 0 1 1.414.586l1.621 1.621A2 2 0 0 1 17 6.621V15a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5zm2-1a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1v-4.5A1.5 1.5 0 0 1 6.5 10h7a1.5 1.5 0 0 1 1.5 1.5V16a1 1 0 0 0 1-1V6.621a1 1 0 0 0-.293-.707l-1.621-1.621A1 1 0 0 0 13.379 4H13v2.5A1.5 1.5 0 0 1 11.5 8h-4A1.5 1.5 0 0 1 6 6.5V4H5zm2 0v2.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5V4H7zm7 12v-4.5a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0-.5.5V16h8z" fill="currentColor"></path></g></svg>
               </template>
-              រក្សារទុក
+              រក្សាទុក
             </n-button>
           </template>
           <!-- Form edit account -->
@@ -35,8 +35,8 @@
                   <n-form-item label="ឈ្មោះ (អង់គ្លេស)" path="enfirstname" class="w-6/12 p-1" >
                     <n-input v-model:value="record.people.enfirstname" placeholder="នាមខ្លួន" />
                   </n-form-item>
-                  <n-form-item label="ថ្ងៃ ខែ ឆ្នាំ កំណើត" path="dob" class="w-4/12 p-1" >
-                    <n-date-picker v-model:value="dob" type="date" format="dd-MM-yyyy" placeholder="ថ្ងៃ ខែ ឆ្នាំ កំណើត" class="w-full" />
+                  <n-form-item label="ថ្ងៃខែឆ្នាំកំណើត" path="dob" class="w-4/12 p-1" >
+                    <n-date-picker v-model:value="dob" type="date" format="dd-MM-yyyy" placeholder="ថ្ងៃខែឆ្នាំកំណើត" class="w-full" />
                   </n-form-item>
                   <n-form-item label="" path="gender" class="w-3/12 p-1 " >
                     <n-radio-group name="gender" v-model:value="record.people.gender" class="mx-auto" >
@@ -62,17 +62,17 @@
                       </n-space>
                     </n-radio-group>
                   </n-form-item>
-                  <n-form-item label="អ៊ីមែល" path="email" class="w-1/2 p-1" >
-                    <n-input v-model:value="record.people.email" placeholder="អ៊ីមែល" />
+                  <n-form-item label="អ៉ីមែល" path="email" class="w-1/2 p-1" >
+                    <n-input v-model:value="record.people.email" placeholder="អ៉ីមែល" />
                   </n-form-item>
-                  <n-form-item label="ទូរស័ព្ទផ្ទាល់ខ្លួន" path="mobile_phone" class="w-1/2 p-1" >
-                    <n-input v-model:value="record.people.mobile_phone" placeholder="ទូរស័ព្ទផ្ទាល់ខ្លួន" />
+                  <n-form-item label="ទូរសព្ទផ្ទាល់ខ្លួន" path="mobile_phone" class="w-1/2 p-1" >
+                    <n-input v-model:value="record.people.mobile_phone" placeholder="ទូរសព្ទផ្ទាល់ខ្លួន" />
                   </n-form-item>
-                  <n-form-item label="លេខអត្តសញ្ញាណបណ្ណ" path="nid" class="w-1/2 p-1" >
-                    <n-input v-model:value="record.people.nid" placeholder="លេខអត្តសញ្ញាណបណ្ណ" />
+                  <n-form-item label="លេខអត្តសញ្ញាណបណ្ណសញ្ជាតិខ្មែរ" path="nid" class="w-1/2 p-1" >
+                    <n-input v-model:value="record.people.nid" placeholder="លេខអត្តសញ្ញាណបណ្ណសញ្ជាតិខ្មែរ" />
                   </n-form-item>
-                  <n-form-item label="ទូរស័ព្ទការិយាល័យ" path="phone" class="w-1/2 p-1" >
-                    <n-input v-model:value="record.people.office_phone" placeholder="ទូរស័ព្ទការិយាល័យ" />
+                  <n-form-item label="ទូរសព្ទការិយាល័យ" path="phone" class="w-1/2 p-1" >
+                    <n-input v-model:value="record.people.office_phone" placeholder="ទូរសព្ទការិយាល័យ" />
                   </n-form-item>
                   <div class="w-full mr-1 border-b border-gray-100  mb-2 " >អាសយដ្ឋាន</div>
                   <n-form-item label="ខេត្ត ក្រុង" class="w-1/5 p-1" >
@@ -168,15 +168,16 @@
                     v-model:value="record.people.pob" 
                     type="textarea" show-count maxlength="5000" />
                   </n-form-item-row>
-                  <div class="w-full mt-2 mb-4 py-1 border-b border-gray-200 " >ព័ត៌មានពីក្រសួង ឬ ស្ថាប័នកំពុងនៅ៖</div>
+                  <!-- <div class="w-full mt-2 mb-4 py-1 border-b border-gray-200 " >ព័ត៌មានពីក្រសួង ឬ ស្ថាប័នកំពុងនៅ៖</div> -->
+                  <div class="w-full mt-2 mb-4 py-1 border-b border-gray-200 " >ព័ត៌មានក្នុងស្ថាប័ន</div>
                   <!-- <n-form-item label="អត្តលេខ" path="code" class="w-6/12 p-1" >
                     <n-input v-model:value="record.officer_code" placeholder="អត្តលេខ" />
                   </n-form-item> -->
-                  <!-- <n-form-item label="ថ្ងៃ ខែ ឆ្នាំ ចូលពេញសិទ្ធិ (តាំងស៊ុប)" path="officer_dob" class="w-6/12 p-1" >
-                    <n-date-picker v-model:value="officer_dob" type="date" placeholder="ថ្ងៃ ខែ ឆ្នាំ កំណើត" class="w-full" />
+                  <!-- <n-form-item label="ថ្ងៃខែឆ្នាំចូលពេញសិទ្ធិ (តាំងស៊ុប)" path="officer_dob" class="w-6/12 p-1" >
+                    <n-date-picker v-model:value="officer_dob" type="date" placeholder="ថ្ងៃខែឆ្នាំកំណើត" class="w-full" />
                   </n-form-item> -->
-                  <n-form-item label="ទូរស័ព្ទ" path="officer_phone" class="w-1/2 p-1" >
-                    <n-input v-model:value="record.officer_phone" placeholder="ទូរស័ព្ទ" />
+                  <n-form-item label="ទូរសព្ទ" path="officer_phone" class="w-1/2 p-1" >
+                    <n-input v-model:value="record.officer_phone" placeholder="ទូរសព្ទ" />
                   </n-form-item>
                   <!-- <div class="w-full" >
                     <div class="w-full border-b border-gray-200 py-2 mb-2 " >ក្របខ័ណ្ឌ</div>
@@ -221,8 +222,8 @@
                   <n-form-item label="លេខិតឆ្លងដែន" path="officer_passport" class="w-1/2 p-1" >
                     <n-input v-model:value="record.officer_passport" placeholder="លេខិតឆ្លងដែន" />
                   </n-form-item>
-                  <n-form-item label="អ៊ីមែល" path="officer_email" class="w-full p-1" >
-                    <n-input v-model:value="record.officer_email" placeholder="អ៊ីមែល" />
+                  <n-form-item label="អ៉ីមែល" path="officer_email" class="w-full p-1" >
+                    <n-input v-model:value="record.officer_email" placeholder="អ៉ីមែល" />
                   </n-form-item>
                   <n-form-item label="ងារ" path="officer_countesy" class="w-full mb-4" >
                     <n-select
@@ -566,7 +567,7 @@ export default {
       ){
         notify.warning({
           title: 'ពិនិត្យព័ត៌មាន' ,
-          description: 'សូមបំពេញលេខទូរស័ព្ទ ឬ អ៊ីមែលរបស់អ្នក' ,
+          description: 'សូមបំពេញលេខទូរសព្ទ ឬ អ៉ីមែលរបស់អ្នក' ,
           duration: 2000
         })
         return false
@@ -598,7 +599,7 @@ export default {
       if( props.record.people.mobile_phone == "" && props.record.people.email == "" ){
         notify.warning({
           title: 'ពិនិត្យព័ត៌មាន' ,
-          description: 'សូមបំពេញ លេខទូរស័ព្ទផ្ទាល់ខ្លួន ឬ អ៊ីមែល' ,
+          description: 'សូមបំពេញ លេខទូរសព្ទផ្ទាល់ខ្លួន ឬ អ៉ីមែល' ,
           duration: 2000
         })
         return false
@@ -674,15 +675,15 @@ export default {
       ).then( res => {
         if( res.data.ok ){
           notify.success({
-            title: 'រក្សារទុកព័ត៌មាន' ,
+            title: 'រក្សាទុកព័ត៌មាន' ,
             description: res.data.message ,
             duration: 2000
           })
           clearRecord( 1 )
         }else{
           notify.error({
-            title: 'រក្សារទុកព័ត៌មាន' ,
-            description: 'មានបញ្ហាក្នុងពេលរក្សារទុកព័ត៌មាន។' ,
+            title: 'រក្សាទុកព័ត៌មាន' ,
+            description: 'មានបញ្ហាក្នុងពេលរក្សាទុកព័ត៌មាន។' ,
             duration: 2000
           })
         }

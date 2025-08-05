@@ -13,9 +13,9 @@
                                     <th class="px-1 py-2 bg-gray-200 font-btb-black " >ល.រ</th>
                                     <th class="px-1 py-2 bg-gray-200 font-btb-black " >លេខលិខិត</th>
                                     <th class="px-1 py-2 bg-gray-200 font-btb-black " >ថ្ងៃខែឆ្នាំ</th>
-                                    <th class="px-1 py-2 bg-gray-200 font-btb-black " >ក្រសួង-ស្ថាប័ន-រាជធានី-ខេត្ត</th>
-                                    <th class="px-1 py-2 bg-gray-200 font-btb-black " >បរិយាយ</th>
+                                    <th class="px-1 py-2 bg-gray-200 font-btb-black " >ក្រសួង-ស្ថាប័ន-រាជធានី-ខេត្ត</th>                                    
                                     <th class="px-1 py-2 bg-gray-200 font-btb-black " >ប្រភេទ</th>
+                                    <th class="px-1 py-2 bg-gray-200 font-btb-black " >បរិយាយ</th>
                                     <th class="px-1 py-2 bg-gray-200 font-btb-black w-28" >ប្រតិបត្តិការ</th>
                                 </tr>
                             </thead>
@@ -24,9 +24,9 @@
                                     <td class="w-12 index p-1 text-center font-bold" >{{ $toKhmer( index + 1 ) }}</td>
                                     <td class="w-24 p-1 " >{{ $toKhmer( officernosalary.fid ) }}</td>
                                     <td class="w-24 p-1 " >{{ $toKhmer( officernosalary.date ) }}</td>
-                                    <td class="w-24 certificate_leverl p-1 uppercase text-center" >{{ $toKhmer( officernosalary.organization ) }}</td>
-                                    <td class="w-48 uppercase text-center" >{{ ( officernosalary.desp ) }}</td>
+                                    <td class="w-24 certificate_leverl p-1 uppercase text-center" >{{ $toKhmer( officernosalary.organization ) }}</td>                                    
                                     <td class="w-48 uppercase text-center" >{{ ( officernosalary.type ) }}</td>
+                                    <td class="w-48 uppercase text-center" >{{ ( officernosalary.desp ) }}</td>
                                     <td class="flex w-28" >
                                         <svg 
                                         @click="uploadToggler(officernosalary)" 
