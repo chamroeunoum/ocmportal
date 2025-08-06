@@ -105,10 +105,10 @@
                       <svg v-if="officer.people.marry_status != 'single'" class="w-6 h-6 mr-1 text-gray-400" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect></svg>
                       នៅលីវ
                     </div>
-                    <div class="w-24 flex leading-6 " >
+                    <div class="w-40 flex leading-6 " >
                       <svg v-if="officer.people.marry_status == 'married'" class="w-6 h-6 mr-1 text-gray-500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M26 4H6a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM6 26V6h20v20z" fill="currentColor"></path><path d="M14 21.5l-5-4.96L10.59 15L14 18.35L21.41 11L23 12.58l-9 8.92z" fill="currentColor"></path></svg>
                       <svg v-if="officer.people.marry_status != 'married'" class="w-6 h-6 mr-1 text-gray-400" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect></svg>
-                      រៀបការរួច
+                      រៀបអាពាហ៍ពិពាហ៍
                     </div>
                     <div class="w-40 flex leading-6 " >
                       <svg v-if="officer.people.marry_status == 'divorced'" class="w-6 h-6 mr-1 text-gray-500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M26 4H6a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM6 26V6h20v20z" fill="currentColor"></path><path d="M14 21.5l-5-4.96L10.59 15L14 18.35L21.41 11L23 12.58l-9 8.92z" fill="currentColor"></path></svg>
@@ -602,7 +602,7 @@
             </table>
           </div>
         </div>
-      <!-- Reward & Penalty -->
+        <!-- Reward & Penalty -->
         <div class="form-panel     w-full mx-auto mt-4" >
           <div class="w-full " >
             <div class="relative w-full pb-2 font-moul " >ឆ-ការលើកសរសើរ ឬដាក់វិន័យ</div>
@@ -662,6 +662,45 @@
             </table>
           </div> 
         </div>
+        <div class="form-panel     w-full mx-auto mt-4 mb-8" >
+          <div class="w-full " >
+            <div class="relative w-full pb-2 font-moul " >ឈ. ការបញ្ជាក់អំពីស្ថានភាព</div>
+            <table class="w-full"  >  
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="flex leading-6 " >
+                      <svg v-if="officer.people.marry_status == 'single'" class="w-6 h-6 mr-1 text-gray-500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M26 4H6a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM6 26V6h20v20z" fill="currentColor"></path><path d="M14 21.5l-5-4.96L10.59 15L14 18.35L21.41 11L23 12.58l-9 8.92z" fill="currentColor"></path></svg>
+                      <svg v-if="officer.people.marry_status != 'single'" class="w-6 h-6 mr-1 text-gray-400" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect></svg>
+                      មន្ត្រីនយោបាយ
+                    </div>
+                  </td>
+                  <td>
+                    <div class="flex leading-6 " >
+                      <svg v-if="officer.people.marry_status == 'married'" class="w-6 h-6 mr-1 text-gray-500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M26 4H6a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM6 26V6h20v20z" fill="currentColor"></path><path d="M14 21.5l-5-4.96L10.59 15L14 18.35L21.41 11L23 12.58l-9 8.92z" fill="currentColor"></path></svg>
+                      <svg v-if="officer.people.marry_status != 'married'" class="w-6 h-6 mr-1 text-gray-400" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect></svg>
+                      មន្ត្រីមុខងារសាធារណៈ
+                    </div>
+                    </td>
+                  <td>
+                    <div class="flex leading-6 " >
+                      <svg v-if="officer.people.marry_status == 'divorced'" class="w-6 h-6 mr-1 text-gray-500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M26 4H6a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM6 26V6h20v20z" fill="currentColor"></path><path d="M14 21.5l-5-4.96L10.59 15L14 18.35L21.41 11L23 12.58l-9 8.92z" fill="currentColor"></path></svg>
+                      <svg v-if="officer.people.marry_status != 'divorced'" class="w-6 h-6 mr-1 text-gray-400" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect></svg>
+                      មន្ត្រីជាប់កិច្ចសន្យា
+                    </div>
+                    </td>
+                  <td>
+                    <div class="flex leading-6 " >
+                      <svg v-if="officer.people.marry_status == 'divorced'" class="w-6 h-6 mr-1 text-gray-500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M26 4H6a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM6 26V6h20v20z" fill="currentColor"></path><path d="M14 21.5l-5-4.96L10.59 15L14 18.35L21.41 11L23 12.58l-9 8.92z" fill="currentColor"></path></svg>
+                      <svg v-if="officer.people.marry_status != 'divorced'" class="w-6 h-6 mr-1 text-gray-400" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect></svg>
+                      មន្ត្រីផ្អែកលើកិច្ចព្រមព្រៀងការងារ
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div> 
+        </div>
         <div class="w-full relative h-60" >
           <div class="absolute left-0 top-0 w-80" >
             <p class="indent-4 leading-6 text-justify " ><span class="text-red-500 mr-1 " >*</span>អង្គភាព {{ officer.organization.name }}</p>
@@ -669,7 +708,7 @@
           </div>
           <div class="absolute right-0 top-0 w-80" >
             <p class="indent-4 leading-6 text-justify " ><span class="text-red-500 mr-1 " >*</span>សាមីខ្លួន</p>
-            <p class="indent-4 leading-6 text-justify ">ខ្ញុំសូមធានាទទួលខុសត្រូវចំពោះមុខច្បាប់ ព័ត៌មានបានបំពេញក្នុងជីវប្រវត្តិមន្ត្រីរាជការនេះ ពិតជាត្រឹមត្រូវប្រាកដមែន។</p>
+            <p class="indent-4 leading-6 text-justify ">ខ្ញុំសូមធានាទទួលខុសត្រូវចំពោះមុខច្បាប់ ព័ត៌មានបានបំពេញក្នុងជីវប្រវត្តិនេះ ពិតជាត្រឹមត្រូវប្រាកដមែន។</p>
             <p class="text-center mt-48" ><span class="font-moul" >{{ 
             // ( officer.countesy != undefined && officer.countesy != null ? officer.countesy.name + ' ' : '' ) + 
             officer.people.lastname + ' ' + officer.people.firstname }}</span></p>

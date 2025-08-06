@@ -2,7 +2,7 @@
   <!-- Form edit account -->
     <div class="vcb-pop-create font-ktr">
       <n-modal v-bind:show="show" :on-esc="maskOrEscClick" :on-mask-click="maskOrEscClick" :on-after-enter="initial" transform-origin="center">
-        <n-card class="w-10/12 sm:w-3/4 md:w-8/12 lg:w-3/5 xl:w-7/12" :title="'កែប្រែព័ត៌មាន' + model.title" :bordered="false" size="small">
+        <n-card class="w-10/12 sm:w-3/4 md:w-8/12 lg:w-3/5 xl:w-7/12" title="កែប្រែព័ត៌មានមន្ត្រី" :bordered="false" size="small">
           <template #header-extra>
             <n-button type="success" @click="update" >
               <template #icon>
@@ -107,8 +107,8 @@
                           </n-radio-group>
                           <n-input v-if="record.people.body_condition==1" v-model:value="record.people.body_condition_desp" placeholder="លក្ខណមិនគ្រប់គ្រាន់" class="w-1/2" />
                         </n-form-item>
-                        <n-form-item label="លេខអត្តសញ្ញាណបណ្ណ" class="w-1/2 p-1" >
-                          <n-input v-model:value="record.people.nid" placeholder="លេខអត្តសញ្ញាណបណ្ណ" />
+                        <n-form-item label="លេខអត្តសញ្ញាណបណ្ណសញ្ជាតិខ្មែរ" class="w-1/2 p-1" >
+                          <n-input v-model:value="record.people.nid" placeholder="លេខអត្តសញ្ញាណបណ្ណសញ្ជាតិខ្មែរ" />
                         </n-form-item>
                         <n-form-item label="អ៉ីមែល" class="w-1/2 p-1" >
                           <n-input v-model:value="record.people.email" placeholder="អ៉ីមែល" />
@@ -368,8 +368,8 @@
                           <n-form-item label="ថ្ងៃខែឆ្នាំកំណើត" class="w-1/3 p-1" >
                               <n-date-picker v-model:value="fatherDob" type="date" clearable format="dd-MM-yyyy" placeholder="ថ្ងៃខែឆ្នាំកំណើត" class="w-full" />
                           </n-form-item>
-                          <n-form-item label="លេខអត្តសញ្ញាណបណ្ណ" class="w-1/3 p-1" >
-                              <n-input v-model:value="record.people.father_nid" placeholder="លេខអត្តសញ្ញាណបណ្ណ" />
+                          <n-form-item label="លេខអត្តសញ្ញាណបណ្ណសញ្ជាតិខ្មែរ" class="w-1/3 p-1" >
+                              <n-input v-model:value="record.people.father_nid" placeholder="លេខអត្តសញ្ញាណបណ្ណសញ្ជាតិខ្មែរ" />
                           </n-form-item>
                           <n-form-item label="មុខរបរ" class="w-1/3 p-1" >
                               <n-input v-model:value="record.people.father_profession" placeholder="មុខរបរ" />
@@ -443,8 +443,8 @@
                           <n-form-item label="ថ្ងៃខែឆ្នាំកំណើត" class="w-1/3 p-1" >
                               <n-date-picker v-model:value="motherDob" type="date" clearable format="dd-MM-yyyy" placeholder="ថ្ងៃខែឆ្នាំកំណើត" class="w-full" />
                           </n-form-item>
-                          <n-form-item label="លេខអត្តសញ្ញាណបណ្ណ" class="w-1/3 p-1" >
-                              <n-input v-model:value="record.people.mother_nid" placeholder="លេខអត្តសញ្ញាណបណ្ណ" />
+                          <n-form-item label="លេខអត្តសញ្ញាណបណ្ណសញ្ជាតិខ្មែរ" class="w-1/3 p-1" >
+                              <n-input v-model:value="record.people.mother_nid" placeholder="លេខអត្តសញ្ញាណបណ្ណសញ្ជាតិខ្មែរ" />
                           </n-form-item>
                           <n-form-item label="មុខរបរ" class="w-1/3 p-1" >
                               <n-input v-model:value="record.people.mother_profession" placeholder="មុខរបរ" />

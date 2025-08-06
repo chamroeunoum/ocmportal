@@ -23,17 +23,27 @@
                   size="large"
                   ref="formRef"
                 >
-                  <n-form-item label="ត្រកូល" class="w-6/12 p-1" >
-                    <n-input v-model:value="record.people.lastname" placeholder="នាមត្រកូល" />
+                  
+                  <n-form-item label="គោត្តនាម" class="w-6/12 p-1" >
+                    <n-input v-model:value="record.people.lastname" placeholder="គោត្តនាម" />
                   </n-form-item>
-                  <n-form-item label="ឈ្មោះ" class="w-6/12 p-1" >
+                  <n-form-item label="នាមខ្លួន" class="w-6/12 p-1" >
                     <n-input v-model:value="record.people.firstname" placeholder="នាមខ្លួន" />
                   </n-form-item>
-                  <n-form-item label="ត្រកូល (អង់គ្លេស)" class="w-6/12 p-1" >
-                    <n-input v-model:value="record.people.enlastname" placeholder="នាមត្រកូល" />
+                  <n-form-item label="គោត្តនាម (ជាអក្សរពុម្ភឡាតាំង)" class="w-6/12 p-1" >
+                    <n-input v-model:value="record.people.enlastname" placeholder="គោត្តនាម" />
                   </n-form-item>
-                  <n-form-item label="ឈ្មោះ (អង់គ្លេស)" class="w-6/12 p-1" >
+                  <n-form-item label="នាមខ្លួន (ជាអក្សរពុម្ភឡាតាំង)" class="w-6/12 p-1" >
                     <n-input v-model:value="record.people.enfirstname" placeholder="នាមខ្លួន" />
+                  </n-form-item>
+                  <n-form-item label="ងារ" class="w-full mb-4" >
+                    <n-select
+                      v-model:value="selectedCountesies"
+                      filterable
+                      placeholder="សូមជ្រើសរើសងារ"
+                      :options="countesies"
+                      multiple
+                    />
                   </n-form-item>
                   <n-form-item label="ថ្ងៃខែឆ្នាំកំណើត" class="w-4/12 p-1" >
                     <n-date-picker v-model:value="dob" type="date" format="dd-MM-yyyy" placeholder="ថ្ងៃខែឆ្នាំកំណើត" class="w-full" />
@@ -169,7 +179,7 @@
                     type="textarea" show-count maxlength="5000" />
                   </n-form-item-row>
                   <!-- <div class="w-full mt-2 mb-4 py-1 border-b border-gray-200 " >ព័ត៌មានពីក្រសួង ឬ ស្ថាប័នកំពុងនៅ៖</div> -->
-                  <div class="w-full mt-2 mb-4 py-1 border-b border-gray-200 " >ព័ត៌មានក្នុងស្ថាប័ន</div>
+                  <div class="w-full mt-2 mb-4 py-1 border-b border-gray-200 " >ព័ត៌មានក្នុងអង្គភាព</div>
                   <n-form-item label="អត្តលេខ" class="w-6/12 p-1" >
                     <n-input v-model:value="record.code" placeholder="អត្តលេខ" />
                   </n-form-item>
@@ -191,11 +201,11 @@
                   <div class="w-full mb-4 " >
                     <div class="w-full py-2 " >រចនាសម្ព័ន្ធមុខងារសាធារណៈ</div>
                     <div class="flex flex-wrap border border-gray-200 p-4 " >
-                      <n-form-item label="អង្គ" class="w-1/2 p-1" >
+                      <n-form-item label="ប្រភេទក្របខ័ណ្ឌ" class="w-1/2 p-1" >
                         <n-select
                           v-model:value="selectedAnk"
                           filterable
-                          placeholder="អង្គ"
+                          placeholder="ប្រភេទក្របខ័ណ្ឌ"
                           :options="ankOptions"
                           @update:value="updateKrobKhan"
                         />
@@ -228,20 +238,11 @@
                       </n-form-item>
                     </div>
                   </div>
-                  <n-form-item label="លេខិតឆ្លងដែន" class="w-1/2 p-1" >
-                    <n-input v-model:value="record.passport" placeholder="លេខិតឆ្លងដែន" />
+                  <n-form-item label="លេខលិខិតឆ្លងដែន" class="w-1/2 p-1" >
+                    <n-input v-model:value="record.passport" placeholder="លេខលិខិតឆ្លងដែន" />
                   </n-form-item>
                   <n-form-item label="អ៉ីមែល" class="w-1/2 p-1" >
                     <n-input v-model:value="record.email" placeholder="អ៉ីមែល" />
-                  </n-form-item>
-                  <n-form-item label="ងារ" class="w-full mb-4" >
-                    <n-select
-                      v-model:value="selectedCountesies"
-                      filterable
-                      placeholder="សូមជ្រើសរើសងារ"
-                      :options="countesies"
-                      multiple
-                    />
                   </n-form-item>
                   <!-- <n-form-item label="អង្គភាព" class="w-full mb-4" >
                     <n-select
@@ -252,11 +253,11 @@
                     />
                   </n-form-item>
                    -->
-                  <n-form-item label="តួនាទី" class="w-full mb-4" >
+                  <n-form-item label="មុខតំណែង" class="w-full mb-4" >
                     <n-select
                       v-model:value="selectedOrganizationStructurePosition"
                       filterable
-                      placeholder="សូមជ្រើសរើសតួនាទី"
+                      placeholder="សូមជ្រើសរើសមុខតំណែង"
                       :options="organizationStructurePositions"
                     />
                   </n-form-item>
