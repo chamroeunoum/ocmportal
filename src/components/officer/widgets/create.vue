@@ -48,7 +48,7 @@
                   <n-form-item label="ថ្ងៃខែឆ្នាំកំណើត" class="w-4/12 p-1" >
                     <n-date-picker v-model:value="dob" type="date" format="dd-MM-yyyy" placeholder="ថ្ងៃខែឆ្នាំកំណើត" class="w-full" />
                   </n-form-item>
-                  <n-form-item label="" class="w-3/12 p-1 " >
+                  <n-form-item label="ភេទ" class="w-3/12 p-1 " >
                     <n-radio-group v-model:value="record.people.gender" class="mx-auto" name="gender" >
                       <n-space>
                         <n-radio
@@ -60,11 +60,11 @@
                       </n-space>
                     </n-radio-group>
                   </n-form-item>
-                  <n-form-item label="" class="w-5/12 p-1" >
+                  <n-form-item label="រៀបអាពាហ៍ពិពាហ៍" class="w-5/12 p-1" >
                     <n-radio-group v-model:value="record.people.marry_status" class="mx-auto" name="marry">
                       <n-space>
                         <n-radio
-                        v-for="status in [{label:'នៅលីវ',value:'single'},{label:'រៀបការរួច',value:'married'},{label:'លះលែង',value:'divorced'}]"
+                        v-for="status in [{label:'នៅលីវ',value:'single'},{label:'រៀបអាពាហ៍ពិពាហ៍',value:'married'},{label:'លះលែង',value:'divorced'}]"
                         :key="status.value"
                         :value="status.value"
                         :label="status.label"
@@ -197,6 +197,35 @@
                   </n-form-item>
                   <n-form-item label="ទូរសព្ទ" class="w-1/2 p-1" >
                     <n-input v-model:value="record.phone" placeholder="ទូរសព្ទ" />
+                  </n-form-item>
+                  <n-form-item label="ប្រភេទមន្ត្រី" class="w-full p-1" >
+                    <n-radio-group v-model:value="record.additional_officer_type" name="radiogroup">
+                      <n-space>
+                        <n-radio
+                          v-for="officerType in [
+                            {
+                              value : 'politician' ,
+                              label: 'មន្ត្រីនយោបាយ'
+                            },
+                            {
+                              value : 'admin_official' ,
+                              label: 'មន្ត្រីមុខងារសាធារណៈ'
+                            },
+                            {
+                              value : 'admin_unofficial' ,
+                              label: 'មន្ត្រីជាប់កិច្ចសន្យា'
+                            },
+                            {
+                              value : 'contracted_officer' ,
+                              label: 'មន្ត្រីផ្អែកលើកិច្ចព្រមព្រៀងការងារ'
+                            }
+                          ]"
+                          :key="officerType.value"
+                          :value="officerType.value"
+                          :label="officerType.label"
+                        />
+                      </n-space>
+                    </n-radio-group>
                   </n-form-item>
                   <div class="w-full mb-4 " >
                     <div class="w-full py-2 " >រចនាសម្ព័ន្ធមុខងារសាធារណៈ</div>
@@ -679,6 +708,7 @@ export default {
           'code' : props.record.code ,
           'salary_rank' : props.record.salary_rank ,
           'officer_type' : props.record.officer_type ,
+          'additional_officer_type' : props.record.additional_officer_type ,
           // People
           'firstname' : props.record.people.firstname ,
           'lastname' : props.record.people.lastname ,

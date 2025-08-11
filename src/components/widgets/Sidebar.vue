@@ -445,6 +445,36 @@ export default {
       //       },
       //     ]
       // },
+      {
+          url: '/structure' ,
+          icon: 'Organization32Regular' ,
+          svg: '<svg class="text-blue-500 h-6" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><g fill="none"><path d="M16 2a5 5 0 0 0-1.001 9.9v3.099H9.733A2.733 2.733 0 0 0 7 17.732V20.1A5.002 5.002 0 0 0 8 30a5 5 0 0 0 1-9.9v-2.368c0-.405.329-.733.733-.733h12.534c.405 0 .733.328.733.733V20.1a5.002 5.002 0 0 0 1 9.9a5 5 0 0 0 1-9.9v-2.368a2.733 2.733 0 0 0-2.733-2.733H17V11.9A5.002 5.002 0 0 0 16 2zm-3 5a3 3 0 1 1 6 0a3 3 0 0 1-6 0zM5 25a3 3 0 1 1 6 0a3 3 0 0 1-6 0zm19-3a3 3 0 1 1 0 6a3 3 0 0 1 0-6z" fill="currentColor"></path></g></svg>' ,
+          name: 'អង្គការលេខ',
+          roles: [
+            1, // Super
+            2, // Administrator
+            3, // backend
+          ],
+          permissions: [
+            'portal_staff'
+          ]
+          // , children: [
+          //   {
+          //     url: '/hr/officer' ,
+          //     icon: 'Organization20Regular' ,
+          //     svg: '<svg class="text-blue-500 h-6" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 16 16"><g fill="none"><path d="M6.002 4a1.998 1.998 0 1 1 3.996 0a1.998 1.998 0 0 1-3.996 0zM8 3.002a.998.998 0 1 0 0 1.996a.998.998 0 0 0 0-1.996zM11 4.5a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0zm1.5-.5a.5.5 0 1 0 0 1a.5.5 0 0 0 0-1zm-9-1a1.5 1.5 0 1 0 0 3a1.5 1.5 0 0 0 0-3zM3 4.5a.5.5 0 1 1 1 0a.5.5 0 0 1-1 0zM4.268 7A1.99 1.99 0 0 0 4 8H2v2.5a1.5 1.5 0 0 0 2.096 1.377c.074.331.19.647.34.942A2.5 2.5 0 0 1 1 10.5V8a1 1 0 0 1 1-1h2.268zm7.296 5.819A2.5 2.5 0 0 0 15 10.5V8a1 1 0 0 0-1-1h-2.268c.17.294.268.635.268 1h2v2.5a1.5 1.5 0 0 1-2.096 1.377c-.075.331-.19.647-.34.942zM6 6.999a1 1 0 0 0-1 1V11a3 3 0 0 0 6 0V8a1 1 0 0 0-1-1H6zm0 1h4V11a2 2 0 0 1-4 0V8z" fill="currentColor"></path></g></svg>' ,
+          //     name: 'បញ្ជីមន្ត្រី',
+          //     roles: [
+          //       1, // Super
+          //       2, // Administrator
+          //       3, // backend
+          //     ],
+          //     permissions: [
+          //       'portal_staff_listing'
+          //     ]
+          //   }
+          // ]
+      },
     ])
     /** End app metadata */
     let toggleApps = ref(false)

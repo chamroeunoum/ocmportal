@@ -82,11 +82,11 @@
                             </n-space>
                           </n-radio-group>
                         </n-form-item>
-                        <n-form-item label="ស្ថានភាពរៀបការ" class="w-5/12 p-1" >
+                        <n-form-item label="រៀបអាពាហ៍ពិពាហ៍" class="w-5/12 p-1" >
                           <n-radio-group v-model:value="record.people.marry_status" class="mx-auto" >
                             <n-space>
                               <n-radio
-                              v-for="status in [{label:'នៅលីវ',value:'single'},{label:'រៀបការរួច',value:'married'},{label:'ពោះមាយ / មេមាយ',value:'divorced'}]"
+                              v-for="status in [{label:'នៅលីវ',value:'single'},{label:'រៀបអាពាហ៍ពិពាហ៍',value:'married'},{label:'ពោះមាយ / មេមាយ',value:'divorced'}]"
                               :key="status.value"
                               :value="status.value"
                               :label="status.label"
@@ -248,14 +248,43 @@
                       <n-form-item label="ទូរសព្ទ" class="w-1/2 p-1" >
                         <n-input v-model:value="record.phone" placeholder="ទូរសព្ទ" />
                       </n-form-item>
+                      <n-form-item label="ប្រភេទមន្ត្រី" class="w-full p-1" >
+                      <n-radio-group v-model:value="record.additional_officer_type" name="radiogroup">
+                        <n-space>
+                          <n-radio
+                            v-for="officerType in [
+                              {
+                                value : 'politician' ,
+                                label: 'មន្ត្រីនយោបាយ'
+                              },
+                              {
+                                value : 'admin_official' ,
+                                label: 'មន្ត្រីមុខងារសាធារណៈ'
+                              },
+                              {
+                                value : 'admin_unofficial' ,
+                                label: 'មន្ត្រីជាប់កិច្ចសន្យា'
+                              },
+                              {
+                                value : 'contracted_officer' ,
+                                label: 'មន្ត្រីផ្អែកលើកិច្ចព្រមព្រៀងការងារ'
+                              }
+                            ]"
+                            :key="officerType.value"
+                            :value="officerType.value"
+                            :label="officerType.label"
+                          />
+                        </n-space>
+                      </n-radio-group>
+                    </n-form-item>
                       <div v-if="record.code != undefined && record.code.length > 0 " class="w-full mb-4 " >
                         <div class="w-full py-2 " >ក្របខ័ណ្ឌ</div>
                         <div class="flex flex-wrap border border-gray-200 p-4 " >
-                          <n-form-item label="អង្គ" class="w-1/2 p-1" >
+                          <n-form-item label="ប្រភេទក្របខ័ណ្ឌ" class="w-1/2 p-1" >
                             <n-select
                               v-model:value="selectedAnk"
                               filterable
-                              placeholder="អង្គ"
+                              placeholder="ប្រភេទក្របខ័ណ្ឌ"
                               :options="ankOptions"
                               @update:value="updateKrobKhan"
                             />
@@ -663,10 +692,18 @@ export default {
      */
      function clearRecord( actionStatus ){
       props.onClose( actionStatus )
+      selectedAnk.value = null
+      selectedKrobKhan.value = null 
+      selectedThnak.value = null
+      selectedRank.value = null
     }
 
     function maskOrEscClick(){
       props.onClose( 0 )
+      selectedAnk.value = null
+      selectedKrobKhan.value = null 
+      selectedThnak.value = null
+      selectedRank.value = null
     }
 
     function update(){
@@ -707,6 +744,7 @@ export default {
           'phone' : props.record.phone ,
           'salary_rank' : props.record.salary_rank ,
           'officer_type' : props.record.officer_type ,
+          'additional_officer_type' : props.record.additional_officer_type ,
           'official_date' : official_date.value != null ? dateFormat( new Date(official_date.value) , "yyyy-mm-dd" ) : dateFormat( new Date() , "yyyy-mm-dd" ) ,
           'unofficial_date' : unofficial_date.value != null ? dateFormat( new Date(unofficial_date.value) , "yyyy-mm-dd" ) : dateFormat( new Date() , "yyyy-mm-dd" ) ,
           'ank' : selectedAnk.value != null && selectedAnk.value.length > 0 ? selectedAnk.value : ( props.record.rank != undefined ? props.record.rank.ank : '' ) ,
@@ -1163,6 +1201,8 @@ export default {
     const motherDob = ref( ( new Date() ).getTime() )
     const krobkhanHandleUpdateCounter = ref(0)
     function initial(){
+      console.log( "INITIAL UPDATE" )
+      console.log( props.record )
       getRankStructure()
       getPositionStructures( false )
       // getRecord()

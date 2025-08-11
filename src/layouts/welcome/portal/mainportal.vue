@@ -28,6 +28,12 @@
                     <div class="portal-service-label font-moul" >វត្តមាន</div>
                 </div>
             </div> -->
+            <div v-if="$hasPermission('portal_attendant')" class="portal-service-item">
+                <div @click="routeTo('/structure' ) " class='portal-service-content' >
+                    <svg class="portal-service-icon text-gray-500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><g fill="none"><path d="M16 2a5 5 0 0 0-1.001 9.9v3.099H9.733A2.733 2.733 0 0 0 7 17.732V20.1A5.002 5.002 0 0 0 8 30a5 5 0 0 0 1-9.9v-2.368c0-.405.329-.733.733-.733h12.534c.405 0 .733.328.733.733V20.1a5.002 5.002 0 0 0 1 9.9a5 5 0 0 0 1-9.9v-2.368a2.733 2.733 0 0 0-2.733-2.733H17V11.9A5.002 5.002 0 0 0 16 2zm-3 5a3 3 0 1 1 6 0a3 3 0 0 1-6 0zM5 25a3 3 0 1 1 6 0a3 3 0 0 1-6 0zm19-3a3 3 0 1 1 0 6a3 3 0 0 1 0-6z" fill="currentColor"></path></g></svg>
+                    <div class="portal-service-label font-moul" >អង្គការលេខទីស្ដីការគណៈរដ្ឋមន្ត្រី</div>
+                </div>
+            </div>
             <div v-if="$hasPermission('portal_staff')" class="portal-service-item">
                 <div @click="routeTo('hr/officer' ) " class='portal-service-content' >
                     <svg class="portal-service-icon text-green-700 " xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 28 28"><g fill="none"><path d="M17.254 11a2.25 2.25 0 0 1 2.25 2.25v6.249a5.501 5.501 0 0 1-11.002 0V13.25a2.25 2.25 0 0 1 2.25-2.25h6.502zm0 1.5h-6.502a.75.75 0 0 0-.75.75v6.249a4.001 4.001 0 0 0 8.002 0V13.25a.75.75 0 0 0-.75-.75zM4.25 11h4.156a3.243 3.243 0 0 0-.817 1.5H4.25a.75.75 0 0 0-.75.75v5.249a3.001 3.001 0 0 0 4.238 2.735c.133.49.324.956.564 1.392A4.501 4.501 0 0 1 2 18.499V13.25A2.25 2.25 0 0 1 4.25 11zm19.5 0A2.25 2.25 0 0 1 26 13.25v5.25a4.5 4.5 0 0 1-6.298 4.127l.056-.102c.214-.406.387-.837.511-1.289A3 3 0 0 0 24.5 18.5v-5.25a.75.75 0 0 0-.749-.75h-3.333A3.242 3.242 0 0 0 19.6 11h4.151zM14 3a3.5 3.5 0 1 1 0 7a3.5 3.5 0 0 1 0-7zm8.003 1a3 3 0 1 1 0 6a3 3 0 0 1 0-6zM5.997 4a3 3 0 1 1 0 6a3 3 0 0 1 0-6zM14 4.5a2 2 0 1 0 0 4a2 2 0 0 0 0-4zm8.003 1a1.5 1.5 0 1 0 0 3a1.5 1.5 0 0 0 0-3zm-16.006 0a1.5 1.5 0 1 0 0 3a1.5 1.5 0 0 0 0-3z" fill="currentColor"></path></g></svg>

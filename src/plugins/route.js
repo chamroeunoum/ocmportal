@@ -42,6 +42,11 @@ import OfficerCrud from './../components/officer/index.vue'
 import OfficerThumbnailCrud from './../components/officer/listing/thumbnail.vue'
 import PrintOfficerProfileComponent from './../layouts/staff/printprofile.vue'
 
+/**
+ * Structure Page
+ */
+import StructureComponent from './../components/structure/index.vue'
+import StructureMainComponent from './../components/structure/main.vue'
 
 /**
  * Card Officer
@@ -296,6 +301,37 @@ export const getRoutes = () => {
                         name: "OfficerThumbnailFilter" ,
                         path: 'thumbnail/:ids' ,
                         component: OfficerThumbnailCrud ,
+                        permissions: [
+                            'portal_staff_listing'
+                        ],
+                    }
+                ]
+            },
+            {
+                name: 'Structure' ,
+                path: '/structure',
+                component: StructureComponent ,
+                meta: { 
+                    transition: 'slide-right' ,
+                    requiresAuth: true,
+                    is_admin : true
+                },
+                permissions: [
+                    'portal_staff'
+                ],
+                children: [
+                    {
+                        name: "StructureMain" ,
+                        path: '' ,
+                        component: StructureMainComponent ,
+                        permissions: [
+                            'portal_staff_listing'
+                        ],
+                    },
+                    {
+                        name: "StructureImage" ,
+                        path: 'image' ,
+                        component: StructureMainComponent ,
                         permissions: [
                             'portal_staff_listing'
                         ],

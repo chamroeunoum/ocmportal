@@ -16,7 +16,7 @@
           </div>
         </div>
       </div>
-      <div class="font-moul w-full pb-2  text-center mb-2 " >ជីវប្រវត្តិមន្ត្រីរាជការ
+      <div class="font-moul w-full pb-2  text-center mb-2 " >ជីវប្រវត្តិ{{ officer_type_name }}
         <!-- <div class="font-tacteing w-full mt-2 text-center" style="font-size: 1rem; " >3</div> -->
       </div>
       <div class="body w-full" >
@@ -669,32 +669,32 @@
               <tbody>
                 <tr>
                   <td>
-                    <div class="flex leading-6 " >
-                      <svg v-if="officer.people.marry_status == 'single'" class="w-6 h-6 mr-1 text-gray-500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M26 4H6a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM6 26V6h20v20z" fill="currentColor"></path><path d="M14 21.5l-5-4.96L10.59 15L14 18.35L21.41 11L23 12.58l-9 8.92z" fill="currentColor"></path></svg>
-                      <svg v-if="officer.people.marry_status != 'single'" class="w-6 h-6 mr-1 text-gray-400" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect></svg>
+                      <div class="flex leading-6 " >
+                      <svg v-if="officer.additional_officer_type == 'politician'" class="w-6 h-6 mr-1 text-gray-500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M26 4H6a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM6 26V6h20v20z" fill="currentColor"></path><path d="M14 21.5l-5-4.96L10.59 15L14 18.35L21.41 11L23 12.58l-9 8.92z" fill="currentColor"></path></svg>
+                      <svg v-if="officer.additional_officer_type != 'politician'" class="w-6 h-6 mr-1 text-gray-400" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect></svg>
                       មន្ត្រីនយោបាយ
-                    </div>
+                      </div>
                   </td>
                   <td>
-                    <div class="flex leading-6 " >
-                      <svg v-if="officer.people.marry_status == 'married'" class="w-6 h-6 mr-1 text-gray-500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M26 4H6a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM6 26V6h20v20z" fill="currentColor"></path><path d="M14 21.5l-5-4.96L10.59 15L14 18.35L21.41 11L23 12.58l-9 8.92z" fill="currentColor"></path></svg>
-                      <svg v-if="officer.people.marry_status != 'married'" class="w-6 h-6 mr-1 text-gray-400" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect></svg>
+                      <div class="flex leading-6 " >
+                      <svg v-if="officer.additional_officer_type == 'admin_official'" class="w-6 h-6 mr-1 text-gray-500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M26 4H6a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM6 26V6h20v20z" fill="currentColor"></path><path d="M14 21.5l-5-4.96L10.59 15L14 18.35L21.41 11L23 12.58l-9 8.92z" fill="currentColor"></path></svg>
+                      <svg v-if="officer.additional_officer_type != 'admin_official'" class="w-6 h-6 mr-1 text-gray-400" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect></svg>
                       មន្ត្រីមុខងារសាធារណៈ
-                    </div>
-                    </td>
+                      </div>
+                      </td>
                   <td>
-                    <div class="flex leading-6 " >
-                      <svg v-if="officer.people.marry_status == 'divorced'" class="w-6 h-6 mr-1 text-gray-500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M26 4H6a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM6 26V6h20v20z" fill="currentColor"></path><path d="M14 21.5l-5-4.96L10.59 15L14 18.35L21.41 11L23 12.58l-9 8.92z" fill="currentColor"></path></svg>
-                      <svg v-if="officer.people.marry_status != 'divorced'" class="w-6 h-6 mr-1 text-gray-400" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect></svg>
+                      <div class="flex leading-6 " >
+                      <svg v-if="officer.additional_officer_type == 'admin_unofficial'" class="w-6 h-6 mr-1 text-gray-500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M26 4H6a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM6 26V6h20v20z" fill="currentColor"></path><path d="M14 21.5l-5-4.96L10.59 15L14 18.35L21.41 11L23 12.58l-9 8.92z" fill="currentColor"></path></svg>
+                      <svg v-if="officer.additional_officer_type != 'admin_unofficial'" class="w-6 h-6 mr-1 text-gray-400" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect></svg>
                       មន្ត្រីជាប់កិច្ចសន្យា
-                    </div>
-                    </td>
+                      </div>
+                      </td>
                   <td>
-                    <div class="flex leading-6 " >
-                      <svg v-if="officer.people.marry_status == 'divorced'" class="w-6 h-6 mr-1 text-gray-500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M26 4H6a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM6 26V6h20v20z" fill="currentColor"></path><path d="M14 21.5l-5-4.96L10.59 15L14 18.35L21.41 11L23 12.58l-9 8.92z" fill="currentColor"></path></svg>
-                      <svg v-if="officer.people.marry_status != 'divorced'" class="w-6 h-6 mr-1 text-gray-400" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect></svg>
+                      <div class="flex leading-6 " >
+                      <svg v-if="officer.additional_officer_type == 'contracted_officer'" class="w-6 h-6 mr-1 text-gray-500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M26 4H6a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h20a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM6 26V6h20v20z" fill="currentColor"></path><path d="M14 21.5l-5-4.96L10.59 15L14 18.35L21.41 11L23 12.58l-9 8.92z" fill="currentColor"></path></svg>
+                      <svg v-if="officer.additional_officer_type != 'contracted_officer'" class="w-6 h-6 mr-1 text-gray-400" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></rect></svg>
                       មន្ត្រីផ្អែកលើកិច្ចព្រមព្រៀងការងារ
-                    </div>
+                      </div>
                   </td>
                 </tr>
               </tbody>
@@ -704,7 +704,7 @@
         <div class="w-full relative h-60" >
           <div class="absolute left-0 top-0 w-80" >
             <p class="indent-4 leading-6 text-justify " ><span class="text-red-500 mr-1 " >*</span>អង្គភាព {{ officer.organization.name }}</p>
-            <p class="indent-4 leading-6 text-justify ">ខ្ញុំសូមធានាទទួលខុសត្រូវចំពោះមុខច្បាប់ថា ព័ត៌មាន រូបថត និងហត្ថលេខា ក្នុងជីវប្រវត្តិមន្ត្រីរាជការនេះ ពិតជារបស់ <span class="font-moul" >{{ officer.people.lastname + ' ' + officer.people.firstname }}</span> ដែលជាមន្ត្រីកំពុងបំរើការងារនៅក្នុងក្រសួង និងអង្គភាពក្រោមឪវាទរបស់ក្រសួងពិតប្រាកដមែន។</p>
+            <p class="indent-4 leading-6 text-justify ">ខ្ញុំសូមធានាទទួលខុសត្រូវចំពោះមុខច្បាប់ថា ព័ត៌មាន រូបថត និងហត្ថលេខា ក្នុងជីវប្រវត្តិ{{ officer_type_name }}នេះ ពិតជារបស់ <span class="font-moul" >{{ officer.people.lastname + ' ' + officer.people.firstname }}</span> ដែលជាមន្ត្រីកំពុងបំរើការងារនៅក្នុងក្រសួង និងអង្គភាពក្រោមឪវាទរបស់ក្រសួងពិតប្រាកដមែន។</p>
           </div>
           <div class="absolute right-0 top-0 w-80" >
             <p class="indent-4 leading-6 text-justify " ><span class="text-red-500 mr-1 " >*</span>សាមីខ្លួន</p>
@@ -745,14 +745,6 @@ import dateFormat from 'dateformat'
             return false
           }
 
-          console.log( route.params.id )
-
-          store.dispatch('officer/mybackground',{ id: route.params.id }).then( res => {
-              officer.value = ( res.data.ok == true ) ? res.data.record : null
-          }).catch( err => {
-              console.log( err )
-          })
-
           const changeTypes = ref([
               {
                   key : 0 ,
@@ -772,13 +764,46 @@ import dateFormat from 'dateformat'
               },
           ])
 
+          const additional_officer_types = ref([
+              {
+                  key : 'politician' ,
+                  label: 'មន្ត្រីនយោបាយ' 
+              },
+              {
+                  key : "admin_official" ,
+                  label: 'មន្ត្រីមុខងារសាធារណៈ' 
+              },
+              {
+                  key : 'admin_unofficial' ,
+                  label: 'មន្ត្រីជាប់កិច្ចសន្យា' 
+              },
+              {
+                  key : 'contracted_officer' ,
+                  label: 'មន្ត្រីផ្អែកលើកិច្ចព្រមព្រៀងការងារ' 
+              },
+          ])
+
+          const officer_type_name = ref('មន្ត្រីរាជការ')
+          const additional_officer_type = ref( null )
+
+          store.dispatch('officer/mybackground',{ id: route.params.id }).then( res => {
+              officer.value = ( res.data.ok == true ) ? res.data.record : null
+              additional_officer_type.value = additional_officer_types.value.find( aot => aot.key == officer.value.additional_officer_type )
+              officer_type_name.value = additional_officer_type.value == null || additional_officer_type.value == undefined ? "មន្ត្រីរាជការ" : additional_officer_type.value.label
+          }).catch( err => {
+              console.log( err )
+          })
+
+
           return {
               today ,
               officer ,
               dateFormat ,
               changeTypes ,
               ocmLogoUrl ,
-              pkachan
+              pkachan ,
+              additional_officer_types ,
+              officer_type_name
           }
       },
       updated(){
