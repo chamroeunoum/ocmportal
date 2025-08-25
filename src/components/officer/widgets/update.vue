@@ -995,30 +995,56 @@ export default {
       selectedDistrict.value = null
       selectedCommune.value = null
       selectedVillage.value = null
-      props.record.people.address_district_id = null 
-      props.record.people.address_commune_id = null 
-      props.record.people.address_village_id = null 
+      props.record.people.address_district_id = null
+      props.record.people.address_commune_id = null
+      props.record.people.address_village_id = null
     }
 
     function setDistrict(){
-      // selectedDistrict.value = selectedProvince.value.districts.find( d => d.id == props.record.people.address_district_id )
       selectedDistrict.value = store.getters['district/records'].all.find( p => p.id == props.record.people.address_district_id )
       selectedCommune.value = null
       selectedVillage.value = null
-      props.record.people.address_commune_id = null 
-      props.record.people.address_village_id = null 
+      props.record.people.address_commune_id = null
+      props.record.people.address_village_id = null
+      // Check whether the parent province is the right one
+      if( selectedProvince.value == null || ( selectedProvince.value != null && selectedDistrict.value != null && selectedDistrict.value.province_id != selectedProvince.value.id ) ){
+        selectedProvince.value = store.getters['province/records'].all.find( p => p.id == selectedDistrict.value.province_id )
+        props.record.people.address_province_id = selectedProvince.value.id
+      }
     }
 
     function setCommune(){
       // selectedCommune.value = selectedDistrict.value.communes.find( d => d.id == props.record.people.address_commune_id )
       selectedCommune.value = store.getters['commune/records'].all.find( p => p.id == props.record.people.address_commune_id )
       selectedVillage.value = null
-      props.record.people.address_village_id = null 
+      props.record.people.address_village_id = null
+      // Check whether the parent province is the right one
+      if( selectedProvince.value == null || ( selectedProvince.value != null && selectedCommune.value != null && selectedCommune.value.province_id != selectedProvince.value.id ) ){
+        selectedProvince.value = store.getters['province/records'].all.find( p => p.id == selectedCommune.value.province_id )
+        props.record.people.address_province_id = selectedProvince.value.id
+      }
+      if( selectedDistrict.value == null || ( selectedDistrict.value != null && selectedCommune.value != null && selectedCommune.value.district_id != selectedDistrict.value.id ) ){
+        selectedDistrict.value = store.getters['district/records'].all.find( d => d.id == selectedCommune.value.district_id )
+        props.record.people.address_district_id = selectedDistrict.value.id
+      }
     }
 
     function setVillage(){
       // selectedVillage.value = selectedCommune.value.villages.find( d => d.id == props.record.people.address_village_id )
       selectedVillage.value = store.getters['village/records'].all.find( p => p.id == props.record.people.address_village_id )
+      // Check whether the parent province is the right one
+      if( selectedProvince.value == null || ( selectedProvince.value != null && selectedCommune.value != null && selectedVillage.value.province_id != selectedProvince.value.id ) ){
+        selectedProvince.value = store.getters['province/records'].all.find( p => p.id == selectedVillage.value.province_id )
+        props.record.people.address_province_id = selectedProvince.value.id
+      }
+      if( selectedDistrict.value == null || ( selectedDistrict.value != null && selectedVillage.value != null && selectedVillage.value.district_id != selectedDistrict.value.id ) ){
+        selectedDistrict.value = store.getters['district/records'].all.find( d => d.id == selectedVillage.value.district_id )
+        props.record.people.address_district_id = selectedDistrict.value.id
+      }
+      if( selectedCommune.value == null || ( selectedCommune.value != null && selectedVillage.value != null && selectedVillage.value.commune_id != selectedCommune.value.id ) ){
+        selectedCommune.value = store.getters['commune/records'].all.find( c => c.id == selectedVillage.value.commune_id )
+        props.record.people.address_commune_id = selectedCommune.value.id
+      }
     }
 
     function pobSetProvince(){
