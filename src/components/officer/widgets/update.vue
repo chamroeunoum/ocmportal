@@ -790,6 +790,7 @@ export default {
             'father_nid' : props.record.people.father_nid ,
             'father_profession' : props.record.people.father_profession ,
             'father_death' : props.record.people.father_death ,
+
             'father_nationality' : props.record.people.father_nationality ,
             'father_national' : props.record.people.father_national ,
             // mother 
@@ -803,6 +804,7 @@ export default {
             'mother_nid' : props.record.people.mother_nid ,
             'mother_profession' : props.record.people.mother_profession ,
             'mother_death' : props.record.people.mother_death ,
+            
             'mother_nationality' : props.record.people.mother_nationality ,
             'mother_national' : props.record.people.mother_national ,
             // Emergency 
@@ -949,46 +951,44 @@ export default {
     const pobSelectedCommune = ref(null)
     const pobSelectedVillage = ref(null)
     const provinceOptions = computed( () => {
-        return store.getters['province/records'].all.map( ( p ) => { return { label: p.name_kh , value : p.id } } )
+        return store.getters['province/records'].all.length != undefined || store.getters['province/records'].all.length > 0 
+          ? store.getters['province/records'].all.map( ( p ) => { return { label: p.name_kh , value : p.id } } )
+          : [{ label : 'មិនមាន ខេត្ត ឬ​ ក្រុង ឡើយ' , value : null }]
     })
     const districtOptions = computed( () => {
-      // return selectedProvince != undefined && selectedProvince.value != undefined && selectedProvince.value != null  && selectedProvince.value.districts != undefined && selectedProvince.value.districts.length > 0
-      //     ? selectedProvince.value.districts.map( ( d ) => { return { label: d.name_kh , value : d.id } } )
-      //     : [{ label : 'សូមជ្រើសរើស ខេត្ត ឬ ក្រុង ជាមុនសិន' , value : null }]
-      return store.getters['district/records'].all.map( ( p ) => { return { label: p.name_kh , value : p.id } } )
+      return selectedProvince.value != undefined && selectedProvince.value != null  && selectedProvince.value.id > 0
+        ? store.getters['district/records'].all.filter( (d) => d.province_id == selectedProvince.value.id ).map( ( d ) => { return { label: d.name_kh , value : d.id } } )
+        : store.getters['district/records'].all.map( ( d ) => { return { label: d.name_kh , value : d.id } } )
     })
     const communeOptions = computed( () => {
-      // return selectedDistrict != undefined && selectedDistrict.value != undefined && selectedDistrict.value != null && selectedDistrict.value.communes != undefined && selectedDistrict.value.communes.length > 0 
-      //     ? selectedDistrict.value.communes.map( ( c ) => { return { label: c.name_kh , value : c.id } } )
-      //     : [{ label : 'សូមជ្រើសរើស ស្រុក ឬ ខណ្ឌ ជាមុនសិន' , value : null }]
-      return store.getters['commune/records'].all.map( ( p ) => { return { label: p.name_kh , value : p.id } } )
+      return selectedDistrict.value != undefined && selectedDistrict.value != null  && selectedDistrict.value.id > 0
+        ? store.getters['commune/records'].all.filter( (c) => c.district_id == selectedDistrict.value.id ).map( ( c ) => { return { label: c.name_kh , value : c.id } } )
+        : store.getters['commune/records'].all.map( ( c ) => { return { label: c.name_kh , value : c.id } } )
     })
     const villageOptions = computed( () => {
-      // return selectedCommune != undefined && selectedCommune.value != undefined && selectedCommune.value != null && selectedCommune.value.villages != undefined && selectedCommune.value.villages.length > 0 
-      //     ? selectedCommune.value.villages.map( ( v ) => { return { label: v.name_kh , value : v.id } } )
-      //     : [{ label : 'សូមជ្រើសរើស ឃុំ ឬ សង្កាត់ ជាមុនសិន' , value : null }]
-      return store.getters['village/records'].all.map( ( p ) => { return { label: p.name_kh , value : p.id } } )
+      return selectedCommune.value != undefined && selectedCommune.value != null  && selectedCommune.value.id > 0
+        ? store.getters['village/records'].all.filter( (v) => v.commune_id == selectedCommune.value.id ).map( ( v ) => { return { label: v.name_kh , value : v.id } } )
+        : store.getters['village/records'].all.map( ( v ) => { return { label: v.name_kh , value : v.id } } )
     })
     const pobProvinceOptions = computed( () => {
-        return store.getters['province/records'].all.map( ( p ) => { return { label: p.name_kh , value : p.id } } )
+        return store.getters['province/records'].all.length != undefined || store.getters['province/records'].all.length > 0 
+          ? store.getters['province/records'].all.map( ( p ) => { return { label: p.name_kh , value : p.id } } )
+          : [{ label : 'មិនមាន ខេត្ត ឬ​ ក្រុង ឡើយ' , value : null }]
     })
     const pobDistrictOptions = computed( () => {
-        // return pobSelectedProvince != undefined && pobSelectedProvince.value != undefined && pobSelectedProvince.value != null && pobSelectedProvince.value.districts != undefined && pobSelectedProvince.value.districts.length > 0
-        //     ? pobSelectedProvince.value.districts.map( ( d ) => { return { label: d.name_kh , value : d.id } } )
-        //     : [{ label : 'សូមជ្រើសរើស ខេត្ត ឬ ក្រុង ជាមុនសិន' , value : null }]
-        return store.getters['district/records'].all.map( ( p ) => { return { label: p.name_kh , value : p.id } } )
+        return pobSelectedProvince.value != undefined && pobSelectedProvince.value != null  && pobSelectedProvince.value.id > 0
+        ? store.getters['district/records'].all.filter( (d) => d.province_id == pobSelectedProvince.value.id ).map( ( d ) => { return { label: d.name_kh , value : d.id } } )
+        : store.getters['district/records'].all.map( ( d ) => { return { label: d.name_kh , value : d.id } } )
     })
     const pobCommuneOptions = computed( () => {
-        // return pobSelectedDistrict != undefined && pobSelectedDistrict.value != undefined && pobSelectedDistrict.value != null && pobSelectedDistrict.value.communes != undefined && pobSelectedDistrict.value.communes.length > 0
-        //     ? pobSelectedDistrict.value.communes.map( ( c ) => { return { label: c.name_kh , value : c.id } } )
-        //     : [{ label : 'សូមជ្រើសរើស ស្រុក ឬ ខណ្ឌ ជាមុនសិន' , value : null }]
-        return store.getters['commune/records'].all.map( ( p ) => { return { label: p.name_kh , value : p.id } } )
+        return pobSelectedDistrict.value != undefined && pobSelectedDistrict.value != null  && pobSelectedDistrict.value.id > 0
+        ? store.getters['commune/records'].all.filter( (c) => c.district_id == pobSelectedDistrict.value.id ).map( ( c ) => { return { label: c.name_kh , value : c.id } } )
+        : store.getters['commune/records'].all.map( ( c ) => { return { label: c.name_kh , value : c.id } } )
     })
     const pobVillageOptions = computed( () => {
-        // return pobSelectedCommune != undefined && pobSelectedCommune.value != undefined && pobSelectedCommune.value != null && pobSelectedCommune.value.villages != undefined && pobSelectedCommune.value.villages.length > 0
-        //     ? pobSelectedCommune.value.villages.map( ( v ) => { return { label: v.name_kh , value : v.id } } )
-        //     : [{ label : 'សូមជ្រើសរើស ឃុំ ឬ សង្កាត់ ជាមុនសិន' , value : null }]
-        return store.getters['village/records'].all.map( ( p ) => { return { label: p.name_kh , value : p.id } } )
+        return pobSelectedCommune.value != undefined && pobSelectedCommune.value != null  && pobSelectedCommune.value.id > 0
+        ? store.getters['village/records'].all.filter( (v) => v.commune_id == pobSelectedCommune.value.id ).map( ( v ) => { return { label: v.name_kh , value : v.id } } )
+        : store.getters['village/records'].all.map( ( v ) => { return { label: v.name_kh , value : v.id } } )
     })
     function setProvince(){
       selectedProvince.value = store.getters['province/records'].all.find( p => p.id == props.record.people.address_province_id )
@@ -1074,15 +1074,16 @@ export default {
     const ranks = ref([])
     function updateKrobKhan(){
       krobkhanHandleUpdateCounter.value++
+      krobkhans.value = []
       selectedKrobKhan.value = null
       selectedRank.value = null
       selectedThnak.value = null 
       let v = anks.value.find( ( val ) => val.ank == selectedAnk.value )
       if( v != undefined ){
         krobkhans.value = v.krobkhans
-        if( krobkhanHandleUpdateCounter.value <= 1 ) {
+        // if( krobkhanHandleUpdateCounter.value <= 1 ) {
           selectedKrobKhan.value = props.record.rank != undefined && props.record.rank != null ? props.record.rank.krobkhan : null
-        }
+        // }
         updateRank()
       }else{
         notify.info({
@@ -1117,9 +1118,9 @@ export default {
       }
     })
     function updateRank(){
+      ranks.value = []
       selectedRank.value = null
       selectedThnak.value = null 
-      ranks.value = []
       if( krobkhans.value.length > 0 ){
         for( let i in krobkhans.value ){
           // if( krobkhans.value[i].krobkhan + "." + krobkhans.value[i].krobkhan_name == selectedKrobKhan.value ){
@@ -1130,9 +1131,9 @@ export default {
                 // value: krobkhans.value[i].ranks[j].krobkhan_name+'-'+krobkhans.value[i].ranks[j].krobkhan+'-'+krobkhans.value[i].ranks[j].rank+'-' + krobkhans.value[i].ranks[j].name
                 value: krobkhans.value[i].ranks[j].rank
               })
-              if( krobkhanHandleUpdateCounter.value <= 1 ) {
+              //if( krobkhanHandleUpdateCounter.value <= 1 ) {
                 selectedRank.value = props.record.rank != undefined && props.record.rank != null ? props.record.rank.rank : null
-              }
+              //}
               updateThnaks()
             }
           }
@@ -1151,8 +1152,8 @@ export default {
       options: []
     })
     function updateThnaks(){
-      selectedThnak.value = null 
       thnaks.value = []
+      selectedThnak.value = null 
       if( krobkhans.value.length > 0 ){
         for( let i in krobkhans.value ){
           // if( krobkhans.value[i].krobkhan + "." + krobkhans.value[i].krobkhan_name == selectedKrobKhan.value ){
@@ -1169,9 +1170,9 @@ export default {
                     value : t.thnak
                   }
                 })
-                if( krobkhanHandleUpdateCounter.value <= 1 ) {
+                // if( krobkhanHandleUpdateCounter.value <= 1 ) {
                   selectedThnak.value = props.record.rank != undefined && props.record.rank != null ? props.record.rank.thnak : null
-                }
+                // }
               }
               // ranks.value.push( {
               //   label: krobkhans.value[i].ranks[j].krobkhan+'.'+krobkhans.value[i].ranks[j].rank+'. ' + krobkhans.value[i].ranks[j].name ,
@@ -1241,6 +1242,12 @@ export default {
       pobSelectedDistrict.value = store.getters['district/records'].all.find( p => p.id == props.record.people.pob_district_id )
       pobSelectedCommune.value = store.getters['commune/records'].all.find( p => p.id == props.record.people.pob_commune_id )
       pobSelectedVillage.value = store.getters['village/records'].all.find( p => p.id == props.record.people.pob_village_id )
+
+      console.log( selectedAnk.value )
+      console.log( selectedKrobKhan.value )
+      console.log( selectedThnak.value )
+      console.log( selectedRank.value )
+      
     }
 
     return {
