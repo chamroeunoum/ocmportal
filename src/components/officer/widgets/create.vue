@@ -405,64 +405,100 @@ export default {
     const pobSelectedCommune = ref(null)
     const pobSelectedVillage = ref(null)
     const provinceOptions = computed( () => {
-        return store.getters['province/records'].all.map( ( p ) => { return { label: p.name_kh , value : p.id } } )
+        return store.getters['province/records'].all.length != undefined || store.getters['province/records'].all.length > 0 
+          ? store.getters['province/records'].all.map( ( p ) => { return { label: p.name_kh , value : p.id } } )
+          : [{ label : 'មិនមាន ខេត្ត ឬ​ ក្រុង ឡើយ' , value : null }]
     })
     const districtOptions = computed( () => {
-      return selectedProvince != undefined && selectedProvince.value != undefined && selectedProvince.value != null 
-          ? store.getters['district/records'].all.filter( ( d ) => d.province_id == selectedProvince.value.id ).map( ( d ) => { return { label: d.name_kh , value : d.id } } )
-          : [{ label : 'សូមជ្រើសរើស ខេត្ត ឬ ក្រុង ជាមុនសិន' , value : null }]
+      return selectedProvince.value != undefined && selectedProvince.value != null  && selectedProvince.value.id > 0
+        ? store.getters['district/records'].all.filter( (d) => d.province_id == selectedProvince.value.id ).map( ( d ) => { return { label: d.name_kh , value : d.id } } )
+        : store.getters['district/records'].all.map( ( d ) => { return { label: d.name_kh , value : d.id } } )
     })
     const communeOptions = computed( () => {
-      return selectedDistrict != undefined && selectedDistrict.value != undefined && selectedDistrict.value != null 
-          ? store.getters['commune/records'].all.filter( ( d ) => d.district_id == selectedDistrict.value.id ).map( ( d ) => { return { label: d.name_kh , value : d.id } } )
-          : [{ label : 'សូមជ្រើសរើស ស្រុក ឬ ខណ្ឌ ជាមុនសិន' , value : null }]
+      return selectedDistrict.value != undefined && selectedDistrict.value != null  && selectedDistrict.value.id > 0
+        ? store.getters['commune/records'].all.filter( (c) => c.district_id == selectedDistrict.value.id ).map( ( c ) => { return { label: c.name_kh , value : c.id } } )
+        : store.getters['commune/records'].all.map( ( c ) => { return { label: c.name_kh , value : c.id } } )
     })
     const villageOptions = computed( () => {
-      return selectedCommune != undefined && selectedCommune.value != undefined && selectedCommune.value != null 
-          ? store.getters['village/records'].all.filter( ( d ) => d.commune_id == selectedCommune.value.id ).map( ( d ) => { return { label: d.name_kh , value : d.id } } )
-          : [{ label : 'សូមជ្រើសរើស ឃុំ ឬ សង្កាត់ ជាមុនសិន' , value : null }]
+      return selectedCommune.value != undefined && selectedCommune.value != null  && selectedCommune.value.id > 0
+        ? store.getters['village/records'].all.filter( (v) => v.commune_id == selectedCommune.value.id ).map( ( v ) => { return { label: v.name_kh , value : v.id } } )
+        : store.getters['village/records'].all.map( ( v ) => { return { label: v.name_kh , value : v.id } } )
     })
     const pobProvinceOptions = computed( () => {
-        return store.getters['province/records'].all.map( ( p ) => { return { label: p.name_kh , value : p.id } } )
+        return store.getters['province/records'].all.length != undefined || store.getters['province/records'].all.length > 0 
+          ? store.getters['province/records'].all.map( ( p ) => { return { label: p.name_kh , value : p.id } } )
+          : [{ label : 'មិនមាន ខេត្ត ឬ​ ក្រុង ឡើយ' , value : null }]
     })
     const pobDistrictOptions = computed( () => {
-        return pobSelectedProvince != undefined && pobSelectedProvince.value != undefined && pobSelectedProvince.value != null 
-            // ? pobSelectedProvince.value.districts.map( ( d ) => { return { label: d.name_kh , value : d.id } } )
-            ? store.getters['district/records'].all.filter( ( d ) => d.province_id == pobSelectedProvince.value.id ).map( ( d ) => { return { label: d.name_kh , value : d.id } } )
-            : [{ label : 'សូមជ្រើសរើស ខេត្ត ឬ ក្រុង ជាមុនសិន' , value : null }]
+        return pobSelectedProvince.value != undefined && pobSelectedProvince.value != null  && pobSelectedProvince.value.id > 0
+        ? store.getters['district/records'].all.filter( (d) => d.province_id == pobSelectedProvince.value.id ).map( ( d ) => { return { label: d.name_kh , value : d.id } } )
+        : store.getters['district/records'].all.map( ( d ) => { return { label: d.name_kh , value : d.id } } )
     })
     const pobCommuneOptions = computed( () => {
-        return pobSelectedDistrict != undefined && pobSelectedDistrict.value != undefined && pobSelectedDistrict.value != null 
-            // ? pobSelectedDistrict.value.communes.map( ( c ) => { return { label: c.name_kh , value : c.id } } )
-            ? store.getters['commune/records'].all.filter( ( d ) => d.district_id == pobSelectedDistrict.value.id ).map( ( d ) => { return { label: d.name_kh , value : d.id } } )
-            : [{ label : 'សូមជ្រើសរើស ស្រុក ឬ ខណ្ឌ ជាមុនសិន' , value : null }]
+        return pobSelectedDistrict.value != undefined && pobSelectedDistrict.value != null  && pobSelectedDistrict.value.id > 0
+        ? store.getters['commune/records'].all.filter( (c) => c.district_id == pobSelectedDistrict.value.id ).map( ( c ) => { return { label: c.name_kh , value : c.id } } )
+        : store.getters['commune/records'].all.map( ( c ) => { return { label: c.name_kh , value : c.id } } )
     })
     const pobVillageOptions = computed( () => {
-        return pobSelectedCommune != undefined && pobSelectedCommune.value != undefined && pobSelectedCommune.value != null 
-            // ? pobSelectedCommune.value.villages.map( ( v ) => { return { label: v.name_kh , value : v.id } } )
-            ? store.getters['village/records'].all.filter( ( d ) => d.commune_id == pobSelectedCommune.value.id ).map( ( d ) => { return { label: d.name_kh , value : d.id } } )
-            : [{ label : 'សូមជ្រើសរើស ឃុំ ឬ សង្កាត់ ជាមុនសិន' , value : null }]
+        return pobSelectedCommune.value != undefined && pobSelectedCommune.value != null  && pobSelectedCommune.value.id > 0
+        ? store.getters['village/records'].all.filter( (v) => v.commune_id == pobSelectedCommune.value.id ).map( ( v ) => { return { label: v.name_kh , value : v.id } } )
+        : store.getters['village/records'].all.map( ( v ) => { return { label: v.name_kh , value : v.id } } )
     })
     function setProvince(){
       selectedProvince.value = store.getters['province/records'].all.find( p => p.id == props.record.people.address_province_id )
       selectedDistrict.value = null
       selectedCommune.value = null
       selectedVillage.value = null
+      props.record.people.address_district_id = null
+      props.record.people.address_commune_id = null
+      props.record.people.address_village_id = null
     }
 
     function setDistrict(){
-      selectedDistrict.value = store.getters['district/records'].all.find( d => d.id == props.record.people.address_district_id )
+      selectedDistrict.value = store.getters['district/records'].all.find( p => p.id == props.record.people.address_district_id )
       selectedCommune.value = null
       selectedVillage.value = null
+      props.record.people.address_commune_id = null
+      props.record.people.address_village_id = null
+      // Check whether the parent province is the right one
+      if( selectedProvince.value == null || ( selectedProvince.value != null && selectedDistrict.value != null && selectedDistrict.value.province_id != selectedProvince.value.id ) ){
+        selectedProvince.value = store.getters['province/records'].all.find( p => p.id == selectedDistrict.value.province_id )
+        props.record.people.address_province_id = selectedProvince.value.id
+      }
     }
 
     function setCommune(){
-      selectedCommune.value = store.getters['commune/records'].all.find( d => d.id == props.record.people.address_commune_id )
+      // selectedCommune.value = selectedDistrict.value.communes.find( d => d.id == props.record.people.address_commune_id )
+      selectedCommune.value = store.getters['commune/records'].all.find( p => p.id == props.record.people.address_commune_id )
       selectedVillage.value = null
+      props.record.people.address_village_id = null
+      // Check whether the parent province is the right one
+      if( selectedProvince.value == null || ( selectedProvince.value != null && selectedCommune.value != null && selectedCommune.value.province_id != selectedProvince.value.id ) ){
+        selectedProvince.value = store.getters['province/records'].all.find( p => p.id == selectedCommune.value.province_id )
+        props.record.people.address_province_id = selectedProvince.value.id
+      }
+      if( selectedDistrict.value == null || ( selectedDistrict.value != null && selectedCommune.value != null && selectedCommune.value.district_id != selectedDistrict.value.id ) ){
+        selectedDistrict.value = store.getters['district/records'].all.find( d => d.id == selectedCommune.value.district_id )
+        props.record.people.address_district_id = selectedDistrict.value.id
+      }
     }
 
     function setVillage(){
-      selectedVillage.value = store.getters['village/records'].all.find( d => d.id == props.record.people.address_village_id )
+      // selectedVillage.value = selectedCommune.value.villages.find( d => d.id == props.record.people.address_village_id )
+      selectedVillage.value = store.getters['village/records'].all.find( p => p.id == props.record.people.address_village_id )
+      // Check whether the parent province is the right one
+      if( selectedProvince.value == null || ( selectedProvince.value != null && selectedCommune.value != null && selectedVillage.value.province_id != selectedProvince.value.id ) ){
+        selectedProvince.value = store.getters['province/records'].all.find( p => p.id == selectedVillage.value.province_id )
+        props.record.people.address_province_id = selectedProvince.value.id
+      }
+      if( selectedDistrict.value == null || ( selectedDistrict.value != null && selectedVillage.value != null && selectedVillage.value.district_id != selectedDistrict.value.id ) ){
+        selectedDistrict.value = store.getters['district/records'].all.find( d => d.id == selectedVillage.value.district_id )
+        props.record.people.address_district_id = selectedDistrict.value.id
+      }
+      if( selectedCommune.value == null || ( selectedCommune.value != null && selectedVillage.value != null && selectedVillage.value.commune_id != selectedCommune.value.id ) ){
+        selectedCommune.value = store.getters['commune/records'].all.find( c => c.id == selectedVillage.value.commune_id )
+        props.record.people.address_commune_id = selectedCommune.value.id
+      }
     }
 
     function pobSetProvince(){
@@ -470,21 +506,57 @@ export default {
       pobSelectedDistrict.value = null
       pobSelectedCommune.value = null
       pobSelectedVillage.value = null
+      props.record.people.pob_district_id = null 
+      props.record.people.pob_commune_id = null 
+      props.record.people.pob_village_id = null 
     }
 
     function pobSetDistrict(){
-      pobSelectedDistrict.value = store.getters['district/records'].all.find( d => d.id == props.record.people.pob_district_id )
+      // pobSelectedDistrict.value = pobSelectedProvince.value.districts.find( d => d.id == props.record.people.pob_district_id )
+      pobSelectedDistrict.value = store.getters['district/records'].all.find( p => p.id == props.record.people.pob_district_id )
       pobSelectedCommune.value = null
       pobSelectedVillage.value = null
+      props.record.people.pob_commune_id = null 
+      props.record.people.pob_village_id = null 
+      // Check whether the parent province is the right one
+      if( pobSelectedProvince.value == null || ( pobSelectedProvince.value != null && pobSelectedProvince.value != null && pobSelectedDistrict.value.province_id != pobSelectedProvince.value.id ) ){
+        pobSelectedProvince.value = store.getters['province/records'].all.find( p => p.id == pobSelectedDistrict.value.province_id )
+        props.record.people.pob_province_id = pobSelectedProvince.value.id
+      }
     }
 
     function pobSetCommune(){
-      pobSelectedCommune.value = store.getters['commune/records'].all.find( d => d.id == props.record.people.pob_commune_id )
+      // pobSelectedCommune.value = pobSelectedDistrict.value.communes.find( d => d.id == props.record.people.pob_commune_id )
+      pobSelectedCommune.value = store.getters['commune/records'].all.find( p => p.id == props.record.people.pob_commune_id )
       pobSelectedVillage.value = null
+      props.record.people.pob_village_id = null 
+      // Check whether the parent province is the right one
+      if( pobSelectedProvince.value == null || ( pobSelectedProvince.value != null && pobSelectedProvince.value != null && pobSelectedCommune.value.province_id != pobSelectedProvince.value.id ) ){
+        pobSelectedProvince.value = store.getters['province/records'].all.find( p => p.id == pobSelectedCommune.value.province_id )
+        props.record.people.pob_province_id = pobSelectedProvince.value.id
+      }
+      if( pobSelectedDistrict.value == null || ( pobSelectedDistrict.value != null && pobSelectedDistrict.value != null && pobSelectedCommune.value.district_id != pobSelectedDistrict.value.id ) ){
+        pobSelectedDistrict.value = store.getters['district/records'].all.find( p => p.id == pobSelectedCommune.value.district_id )
+        props.record.people.pob_district_id = pobSelectedDistrict.value.id
+      }
     }
 
     function pobSetVillage(){
-      pobSelectedVillage.value = store.getters['village/records'].all.find( d => d.id == props.record.people.pob_village_id )
+      // pobSelectedVillage.value = pobSelectedCommune.value.villages.find( d => d.id == props.record.people.pob_village_id )
+      pobSelectedVillage.value = store.getters['village/records'].all.find( p => p.id == props.record.people.pob_village_id )
+      // Check whether the parent province is the right one
+      if( pobSelectedProvince.value == null || ( pobSelectedProvince.value != null && pobSelectedProvince.value != null && pobSelectedVillage.value.province_id != pobSelectedProvince.value.id ) ){
+        pobSelectedProvince.value = store.getters['province/records'].all.find( p => p.id == pobSelectedVillage.value.province_id )
+        props.record.people.pob_province_id = pobSelectedProvince.value.id
+      }
+      if( pobSelectedDistrict.value == null || ( pobSelectedDistrict.value != null && pobSelectedDistrict.value != null && pobSelectedVillage.value.district_id != pobSelectedDistrict.value.id ) ){
+        pobSelectedDistrict.value = store.getters['district/records'].all.find( p => p.id == pobSelectedVillage.value.district_id )
+        props.record.people.pob_district_id = pobSelectedDistrict.value.id
+      }
+      if( pobSelectedCommune.value == null || ( pobSelectedCommune.value != null && pobSelectedCommune.value != null && pobSelectedVillage.value.commune_id != pobSelectedCommune.value.id ) ){
+        pobSelectedCommune.value = store.getters['commune/records'].all.find( p => p.id == pobSelectedVillage.value.commune_id )
+        props.record.people.pob_commune_id = pobSelectedCommune.value.id
+      }
     }
     
     const dob = ref( null )

@@ -2,7 +2,7 @@
     <div v-if="show" class="birth-information absolute left-0 right-0 bottom-0 top-0 bg-white" >
         <Transition name="slide-fade" >
             <div v-if="record != undefined && record != null " class="absolute left-0 right-0 bottom-0 top-0 p-8 mb-0" >
-                <div class="font-moul border-b border-gray-200 w-full pb-2 mb-4 h-8 leading-6 relative" >ការដំឡើងឋានន្តរស័ក្តិ និងថ្នាក់តាមសញ្ញាបត្រ
+                <div class="font-moul border-b border-gray-200 w-full pb-2 mb-4 h-10 leading-6 relative" >ការដំឡើងឋានន្តរស័ក្តិ និងថ្នាក់តាមសញ្ញាបត្រ
                     <div @click="formToggler" class="absolute right-0 top-0 w-32 text-center border border-gray-300 bg-gray-100 cursor-pointer p-1 rounded-full px-2 hover:bg-green-100 hover:border-green-500 duration-500" >បញ្ចូល</div>
                 </div>
                 <n-scrollbar >
@@ -51,7 +51,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <div v-if="officerRanks == undefined || officerRanks == null || ( officerRanks.length <= 0 )" >
+                        <div v-if="officerRanks == undefined || officerRanks == null || ( officerRanks.length <= 0 )" class="text-center p-16" >
                             មិនអ្វីបង្ហាញឡើយ
                         </div>
                     </div>

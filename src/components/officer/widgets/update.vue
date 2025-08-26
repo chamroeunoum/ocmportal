@@ -286,7 +286,8 @@
                               filterable
                               placeholder="ប្រភេទក្របខ័ណ្ឌ"
                               :options="ankOptions"
-                              @update:value="updateKrobKhan"
+                              @update:value="setKrobKhan"
+                              clearable
                             />
                           </n-form-item>
                           <n-form-item label="ក្របខ័ណ្ឌ" class="w-1/2 p-1" >
@@ -295,7 +296,8 @@
                               filterable
                               placeholder="ក្របខ័ណ្ឌ"
                               :options="krobKhanOptions"
-                              @update:value="updateRank"
+                              @update:value="setRank"
+                              clearable
                             />
                           </n-form-item>
                           <n-form-item label="ឋានន្តរស័ក្ដិ" class="w-1/2 p-1" >
@@ -304,7 +306,8 @@
                               filterable
                               placeholder="ឋានន្តរស័ក្ដិ"
                               :options="rankOptions"
-                              @update:value="updateThnaks"
+                              @update:value="setThnak"
+                              clearable
                             />
                           </n-form-item>
                           <n-form-item label="ថ្នាក់" class="w-1/2 p-1" >
@@ -313,6 +316,7 @@
                               filterable
                               placeholder="ថ្នាក់"
                               :options="thnakOptions"
+                              clearable
                             />
                           </n-form-item>
                         </div>
@@ -594,6 +598,7 @@ import { useStore } from 'vuex'
 import { useMessage, useNotification } from 'naive-ui'
 
 import dateFormat from "dateformat";
+import { keysWithFilter } from 'naive-ui/es/tree/src/utils';
 
 export default {
   watch: {
@@ -1064,6 +1069,11 @@ export default {
       pobSelectedVillage.value = null
       props.record.people.pob_commune_id = null 
       props.record.people.pob_village_id = null 
+      // Check whether the parent province is the right one
+      if( pobSelectedProvince.value == null || ( pobSelectedProvince.value != null && pobSelectedProvince.value != null && pobSelectedDistrict.value.province_id != pobSelectedProvince.value.id ) ){
+        pobSelectedProvince.value = store.getters['province/records'].all.find( p => p.id == pobSelectedDistrict.value.province_id )
+        props.record.people.pob_province_id = pobSelectedProvince.value.id
+      }
     }
 
     function pobSetCommune(){
@@ -1071,11 +1081,33 @@ export default {
       pobSelectedCommune.value = store.getters['commune/records'].all.find( p => p.id == props.record.people.pob_commune_id )
       pobSelectedVillage.value = null
       props.record.people.pob_village_id = null 
+      // Check whether the parent province is the right one
+      if( pobSelectedProvince.value == null || ( pobSelectedProvince.value != null && pobSelectedProvince.value != null && pobSelectedCommune.value.province_id != pobSelectedProvince.value.id ) ){
+        pobSelectedProvince.value = store.getters['province/records'].all.find( p => p.id == pobSelectedCommune.value.province_id )
+        props.record.people.pob_province_id = pobSelectedProvince.value.id
+      }
+      if( pobSelectedDistrict.value == null || ( pobSelectedDistrict.value != null && pobSelectedDistrict.value != null && pobSelectedCommune.value.district_id != pobSelectedDistrict.value.id ) ){
+        pobSelectedDistrict.value = store.getters['district/records'].all.find( p => p.id == pobSelectedCommune.value.district_id )
+        props.record.people.pob_district_id = pobSelectedDistrict.value.id
+      }
     }
 
     function pobSetVillage(){
       // pobSelectedVillage.value = pobSelectedCommune.value.villages.find( d => d.id == props.record.people.pob_village_id )
       pobSelectedVillage.value = store.getters['village/records'].all.find( p => p.id == props.record.people.pob_village_id )
+      // Check whether the parent province is the right one
+      if( pobSelectedProvince.value == null || ( pobSelectedProvince.value != null && pobSelectedProvince.value != null && pobSelectedVillage.value.province_id != pobSelectedProvince.value.id ) ){
+        pobSelectedProvince.value = store.getters['province/records'].all.find( p => p.id == pobSelectedVillage.value.province_id )
+        props.record.people.pob_province_id = pobSelectedProvince.value.id
+      }
+      if( pobSelectedDistrict.value == null || ( pobSelectedDistrict.value != null && pobSelectedDistrict.value != null && pobSelectedVillage.value.district_id != pobSelectedDistrict.value.id ) ){
+        pobSelectedDistrict.value = store.getters['district/records'].all.find( p => p.id == pobSelectedVillage.value.district_id )
+        props.record.people.pob_district_id = pobSelectedDistrict.value.id
+      }
+      if( pobSelectedCommune.value == null || ( pobSelectedCommune.value != null && pobSelectedCommune.value != null && pobSelectedVillage.value.commune_id != pobSelectedCommune.value.id ) ){
+        pobSelectedCommune.value = store.getters['commune/records'].all.find( p => p.id == pobSelectedVillage.value.commune_id )
+        props.record.people.pob_commune_id = pobSelectedCommune.value.id
+      }
     }
 
     const anks = ref([])
@@ -1084,11 +1116,14 @@ export default {
       anks.value = store.getters['rank/records'].all
       if( props.record.rank != undefined && props.record.rank != null ){
         selectedAnk.value = props.record.rank.ank
+        selectedKrobKhan.value = props.record.rank.krobkhan
+        selectedRank.value = props.record.rank.rank
+        selectedThnak.value = props.record.rank.thnak
         updateKrobKhan()
       }
     }    
     const ankOptions = computed(()=>{
-      return anks.value.length > 0
+      return anks.value != undefined && Array.isArray( anks.value ) && anks.value.length > 0
         ? (
           anks.value.map( ( v ) => { return { label: v.ank , value : v.ank } } )
         )
@@ -1098,18 +1133,23 @@ export default {
     const selectedKrobKhan = ref(null)
     const selectedRank = ref(null)
     const ranks = ref([])
-    function updateKrobKhan(){
+    function setKrobKhan(){
       krobkhanHandleUpdateCounter.value++
-      krobkhans.value = []
-      selectedKrobKhan.value = null
       selectedRank.value = null
       selectedThnak.value = null 
+      updateKrobKhan()
+    }
+    function updateKrobKhan(){
+      krobkhans.value = []
       let v = anks.value.find( ( val ) => val.ank == selectedAnk.value )
       if( v != undefined ){
         krobkhans.value = v.krobkhans
-        // if( krobkhanHandleUpdateCounter.value <= 1 ) {
-          selectedKrobKhan.value = props.record.rank != undefined && props.record.rank != null ? props.record.rank.krobkhan : null
-        // }
+        if( krobkhanHandleUpdateCounter.value <= 1 ) {
+          selectedKrobKhan.value = props.record.rank.krobkhan
+        }
+        if( v.krobkhans.find( k => k.krobkhan == selectedKrobKhan.value ) == undefined ){
+          selectedKrobKhan.value = null
+        }
         updateRank()
       }else{
         notify.info({
@@ -1120,7 +1160,7 @@ export default {
       }
     }
     const krobKhanOptions = computed( () => {
-      if( krobkhans.value.length > 0 ){
+      if( krobkhans.value != undefined && Array.isArray( krobkhans.value ) && krobkhans.value.length > 0 ){
         let uniqueKrobKhans = new Array()
         for( let i in krobkhans.value ){
           if ( uniqueKrobKhans.indexOf( krobkhans.value[i].krobkhan + "." + krobkhans.value[i].krobkhan_name ) == -1 ){
@@ -1137,31 +1177,36 @@ export default {
       }
     })
     const rankOptions = computed( () => {
-      if( ranks.value.length > 0 ){
+      if( Array.isArray( ranks.value ) && ranks.value.length > 0 ){
         return ranks.value
       }else{
         return [ { label: 'មិនមានឋានន្តរស័ក្តិ' , value : 0 } ]
       }
     })
+    function setRank(){
+      selectedThnak.value = null 
+      updateRank()
+    }
     function updateRank(){
       ranks.value = []
       selectedRank.value = null
       selectedThnak.value = null 
       if( krobkhans.value.length > 0 ){
         for( let i in krobkhans.value ){
-          // if( krobkhans.value[i].krobkhan + "." + krobkhans.value[i].krobkhan_name == selectedKrobKhan.value ){
           if( krobkhans.value[i].krobkhan == selectedKrobKhan.value ){
             for( let j in krobkhans.value[i].ranks ){
               ranks.value.push( {
                 label: krobkhans.value[i].ranks[j].krobkhan+'.'+krobkhans.value[i].ranks[j].rank+'. ' + krobkhans.value[i].ranks[j].name ,
-                // value: krobkhans.value[i].ranks[j].krobkhan_name+'-'+krobkhans.value[i].ranks[j].krobkhan+'-'+krobkhans.value[i].ranks[j].rank+'-' + krobkhans.value[i].ranks[j].name
                 value: krobkhans.value[i].ranks[j].rank
               })
-              //if( krobkhanHandleUpdateCounter.value <= 1 ) {
-                selectedRank.value = props.record.rank != undefined && props.record.rank != null ? props.record.rank.rank : null
-              //}
-              updateThnaks()
             }
+            if( krobkhanHandleUpdateCounter.value <= 1 ) {
+              selectedRank.value = props.record.rank.rank
+            }
+            if( krobkhans.value[i].ranks.find( r => r.rank == selectedRank.value ) == undefined ){
+              selectedRank.value = null
+            }
+            updateThnaks()
           }
         }
       }else{
@@ -1173,37 +1218,40 @@ export default {
       }
     }
     const selectedThnak = ref(null)
-    const thnaks = ref({
+    const thnaks = reactive({
       key: '' ,
       options: []
     })
+    function setThnak(){
+      updateThnaks()
+    }
     function updateThnaks(){
-      thnaks.value = []
+      thnaks.key = '' 
+      thnaks.options = []
       selectedThnak.value = null 
       if( krobkhans.value.length > 0 ){
         for( let i in krobkhans.value ){
-          // if( krobkhans.value[i].krobkhan + "." + krobkhans.value[i].krobkhan_name == selectedKrobKhan.value ){
           if( krobkhans.value[i].krobkhan == selectedKrobKhan.value ){
             for( let j in krobkhans.value[i].ranks ){
-              // if( krobkhans.value[i].ranks[j].krobkhan_name+'-'+krobkhans.value[i].ranks[j].krobkhan+'-'+krobkhans.value[i].ranks[j].rank+'-' + krobkhans.value[i].ranks[j].name == selectedRank.value ){
               if( krobkhans.value[i].ranks[j].rank == selectedRank.value ){
-                // thnaks.value.key = krobkhans.value[i].ranks[j].krobkhan_name+'-'+krobkhans.value[i].ranks[j].krobkhan+'-'+krobkhans.value[i].ranks[j].rank+'-' + krobkhans.value[i].ranks[j].name
-                thnaks.value.key = krobkhans.value[i].ranks[j].rank
-                thnaks.value.options = krobkhans.value[i].ranks[j].thnaks.map( t => { 
+                thnaks.key = krobkhans.value[i].ranks[j].rank
+                thnaks.options = krobkhans.value[i].ranks[j].thnaks.map( t => { 
                   return { 
                     label: krobkhans.value[i].ranks[j].krobkhan+'.'+krobkhans.value[i].ranks[j].rank+'.'+t.thnak ,
-                    // value : krobkhans.value[i].ranks[j].krobkhan_name+'-'+krobkhans.value[i].ranks[j].krobkhan+'-'+krobkhans.value[i].ranks[j].rank+'.'+t.thnak+'-' + krobkhans.value[i].ranks[j].name
                     value : t.thnak
                   }
                 })
-                // if( krobkhanHandleUpdateCounter.value <= 1 ) {
-                  selectedThnak.value = props.record.rank != undefined && props.record.rank != null ? props.record.rank.thnak : null
-                // }
+
               }
-              // ranks.value.push( {
-              //   label: krobkhans.value[i].ranks[j].krobkhan+'.'+krobkhans.value[i].ranks[j].rank+'. ' + krobkhans.value[i].ranks[j].name ,
-              //   value: krobkhans.value[i].ranks[j].krobkhan_name+'-'+krobkhans.value[i].ranks[j].krobkhan+'-'+krobkhans.value[i].ranks[j].rank+'-' + krobkhans.value[i].ranks[j].name
-              // })
+            }
+            if( krobkhanHandleUpdateCounter.value <= 1 ) {
+              selectedThnak.value = props.record.rank.thnak
+            }
+            console.log( thnaks.options )
+            if( Array.isArray( thnaks.options ) && thnaks.options.length > 0 ){
+              thnaks.options.find( t => t.value == selectedThnak.value ) == undefined
+            }else{
+              selectedThnak.value = null
             }
           }
         }
@@ -1216,13 +1264,12 @@ export default {
       }
     }
     const thnakOptions = computed( () => {
-      if( thnaks.value.options.length > 0 ){
-        return thnaks.value.options
+      if( thnaks.options != undefined && Array.isArray( thnaks.options ) && thnaks.options.length > 0 ){
+        return thnaks.options
       }else{
         return [ { label: 'មិនមានថ្នាក់' , value : 0 } ]
       }
     })
-
 
     const fatherDob = ref( ( new Date() ).getTime() )
     const motherDob = ref( ( new Date() ).getTime() )
@@ -1230,6 +1277,7 @@ export default {
     function initial(){
       console.log( "INITIAL UPDATE" )
       console.log( props.record )
+      krobkhanHandleUpdateCounter.value = 0
       getRankStructure()
       getPositionStructures( false )
       // getRecord()
@@ -1268,11 +1316,7 @@ export default {
       pobSelectedDistrict.value = store.getters['district/records'].all.find( p => p.id == props.record.people.pob_district_id )
       pobSelectedCommune.value = store.getters['commune/records'].all.find( p => p.id == props.record.people.pob_commune_id )
       pobSelectedVillage.value = store.getters['village/records'].all.find( p => p.id == props.record.people.pob_village_id )
-
-      console.log( selectedAnk.value )
-      console.log( selectedKrobKhan.value )
-      console.log( selectedThnak.value )
-      console.log( selectedRank.value )
+      
       
     }
 
@@ -1327,8 +1371,11 @@ export default {
       krobKhanOptions ,
       rankOptions ,
       thnakOptions ,
+      setKrobKhan ,
       updateKrobKhan ,
+      setRank ,
       updateRank ,
+      setThnak ,
       updateThnaks
     }
   }

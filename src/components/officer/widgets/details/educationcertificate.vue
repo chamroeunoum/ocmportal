@@ -2,7 +2,7 @@
     <div v-if="show" class="birth-information absolute left-0 right-0 bottom-0 top-0" >
         <Transition name="slide-fade" >
             <div v-if="record != undefined && record != null " class="absolute left-0 right-0 bottom-0 top-0 p-8 mb-0" >
-                <div class="font-moul border-b border-gray-200 w-full pb-2 mb-4 h-8 leading-6 relative" >ព័ត៌មានកម្រិតការសិក្សា
+                <div class="font-moul border-b border-gray-200 w-full pb-2 mb-4 h-10 leading-6 relative" >ព័ត៌មានកម្រិតការសិក្សា
                     <div @click="formToggler" class="absolute right-0 top-0 w-32 text-center border border-gray-300 bg-gray-100 cursor-pointer p-1 rounded-full px-2 hover:bg-green-100 hover:border-green-500 duration-500" >បញ្ចូល</div>
                 </div>
                 <n-scrollbar >
@@ -16,7 +16,7 @@
                                     <th class="px-1 py-2 bg-gray-200 font-btb-black " >ឆ្នាំសិក្សា</th>
                                     <th class="px-1 py-2 bg-gray-200 font-btb-black " >គ្រឹះស្ថានសិក្សា</th>
                                     <th class="px-1 py-2 bg-gray-200 font-btb-black " >ទីតាំងគ្រឹះស្ថានសិក្សា</th>
-                                    <th class="px-1 py-2 bg-gray-200 font-btb-black " >ប្រតិបត្តិការ</th>
+                                    <th class="px-1 py-2 bg-gray-200 font-btb-black  w-48" >ប្រតិបត្តិការ</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -49,14 +49,14 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <div v-if="certificates == undefined || certificates == null || ( certificates.length <= 0 )" >
+                        <div v-if="certificates == undefined || certificates == null || ( certificates.length <= 0 )" class="p-16 text-center" >
                             មិនទាន់មានសញ្ញាបត្រនៅឡើយ
                         </div>
                     </div>
                 </n-scrollbar>
                 <!-- Create - update form -->
                 <Transition name="slide-fade" >
-                    <div v-if="formHelper" class="form absolute top-0 right-0 bottom-0 left-0 bg-gray-100/80" >
+                    <div v-if="formHelper " class="form absolute top-0 right-0 bottom-0 left-0 bg-gray-100/80" >
                         <div class="form-panel border border-gray-200 rounded-md m-4  bg-white shadow w-1/2 mx-auto " >
                             <div class="w-full p-4 " >
                                 <div class="relative w-full mb-4 border-b border-gray-200 pb-2 font-moul " >ព័ត៌មានកម្រិតការសិក្សា
@@ -401,7 +401,7 @@ import PdfPreview from './pdfpreview.vue'
                 }).catch( err => {
                     console.log( err )
                 })
-                formToggler
+                formToggler()
                 uploadHelper.value = false
             }
 
@@ -536,6 +536,7 @@ import PdfPreview from './pdfpreview.vue'
                         duration: 3000
                     })
                     pdfs.value = []
+                    getCertificates()
                 }).catch( err => {
                     console.log( err )
                     notify.error({
@@ -545,7 +546,6 @@ import PdfPreview from './pdfpreview.vue'
                     })
                 })
                 uploadHelper.value = false
-                getCertificates()
             }
             // End Upload
 

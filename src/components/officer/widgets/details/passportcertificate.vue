@@ -2,7 +2,7 @@
     <div v-if="show" class="birth-information absolute left-0 right-0 bottom-0 top-0" >
         <Transition name="slide-fade" >
             <div v-if="record != undefined && record != null " class="absolute left-0 right-0 bottom-0 top-0 p-8 mb-0" >
-                <div class="font-moul border-b border-gray-200 w-full pb-2 mb-4 h-8 leading-6 relative" >លិខិតឆ្លងដែន
+                <div class="font-moul border-b border-gray-200 w-full pb-2 mb-4 h-10 leading-6 relative" >លិខិតឆ្លងដែន
                     <div @click="formToggler" class="absolute right-0 top-0 w-32 text-center border border-gray-300 bg-gray-100 cursor-pointer p-1 rounded-full px-2 hover:bg-green-100 hover:border-green-500 duration-500" >បញ្ចូល</div>
                 </div>
                 <n-scrollbar >
@@ -47,7 +47,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <div v-if="nics == undefined || nics == null || ( nics.length <= 0 )" >
+                        <div v-if="nics == undefined || nics == null || ( nics.length <= 0 )" class="text-center p-16" >
                             មិនទាន់មាន អត្តសញ្ញាណបណ្ណ នៅឡើយ
                         </div>
                     </div>

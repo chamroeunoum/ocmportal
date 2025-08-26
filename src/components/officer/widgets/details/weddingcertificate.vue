@@ -2,7 +2,7 @@
     <div v-if="show" class="birth-information absolute left-0 right-0 bottom-0 top-0" >
         <Transition name="slide-fade" >
             <div v-if="record != undefined && record != null " class="absolute left-0 right-0 bottom-0 top-0 p-8 mb-0" >
-                <div class="font-moul border-b border-gray-200 w-full pb-2 mb-4 h-8 leading-6 relative" >ព័ត៌មានអាពាហ៍ពិពាហ៍ 
+                <div class="font-moul border-b border-gray-200 w-full pb-2 mb-4 h-10 leading-6 relative" >ព័ត៌មានអាពាហ៍ពិពាហ៍ 
                     <div @click="formToggler" class="absolute right-0 top-0 w-32 text-center border border-gray-300 bg-gray-100 cursor-pointer p-1 rounded-full px-2 hover:bg-green-100 hover:border-green-500 duration-500" >បញ្ចូល</div>
                 </div>
                 <n-scrollbar >
@@ -17,7 +17,7 @@
                                     <th class="px-1 py-2 bg-gray-200 font-btb-black " >ឃុំ/សង្កាត់</th>
                                     <th class="px-1 py-2 bg-gray-200 font-btb-black " >ស្រុក/ខណ្ឌ</th>
                                     <th class="px-1 py-2 bg-gray-200 font-btb-black " >ខេត្ត/ក្រុង</th>
-                                    <th class="px-1 py-2 bg-gray-200 font-btb-black " >ប្រតិបត្តិការ</th>
+                                    <th class="px-1 py-2 bg-gray-200 font-btb-black w-48" >ប្រតិបត្តិការ</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -25,10 +25,10 @@
                                     <td class="w-12 index p-1 text-center font-bold" >{{ $toKhmer( index + 1 ) }}</td>
                                     <td class="w-24 p-1 " >{{ $toKhmer( certificate.wedding_number ) }}</td>
                                     <td class="w-24 certificate_leverl p-1 " >{{ $toKhmer( certificate.book_number ) }}</td>
-                                    <td class="w-48 " >{{ $toKhmer( certificate.year ) }}</td>
-                                    <td class="w-48 " >{{ $toKhmer( certificate.commune.name_kh ) }}</td>
-                                    <td class="w-48 " >{{ $toKhmer( certificate.district.name_kh ) }}</td>
-                                    <td class="w-48 " >{{ $toKhmer( certificate.province.name_kh ) }}</td>
+                                    <td class=" " >{{ $toKhmer( certificate.year ) }}</td>
+                                    <td class=" " >{{ certificate.commune != undefined ? $toKhmer( certificate.commune.name_kh ) : '' }}</td>
+                                    <td class=" " >{{ certificate.district != undefined ? $toKhmer( certificate.district.name_kh ) : '' }}</td>
+                                    <td class=" " >{{ certificate.province != undefined ? $toKhmer( certificate.province.name_kh ) : '' }}</td>
                                     <td class="flex flex-row-reverse" >
                                         <svg 
                                         @click="uploadToggler(certificate)" 
@@ -51,7 +51,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <div v-if="certificates == undefined || certificates == null || ( certificates.length <= 0 )" >
+                        <div v-if="certificates == undefined || certificates == null || ( certificates.length <= 0 )" class="p-16 text-center" >
                             មិនទាន់មានលិខិតអាពាហ៍ពិពាហ៍នៅឡើយ
                         </div>
                     </div>
