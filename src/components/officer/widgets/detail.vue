@@ -648,7 +648,7 @@ export default {
           search : '' ,
           page: 1 , 
           perPage : 100 ,
-          people_id: props.record.id 
+          people_id: props.record.people.id
         }).then( res => {
             store.commit( 'niccertificate/setRecords', res.data.records )
         }).catch( err => {

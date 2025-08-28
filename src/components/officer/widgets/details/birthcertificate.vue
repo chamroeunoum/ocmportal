@@ -26,9 +26,9 @@
                                     <td class="w-24 p-1 " >{{ $toKhmer( certificate.birth_number ) }}</td>
                                     <td class="w-24 certificate_leverl p-1 " >{{ $toKhmer( certificate.book_number ) }}</td>
                                     <td class="w-48 " >{{ $toKhmer( certificate.year ) }}</td>
-                                    <td class="w-48 " >{{ $toKhmer( certificate.commune.name_kh ) }}</td>
-                                    <td class="w-48 " >{{ $toKhmer( certificate.district.name_kh ) }}</td>
-                                    <td class="w-48 " >{{ $toKhmer( certificate.province.name_kh ) }}</td>
+                                    <td class="w-48 " >{{ certificate.commune != undefined ? $toKhmer( certificate.commune.name_kh ) : '' }}</td>
+                                    <td class="w-48 " >{{ certificate.district != undefined ? $toKhmer( certificate.district.name_kh ) : '' }}</td>
+                                    <td class="w-48 " >{{ certificate.province != undefined ? $toKhmer( certificate.province.name_kh ) : '' }}</td>
                                     <td class="flex flex-row-reverse" >
                                         <svg 
                                         @click="uploadToggler(certificate)" 
@@ -575,9 +575,48 @@ import PdfPreview from './pdfpreview.vue'
             }
             
             function save(){
-                // if( selectedCertificate.value == undefined || selectedCertificate.value == null ){
-                //     return false
-                // }
+                if( !(parseInt( birthCertificate.birth_number ) > 0) ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: 'សូមបញ្ជាក់លេខសំបុត្រ' , 
+                        duration: 2000
+                    })
+                    return false
+                }
+                if( !(parseInt( birthCertificate.book_number ) > 0) ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: 'សូមបញ្ជាក់លេខសៀវភៅ' , 
+                        duration: 2000
+                    })
+                    return false
+                }
+                if( !(parseInt( birthCertificate.province_id ) > 0) ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: 'សូមជ្រើសរើស ខេត្ត/ក្រុង' , 
+                        duration: 2000
+                    })
+                    return false
+                }
+                if( !(parseInt( birthCertificate.district_id ) > 0) ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: 'សូមជ្រើសរើស ស្រុក/ខណ្ឌ' , 
+                        duration: 2000
+                    })
+                    return false
+                }
+                if( !(parseInt(birthCertificate.commune_id ) > 0) ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: 'សូមជ្រើសរើស ឃុំ/សង្កាត់' , 
+                        duration: 2000
+                    })
+                    return false
+                }
+
+                
                 store.dispatch( model.name + '/' + ( selectedCertificate.value != undefined && selectedCertificate.value != null && selectedCertificate.value.id > 0 ? 'update' : 'create' ) , 
                 selectedCertificate.value != undefined && selectedCertificate.value != null && selectedCertificate.value.id > 0 
                     // Update

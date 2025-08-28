@@ -837,9 +837,46 @@ import PdfPreview from './pdfpreview.vue'
             }
             
             function save(){
-                // if( selectedCertificate.value == undefined || selectedCertificate.value == null ){
-                //     return false
-                // }
+                if( !(parseInt( weddingCertificate.wedding_number ) > 0) ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: 'សូមបញ្ជាក់លេខសំបុត្រ' , 
+                        duration: 2000
+                    })
+                    return false
+                }
+                if( !(parseInt( weddingCertificate.book_number ) > 0) ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: 'សូមបញ្ជាក់លេខសៀវភៅ' , 
+                        duration: 2000
+                    })
+                    return false
+                }
+                if( !(parseInt( weddingCertificate.province_id ) > 0) ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: 'សូមជ្រើសរើស ខេត្ត/ក្រុង' , 
+                        duration: 2000
+                    })
+                    return false
+                }
+                if( !(parseInt( weddingCertificate.district_id ) > 0) ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: 'សូមជ្រើសរើស ស្រុក/ខណ្ឌ' , 
+                        duration: 2000
+                    })
+                    return false
+                }
+                if( !(parseInt(weddingCertificate.commune_id ) > 0) ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: 'សូមជ្រើសរើស ឃុំ/សង្កាត់' , 
+                        duration: 2000
+                    })
+                    return false
+                }
                 store.dispatch( model.name + '/' + ( selectedCertificate.value != null && selectedCertificate.value.id > 0 ? 'update' : 'create' ) , 
                 selectedCertificate.value != null && selectedCertificate.value.id > 0
                     // Update
@@ -849,9 +886,12 @@ import PdfPreview from './pdfpreview.vue'
                         'wedding_number' : weddingCertificate.wedding_number ,
                         'book_number' : weddingCertificate.book_number ,
                         'year' : issuedYear.value != undefined && issuedYear.value != null && issuedYear.value > 0 ? dateFormat( new Date( issuedYear.value ) , 'yyyy-mm-dd' ) : dateFormat( new Date( ) , 'yyyy-mm-dd' ) ,
-                        'province_id' : selectedProvince != undefined && selectedProvince.value != null ? selectedProvince.value.id : 0 ,
-                        'district_id' : selectedDistrict != undefined && selectedDistrict.value != null ? selectedDistrict.value.id : 0 ,
-                        'commune_id' : selectedCommune != undefined && selectedCommune.value != null ? selectedCommune.value.id : 0 ,
+                        // 'province_id' : selectedProvince != undefined && selectedProvince.value != null ? selectedProvince.value.id : 0 ,
+                        // 'district_id' : selectedDistrict != undefined && selectedDistrict.value != null ? selectedDistrict.value.id : 0 ,
+                        // 'commune_id' : selectedCommune != undefined && selectedCommune.value != null ? selectedCommune.value.id : 0 ,
+                        'province_id' : weddingCertificate.province_id ,
+                        'district_id' : weddingCertificate.district_id ,
+                        'commune_id' : weddingCertificate.commune_id ,
                         'issued_date' : issuedDate.value != undefined && issuedDate.value != null && issuedDate.value > 0 ? dateFormat( new Date( issuedDate.value ) , 'yyyy-mm-dd' ) : dateFormat( new Date( ) , 'yyyy-mm-dd' ) ,
                         'issued_location' : weddingCertificate.issued_location ,
                         'signed_name' : weddingCertificate.signed_name ,

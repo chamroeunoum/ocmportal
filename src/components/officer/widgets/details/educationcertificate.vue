@@ -366,10 +366,28 @@ import PdfPreview from './pdfpreview.vue'
             }
             
             function save(){
+                if( educationCertificate.certificate_group_id == null || educationCertificate.certificate_group_id == 0 ){
+                    notify.info({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: 'សូមបញ្ជាក់សញ្ញាបត្រ' ,
+                        duration: 2000
+                    })
+                    return false ;
+                }
                 if( ( educationCertificate.certificate_group_id == 3 || educationCertificate.certificate_group_id == 8 ) && educationCertificate.certificate_note == '' ){
                     notify.info({
                         title: 'បំពេញព័ត៌មាន' ,
-                        content: 'សូមបញ្ជាក់ឈ្មោះសញ្ញាបត្រ'
+                        content: 'សូមបញ្ជាក់ឈ្មោះសញ្ញាបត្រ' ,
+                        duration: 2000
+                    })
+                    return false
+                }
+                educationCertificate.field_name = educationCertificate.field_name.trim()
+                if( educationCertificate.field_name == null || educationCertificate.field_name == "" ){
+                    notify.info({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: 'សូមបញ្ជាក់ឈ្មោះជំនាញ' ,
+                        duration: 2000
                     })
                     return false
                 }

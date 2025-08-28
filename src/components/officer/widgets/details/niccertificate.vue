@@ -251,11 +251,21 @@ import PdfPreview from './pdfpreview.vue'
             }
 
             function save(){
-                // if( selectedNic.value == undefined || selectedNic.value == null ){
-                //     return false
-                // }
-                console.log( nicStart.value )
-                console.log( nicEnd.value )
+                if( nic.number == undefined || nic.number == '' ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: 'សូមបញ្ចូលលេខអត្តសញ្ញាណបណ្ណ' ,
+                        duration : 2000
+                    })
+                    return false
+                }
+                if( props.record.people == undefined ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: 'មិនបានបញ្ជាក់ពីម្ចាស់អត្តសញ្ញាណបណ្ណ'
+                    })
+                    return false
+                }
                 store.dispatch( model.name + '/' + ( selectedNic.value != undefined && selectedNic.value != null && selectedNic.value.id > 0 ? 'update' : 'create' ) , 
                 selectedNic.value != undefined && selectedNic.value != null && selectedNic.value.id > 0  
                     // Update
@@ -270,6 +280,7 @@ import PdfPreview from './pdfpreview.vue'
                     }
                     // Create
                     : {
+                        people_id: props.record.people.id ,
                         number : nic.number ,
                         start : nicStart.value != undefined && nicStart.value != null ? dateFormat( new Date( nicStart.value ) , 'yyyy-mm-dd' ) : dateFormat( new Date( ) , 'yyyy-mm-dd' ) ,
                         end : nicEnd.value != undefined && nicEnd.value != null ? dateFormat( new Date( nicEnd.value ) , 'yyyy-mm-dd' ) : dateFormat( new Date( ) , 'yyyy-mm-dd' ) ,
