@@ -282,9 +282,14 @@ import PdfPreview from './pdfpreview.vue'
             }
             
             function save(){
-                // if( selectedLanguage.value == undefined || selectedLanguage.value == null ){
-                //     return false
-                // }
+                if( lang.name == "" || lang.name == null || lang.name.length <= 0 ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: 'សូមបំពេញឈ្មោះភាសាបរទេស' ,
+                        duration: 2000
+                    })
+                    return false
+                }
                 store.dispatch( model.name + '/' + ( selectedLanguage.value != undefined && selectedLanguage.value != null && selectedLanguage.value.id > 0 ? 'update' : 'create' ) , 
                 selectedLanguage.value != undefined && selectedLanguage.value != null && selectedLanguage.value.id > 0 
                     // Update

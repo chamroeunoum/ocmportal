@@ -302,9 +302,14 @@ import PdfPreview from './pdfpreview.vue'
             }
 
             function save(){
-                // if( selectedNic.value == undefined || selectedNic.value == null ){
-                //     return false
-                // }
+                if( nic.number == null || nic.number == "" || nic.number.length <= 0 ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: 'សូមបំពេញលេខលិខិតឆ្លងដែន' ,
+                        duration: 2000 
+                    })
+                    return false
+                }
                 store.dispatch( model.name + '/' + ( selectedNic.value != undefined && selectedNic.value != null && selectedNic.value.id > 0 ? 'update' : 'create' ) , 
                 selectedNic.value != undefined && selectedNic.value != null && selectedNic.value.id > 0  
                     // Update
