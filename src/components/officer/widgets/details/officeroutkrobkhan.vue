@@ -49,7 +49,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <div v-if="officernosalaries == undefined || officernosalaries == null || ( officernosalaries.length <= 0 )" class="text-center p-167" >
+                        <div v-if="officernosalaries == undefined || officernosalaries == null || ( officernosalaries.length <= 0 )" class="text-center p-16" >
                             មិនមានព័ត៌មានបង្ហាញឡើយ។
                         </div>
                     </div>
@@ -251,10 +251,22 @@ import PdfPreview from './pdfpreview.vue'
             }
             
             function save(){
-                console.log( props.record )
-                // if( selectedFreenosalary.value == undefined || selectedFreenosalary.value == null ){
-                //     return false
-                // }
+                if( officernosalary.organization == '' || officernosalary.organization == null ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: 'សូមបំពេញក្រសួង-ស្ថាប័ន' ,
+                        duration: 2000
+                    })
+                    return false
+                }
+                if( !(parseInt( officernosalary.total_months ) > 0 ) ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: 'សូមបំពេញចំនួនខែ' ,
+                        duration: 2000
+                    })
+                    return false
+                }
                 store.dispatch( model.name + '/' + ( selectedFreenosalary.value != undefined && selectedFreenosalary.value != null && selectedFreenosalary.value.id > 0 ? 'update' : 'create' ) , 
                 selectedFreenosalary.value != undefined && selectedFreenosalary.value != null && selectedFreenosalary.value.id > 0 
                     // Update

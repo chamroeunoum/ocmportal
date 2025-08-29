@@ -77,13 +77,13 @@
                                             <n-date-picker type="date" v-model:value="date" format="dd-MM-yyyy" placeholder="ថ្ងៃខែឆ្នាំសុពលភាព" />
                                         </n-form-item>
                                         <n-form-item label="គ្រឹះស្ថានបណ្ដុះបណ្ដាល" class="w-1/2 p-1" >
-                                            <n-input v-model:value="officerRank.organization" placeholder="ក្រសួង-ស្ថាប័ន" />
+                                            <n-input v-model:value="officerRank.organization" placeholder="គ្រឹះស្ថានបណ្ដុះបណ្ដាល" />
                                         </n-form-item>
                                         <n-form-item label="ទីកន្លែងសិក្សា" class="w-1/2 p-1" >
-                                            <n-input v-model:value="officerRank.location" placeholder="នាយកដ្ឋាន-អង្គភាព" />
+                                            <n-input v-model:value="officerRank.location" placeholder="ទីកន្លែងសិក្សា" />
                                         </n-form-item>
                                         <n-form-item label="សញ្ញាបត្របានទទួល" class="w-1/2 p-1" >
-                                            <n-input v-model:value="officerRank.certificate" placeholder="ការិយាល័យ-ផ្នែក" />
+                                            <n-input v-model:value="officerRank.certificate" placeholder="សញ្ញាបត្របានទទួល" />
                                         </n-form-item>
                                         <n-form-item label="ក្របខ័ណ្ឌឋានន្តរស័ក្តិ និងថ្នាក់ចាស់" class="w-1/2 p-1" >
                                             <n-select v-model:value="officerRank.previous_rank_id" placeholder="ក្របខ័ណ្ឌឋានន្តរស័ក្តិ និងថ្នាក់ចាស់" :options="ranks" ></n-select>
@@ -265,10 +265,46 @@ import PdfPreview from './pdfpreview.vue'
             }
             
             function save(){
-                console.log( props.record )
-                // if( selectedRank.value == undefined || selectedRank.value == null ){
-                //     return false
-                // }
+                if( officerRank.organization == '' || officerRank.organization == null ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: 'សូមបំពេញគ្រឹះស្ថានបណ្ដុះបណ្ដាល' ,
+                        duration: 2000
+                    })
+                    return false
+                }
+                if( officerRank.location == '' || officerRank.location == null ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: 'សូមបំពេញទីកន្លែងសិក្សា' ,
+                        duration: 2000
+                    })
+                    return false
+                }
+                if( officerRank.certificate == '' || officerRank.certificate == null ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: 'សូមបំពេញសញ្ញាបត្រ' ,
+                        duration: 2000
+                    })
+                    return false
+                }
+                if( !( parseInt( officerRank.previous_rank_id ) > 0 ) ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: 'សូមបំពេញក្របខ័ណ្ឌឋានន្តរស័ក្តិ និងថ្នាក់ចាស់' ,
+                        duration: 2000
+                    })
+                    return false
+                }
+                if( !( parseInt( officerRank.rank_id ) > 0 ) ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: 'សូមបំពេញក្របខ័ណ្ឌឋានន្តរស័ក្តិ និងថ្នាក់ថ្មី' ,
+                        duration: 2000
+                    })
+                    return false
+                }
                 store.dispatch( model.name + '/' + ( selectedRank.value != undefined && selectedRank.value != null && selectedRank.value.id > 0 ? 'update' : 'create' ) , 
                 selectedRank.value != undefined && selectedRank.value != null && selectedRank.value.id > 0 
                     // Update

@@ -301,10 +301,46 @@ import PdfPreview from './pdfpreview.vue'
             }
             
             function save(){
-                console.log( props.record )
-                // if( selectedRank.value == undefined || selectedRank.value == null ){
-                //     return false
-                // }
+                if( officerRank.organization == '' || officerRank.organization == null ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: 'សូមបំពេញក្រសួង-ស្ថាប័ន' ,
+                        duration: 2000
+                    })
+                    return false
+                }
+                if( officerRank.sub_organization == '' || officerRank.sub_organization == null ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: 'សូមបំពេញនាយកដ្ឋាន-អង្គភាព' ,
+                        duration: 2000
+                    })
+                    return false
+                }
+                if( officerRank.sub_sub_organization == '' || officerRank.sub_sub_organization == null ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: 'សូមបំពេញការិយាល័យ-ផ្នែក' ,
+                        duration: 2000
+                    })
+                    return false
+                }
+                if( !( parseInt( officerRank.previous_rank_id ) > 0 ) ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: 'សូមបំពេញក្របខ័ណ្ឌឋានន្តរស័ក្តិ និងថ្នាក់ចាស់' ,
+                        duration: 2000
+                    })
+                    return false
+                }
+                if( !( parseInt( officerRank.rank_id ) > 0 ) ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: 'សូមបំពេញក្របខ័ណ្ឌឋានន្តរស័ក្តិ និងថ្នាក់ថ្មី' ,
+                        duration: 2000
+                    })
+                    return false
+                }
                 store.dispatch( model.name + '/' + ( selectedRank.value != undefined && selectedRank.value != null && selectedRank.value.id > 0 ? 'update' : 'create' ) , 
                 selectedRank.value != undefined && selectedRank.value != null && selectedRank.value.id > 0 
                     // Update

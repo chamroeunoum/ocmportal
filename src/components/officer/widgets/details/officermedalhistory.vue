@@ -248,10 +248,30 @@ import PdfPreview from './pdfpreview.vue'
             }
             
             function save(){
-                console.log( props.record )
-                // if( selectedFreenosalary.value == undefined || selectedFreenosalary.value == null ){
-                //     return false
-                // }
+                if( officernosalary.fid == '' || officernosalary.fid == null ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: 'សូមបំពេញលេខលិខិត' ,
+                        duration: 2000
+                    })
+                    return false 
+                }
+                if( officernosalary.organization == '' || officernosalary.organization == null ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: 'សូមបំពេញក្រសួង-ស្ថាប័ន-រាជធានី-ខេត្ត' ,
+                        duration: 2000
+                    })
+                    return false 
+                }
+                if( officernosalary.type == '' || officernosalary.type == null ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: 'សូមបំពេញប្រភេទលិខិត' ,
+                        duration: 2000
+                    })
+                    return false 
+                }
                 store.dispatch( model.name + '/' + ( selectedFreenosalary.value != undefined && selectedFreenosalary.value != null && selectedFreenosalary.value.id > 0 ? 'update' : 'create' ) , 
                 selectedFreenosalary.value != undefined && selectedFreenosalary.value != null && selectedFreenosalary.value.id > 0 
                     // Update

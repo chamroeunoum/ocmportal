@@ -276,10 +276,39 @@ import PdfPreview from './pdfpreview.vue'
             }
             
             function save(){
-                console.log( props.record )
-                // if( selectedLanguage.value == undefined || selectedLanguage.value == null ){
-                //     return false
-                // }
+                if( officerjobbackground.organization == '' || officerjobbackground.organization == null ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: "សូមបញ្ជាក់ស្ថាប័ន" ,
+                        duration: 2000 
+                    })
+                    return false
+                }
+                if( officerjobbackground.organization == '' || officerjobbackground.organization == null ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: "សូមបញ្ជាក់ពីក្រសួង-ស្ថាប័ន" ,
+                        duration: 2000 
+                    })
+                    return false
+                }
+                if( officerjobbackground.sub_organization == '' || officerjobbackground.sub_organization == null ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: "សូមបញ្ជាក់នាយកដ្ឋាន-អង្គភាព" ,
+                        duration: 2000 
+                    })
+                    return false
+                }
+                if( officerjobbackground.position == '' || officerjobbackground.position == null ){
+                    notify.warning({
+                        title: 'បំពេញព័ត៌មាន' ,
+                        content: "សូមបញ្ជាក់តួនាទី" ,
+                        duration: 2000 
+                    })
+                    return false
+                }
+                
                 store.dispatch( model.name + '/' + ( selectedLanguage.value != undefined && selectedLanguage.value != null && selectedLanguage.value.id > 0 ? 'update' : 'create' ) , 
                 selectedLanguage.value != undefined && selectedLanguage.value != null && selectedLanguage.value.id > 0 
                     // Update
