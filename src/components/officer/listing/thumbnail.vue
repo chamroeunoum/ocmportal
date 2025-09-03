@@ -531,11 +531,11 @@ export default {
     /**
      * Initial the data
      */
+    getOrganizations()
     getPositions()
     getRankStructure()
     getCountesies()
     getRecords()
-    // getProvinces()
     getPdcv()
         
 

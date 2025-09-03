@@ -47,6 +47,7 @@ import PrintOfficerProfileComponent from './../layouts/staff/printprofile.vue'
  */
 import StructureComponent from './../components/structure/index.vue'
 import StructureMainComponent from './../components/structure/main.vue'
+import StructureOrgchartComponent from './../components/structure/orgchart.vue'
 
 /**
  * Card Officer
@@ -323,7 +324,7 @@ export const getRoutes = () => {
                     {
                         name: "StructureMain" ,
                         path: '' ,
-                        component: StructureMainComponent ,
+                        component: StructureOrgchartComponent ,
                         permissions: [
                             'portal_staff_listing'
                         ],
@@ -332,6 +333,14 @@ export const getRoutes = () => {
                         name: "StructureImage" ,
                         path: 'image' ,
                         component: StructureMainComponent ,
+                        permissions: [
+                            'portal_staff_listing'
+                        ],
+                    },
+                    {
+                        name: "StructureOrgchart" ,
+                        path: 'orgchart' ,
+                        component: StructureOrgchartComponent ,
                         permissions: [
                             'portal_staff_listing'
                         ],
