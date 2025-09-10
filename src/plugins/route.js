@@ -481,7 +481,6 @@ export const getRoutes = () => {
             }
         ]
         routers = routers.filter( ( router ) => hasPermission( router.permissions ) )
-        console.log( routers )
     }else{
         routers = [
             { 
@@ -596,8 +595,5 @@ export const getRoutes = () => {
         // will match everything and put it under `$route.params.pathMatch`
         { path: '/:pathMatch(.*)*', name: 'NotFound', component: Page404 }    
     )
-
-    console.log( routers )
-
     return routers
 }

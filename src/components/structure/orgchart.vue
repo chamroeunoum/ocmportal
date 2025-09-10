@@ -77,12 +77,9 @@
 
 import * as d3 from 'd3'
 import { OrgChart } from 'd3-org-chart'
-import { reactive ,ref } from 'vue'
+import { onMounted, reactive ,ref } from 'vue'
 import { useStore } from 'vuex'
-import { useNotification , useDialog, selectDark } from 'naive-ui'
 import Frame4Corner from './../widgets/frame/corner4.vue'
-// import ActionForm from './modal/actions.vue'
-// import AddChildOrganizationForm from './modal/addChild.vue'
 import ocmLogoUrl from './../../assets/logo.svg'
 import ocmLogoUrlPng from './../../assets/logo.png'
 
@@ -97,61 +94,47 @@ export default {
     // ActionForm ,
     // AddChildOrganizationForm
   },
-  data() {
-    return {
-      ocmLogoUrl ,
-      ocmLogoUrlPng,
-      model: {
-        name: "organizations" ,
-        title: "រចនាសម្ព័ន្ធក្រសួង"
-      },
-      drawerHelper : false ,
-      index : 0 ,
-      chart : null ,
-      selectedNode: {
-        id: 0 ,
-        parentId: "" ,
-        name: "" ,
-        image: "https://picsum.photos/200/300" ,
-        desp: "" ,
-        leader: []
-      } ,
-      nodeVal: {
-        id: 0 ,
-        parentId: "" ,
-        name: "" ,
-        image: "https://picsum.photos/200/300" ,
-        desp: "" ,
-        leader: []
-      },
-      organizationModal : false ,
-      childOrganizationModal : false ,
-      dataFlattened: [],
-      chart: null ,
-      total_jobs_in_each_organization: [] ,
-      loading: true 
-    };
-  },
-  mounted() {
-    this.drawingOrgchart()
-  },
-  methods: {
-    drawingOrgchart(){
-      // this.$store.dispatch('regulator/getChildDocument').then( res => {
-      //   console.log( res.data );
-      // });
-      /**
-       * Get CSV
-       */
-      // this.$store.dispatch('organizations/listByParent',{
-      this.$store.dispatch('organization/getStructure' , { organization_structure_id : 1 },{
+  setup(){
+
+    const store = useStore()
+
+    const organizationStructure = ref([])
+    function readOrganizationStructure(children){
+      return children.map( (child) => {
+        let parent = [{
+          // Fields use by the organization chart
+          id: child.id ,
+          parentId: parseInt( child.pid ) > 0 ? parseInt( child.pid ) : null ,
+          name: child.organization.name , 
+          desp: child.organization.desp ,
+          image: child.organization.image ,
+          // Field others
+          pid: child.pid ,
+          tpid: child.tpid ,
+          total_jobs: child.total_jobs ,
+          total_unit_jobs: child.total_unit_jobs ,
+          organization: child.organization ,
+          root_position: child.root_position ,
+          pdf: child.organization.pdf
+        }]
+        if( child.children != undefined && child.children != null ){
+          return parent.concat( readOrganizationStructure(child.children) )
+        }else{
+          return parent
+        }
+      }).flat(Infinity)
+    }
+
+    const dataFlattened = ref([])
+    const chart = ref(null)
+    const loading = ref(true)
+    function drawingOrgchart(){
+      store.dispatch('organization/getStructure' , { organization_structure_id : 1 },{
         search: '' ,
         perPage: 1000 , 
         page: 1 ,
         id: 2
       }).then( res => {
-          let _this = this 
-          
           const nodes = ref([])
           nodes.value.push( {
             id: res.data.record.id ,
@@ -160,37 +143,54 @@ export default {
             pid: res.data.record.pid  ,
             organization: res.data.record.organization ,
             image: res.data.record.root_position.image != "" && res.data.record.root_position.image != undefined ? res.data.record.root_position.image : ocmLogoUrlPng ,
-            desp: res.data.record.organization.desp ,
-            permissions : res.data.record.permissions ,
+            desp: res.data.record.desp ,
+            _centered: true ,
+            // Field others
+            pid: res.data.record.pid ,
+            tpid: res.data.record.tpid ,
+            total_jobs: res.data.record.total_jobs ,
+            total_unit_jobs: res.data.record.total_unit_jobs ,
+            organization: res.data.record.organization ,
+            root_position: res.data.record.root_position ,
+            pdf: res.data.record.organization.pdf,
             total_jobs : res.data.record.total_jobs ,
             total_unit_jobs : res.data.record.total_unit_jobs ,
-            _centered: true  
+            permissions : res.data.record.permissions ,
           } )
 
-          if( res.data.records != undefined && res.data.records.length > 0 ){
-            _this.total_jobs_in_each_organization = res.data.total_jobs_in_each_organization
-            for(const e of res.data.records ){
+          if( res.data.record.children != undefined && res.data.record.children != null ){
+            organizationStructure.value = readOrganizationStructure( res.data.record.children )
+            console.log( organizationStructure.value )
+            for(const e of organizationStructure.value ){
+              if( e.root_position == null ){
+                console.log( e )
+              }
               nodes.value.push({
                 id: e.id ,
                 parentId: parseInt( e.pid ) > 0 ? parseInt( e.pid ) : null ,
                 name: e.organization.name ,
                 pid: e.pid ,
                 organization: e.organization ,
-                image: e.root_position != null && e.root_position.image != "" && e.root_position.image != undefined ? e.root_position.image : null ,
+                image: e.root_position != null && e.root_position.image != "" && e.root_position.image != undefined ? e.root_position.image : ocmLogoUrl ,
                 desp: e.organization.desp ,
-                permissions : e.permissions ,
-                total_jobs : e.total_jobs ,
-                total_unit_jobs : e.total_unit_jobs
+                // Field others
+                pid: e.pid ,
+                tpid: e.tpid ,
+                total_jobs: e.total_jobs ,
+                total_unit_jobs: e.total_unit_jobs ,
+                organization: e.organization ,
+                root_position: e.root_position ,
+                pdf: e.organization.pdf
               })
             }
           }
 
-          _this.dataFlattened = nodes.value
-          _this.dataFlattened.columns = 'id,name,image,parentId,desp'
-          _this.chart = new OrgChart()
+          dataFlattened.value = nodes.value
+          dataFlattened.value.columns = 'id,name,image,parentId,desp'
+          chart.value = new OrgChart()
           .container('.chart-container')
           .data( 
-            this.dataFlattened
+            dataFlattened.value
           )
           .svgHeight(window.innerHeight - 55)
           .initialZoom(0.8)
@@ -222,32 +222,9 @@ export default {
           })
           .nodeUpdate(function (node, i, arr) {
               d3.select(this).on('click.node', (event, d, i) => {
-                _this.chart.setCentered( d.data.id +'' ).render()
+                chart.setCentered( d.data.id +'' ).render()
               })
           })
-          // .connections(
-          //   [
-          //       { id: 1, from: "O-6067", to: "O-6068", label: "Directly Reports To" },
-          //       { id: 2, from: "O-6070", to: "O-6066", label: "Reports To" },
-          //       { id: 3, from: "O-6088", to: "O-6069", label: "They were coworkers once" },
-          //       { id: 3, from: "O-6164", to: "O-6070", label: "Possible conflicts of interest" }
-          //   ],
-          // )
-          // .nodeContent(function (d, i, arr, state) {
-          //   return `<div style="padding:0px">
-              
-          //     ${state.layout == 'top' && state.compact && d.flexCompactDim && (d.flexCompactDim[0] || d.flexCompactDim[0] == 1) ? ` <div style="border:1px solid black;opacity:0.5;margin-left:${-(d.flexCompactDim[0] / 2 - d.width) / 2 + state.compactMarginPair(d) / 4}px;width:${d.flexCompactDim[0]}px;height:${d.flexCompactDim[1]}px;z-index:-1;position:absolute;background-color:red"></div>` : ''}
-          //     ${state.layout == 'bottom' && state.compact && d.flexCompactDim && (d.flexCompactDim[0] || d.flexCompactDim[0] == 1) ? ` <div style="border:1px solid black;opacity:0.5;margin-top:${-d.flexCompactDim[1] + d.height}px;margin-left:${-(d.flexCompactDim[0] / 2 - d.width) / 2 + state.compactMarginPair(d) / 4}px;width:${d.flexCompactDim[0]}px;height:${d.flexCompactDim[1]}px;z-index:-1;position:absolute;background-color:red"></div>` : ''}
-          //     ${state.layout == 'left' && state.compact && d.flexCompactDim && (d.flexCompactDim[0] || d.flexCompactDim[0] == 1) ? ` <div style="border:1px solid black;opacity:0.5;margin-top:${-(d.flexCompactDim[0]/2-d.height)/2+ state.compactMarginPair(d) / 4}px;margin-left:${0}px;width:${d.flexCompactDim[1]}px;height:${d.flexCompactDim[0]}px;z-index:-1;position:absolute;background-color:red"></div>` : ''}
-          //     ${state.layout == 'right' && state.compact && d.flexCompactDim && (d.flexCompactDim[0] || d.flexCompactDim[0] == 1) ? ` <div style="border:1px solid black;opacity:0.5; margin-top:${-(d.flexCompactDim[0]/2-d.height)/2+ state.compactMarginPair(d) / 4}px;margin-left:${d.width-d.flexCompactDim[1]}px;width:${d.flexCompactDim[1]}px;height:${d.flexCompactDim[0]}px;z-index:-1;position:absolute;background-color:red"></div>` : ''}
-              
-          //     <img src="${d.data.image}"  style="border-radius:100px;width:60px;height:60px;" />
-          //     ID: ${d.data.id} <br>
-          //     Children Direct:${d.data._directSubordinates}<br>
-          //     Children Total:${d.data._totalSubordinates}
-          //   </div>`;
-          // })
-          // Commentable
           .nodeHeight(d => 100)
           .nodeWidth(d => {
               return 400
@@ -256,12 +233,6 @@ export default {
           .onNodeClick( d => {
             this.selectedNode = this.dataFlattened.find( node => node.id == d )
             this.organizationModal = true
-            // this.selectedNode = {
-            //   id: node.data.id ,
-            //   name: node.data.name ,
-            //   image: node.data.image ,
-            //   pid: node.data.pid
-            // }
             /**
              * Show drawer for adding
              */
@@ -274,7 +245,7 @@ export default {
           .buttonContent(({ node, state }) => {
             return `<div class="border border-gray-300 bg-white rounded-md flex flex-row h-6 font-bold text-blue-500" >
               <svg class="w-4" style="margin: 2px 5px auto 5px; " xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M9 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H10v1a5 5 0 0 1 5 5v1h1a2 2 0 0 1 2 2v4a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-4a2 2 0 0 1 2-2h1v-1a5.002 5.002 0 0 1 4-4.9V2.5zm7 9.5h-1.5a.5.5 0 0 1-.5-.5V10a4 4 0 0 0-8 0v1.5a.5.5 0 0 1-.5.5H4a1 1 0 0 0-1 1v4h5v-2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2h5v-4a1 1 0 0 0-1-1zM6 13.5a.5.5 0 0 0-1 0v2a.5.5 0 0 0 1 0v-2zm9 0a.5.5 0 0 0-1 0v2a.5.5 0 0 0 1 0v-2zM8.5 9a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 1 0v-2a.5.5 0 0 0-.5-.5zm3.5.5a.5.5 0 0 0-1 0v2a.5.5 0 0 0 1 0v-2zM9 17h2v-2H9v2z" fill="currentColor"></path></g></svg>
-              <div class="" style="margin: 1px 5px auto 5px; " >${ _this.$toKhmer( node.data._directSubordinates ) }</div>
+              <div class="" style="margin: 1px 5px auto 5px; " >${ ( node.data._directSubordinates ) }</div>
               </div>`
           })
           .linkUpdate(function (d, i, arr) {
@@ -312,7 +283,7 @@ export default {
                             `<!-- Total staffs of each positions within the organization -->
                             <div style="position: absolute; right: 5px; bottom: -4px; border: 1px solid #CCC; background-color: #FFF; color:#716E7B; border-radius: 5px; height: 22px; padding: 2px; float: left;" >
                               <svg class="text-blue-600" style=" float: left; width: 11px; height: 11px; margin: 2px 5px auto 5px; display: inline-block; font-size: 12px ;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 448 512"><path d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0S96 57.3 96 128s57.3 128 128 128zm95.8 32.6L272 480l-32-136l32-56h-96l32 56l-32 136l-47.8-191.4C56.9 292 0 350.3 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-72.1-56.9-130.4-128.2-133.8z" fill="currentColor"></path></svg>
-                              <div class="text-blue-600" style=" float: right; font-size: 11px ; margin: 0px 5px 0px 0px; " >` + _this.$toKhmer( d.data.total_unit_jobs ) + `</div>
+                              <div class="text-blue-600" style=" float: right; font-size: 11px ; margin: 0px 5px 0px 0px; " >` + ( d.data.total_unit_jobs ) + `</div>
                             </div>`
                             : ''
                         )
@@ -323,7 +294,7 @@ export default {
                             `<!-- Total Staffs in the whole organization structure -->
                             <div style="position: absolute; left: 5px; bottom: -4px; border: 1px solid #CCC; background-color: #FFF; color:#716E7B; border-radius: 5px; height: 22px; padding: 2px; float: left;" >
                               <svg class="text-blue-600" style=" float: left; width: 11px; height: 11px; margin: 2px 5px auto 5px; display: inline-block; font-size: 12px ;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M12.475 8.014a1 1 0 0 1 .993.884l.007.116v4.368a3.484 3.484 0 0 1-6.964.19l-.005-.19V9.014a1 1 0 0 1 .883-.993l.117-.007h4.969zm0 1h-4.97v4.368a2.484 2.484 0 0 0 4.964.163l.006-.163V9.014zm-6.701-1a1.988 1.988 0 0 0-.26.82l-.008.18h-2.49v3.74a1.856 1.856 0 0 0 2.618 1.693c.08.329.196.644.344.94a2.856 2.856 0 0 1-3.957-2.466l-.004-.168V9.014a1 1 0 0 1 .883-.993l.117-.007h2.757zm8.433 0h2.784a1 1 0 0 1 .993.884l.007.116v3.74a2.855 2.855 0 0 1-3.984 2.624c.148-.298.264-.613.343-.943a1.856 1.856 0 0 0 2.635-1.536l.006-.145v-3.74h-2.516l-.006-.149a1.989 1.989 0 0 0-.262-.851zM9.988 2.989a2.227 2.227 0 1 1 0 4.455a2.227 2.227 0 0 1 0-4.455zm4.988.628a1.913 1.913 0 1 1 0 3.827a1.913 1.913 0 0 1 0-3.827zm-9.96 0a1.913 1.913 0 1 1 0 3.827a1.913 1.913 0 0 1 0-3.827zm4.972.372a1.227 1.227 0 1 0 0 2.455a1.227 1.227 0 0 0 0-2.455zm4.988.628a.913.913 0 1 0 0 1.827a.913.913 0 0 0 0-1.827zm-9.96 0a.913.913 0 1 0 0 1.827a.913.913 0 0 0 0-1.827z" fill="currentColor"></path></g></svg>
-                              <div class="text-blue-600" style=" float: right; font-size: 11px ; margin: 0px 5px 0px 0px; " >` + _this.$toKhmer( d.data.total_jobs ) + `</div>
+                              <div class="text-blue-600" style=" float: right; font-size: 11px ; margin: 0px 5px 0px 0px; " >` + ( d.data.total_jobs ) + `</div>
                             </div>`
                             : ''
                         )+
@@ -332,37 +303,13 @@ export default {
           .render()
           // .expandAll()
           .fit()
-          this.loading = false
+          loading.value = false
         // }) // Finish building chart
       }).catch( err => { console.log( err ) } );
 
-    },
-    downloadPdf() {
-      this.chart.exportImg({
-          save: false,
-          onLoad: (base64 => {
-              var pdf = new jspdf.jsPDF();
-              var img = new Image()
-              img.src = base64;
-              img.onload = function () {
-                  pdf.addImage(img, 'JPEG', 5, 5, 595 / 3, img.height / img.width * 595 / 3);
-                  pdf.save('chart.pdf');
-              }
-          })
-      })
-    },
-    changeLayout(){
-      this.chart.layout(["right","bottom","left","top"][this.index++%4]).render().fit()
-    },
-    beforeUpload(data){
-      if (data.file.file?.type !== "image/png") {
-        message.error(
-          "Only upload picture files in png format, please re-upload."
-        );
-      }
-      return false;
-    }, 
-    addChild(){
+    }
+
+    function addChild(){
       this.$store.dispatch( 'organizations/addchild',{
         name: this.childNode.name ,
         // document_id : 0 , // Id of the document that this record despribe
@@ -396,69 +343,32 @@ export default {
             image: "" ,
             desp: ''
           })
-
-          // notify.success({
-          //   title: 'រក្សារទុកព័ត៌មាន' ,
-          //   despription: res.data.message ,
-          //   duration: 3000
-          // })
-          console.log( res.data.message )
         }else{
-          // notify.error({
-          //   title: 'រក្សារទុកព័ត៌មាន' ,
-          //   despription: res.data.message ,
-          //   duration: 3000
-          // })
           console.log( res.data.message )
         }
       }).catch( err => {
         console.log( err )
       })
       this.drawerHelper = false 
-    },
-    linkRegulator(){
-      this.$store.dispatch('regulator/linkDocument',{
-        id: this.selectedNode.id ,
-        document_id : 0 , // Id of the document that this record despribe
-      }).then( res => {
-        console.log( res.data )
-        this.drawerHelper = false
-        this.drawingOrgchart()
-      }).catch( err => {
-        console.log( err )
-      });
-    },
-    onCloseChildOrganizationModal(record){
-      console.log( "on close child organization modal")
-      this.chart.render()
-      this.childOrganizationModal = false
-    },
-    onCloseOrganizationModel(record){
-      // this.dataFlattened = res.data.records
-      // this.dataFlattened.columns = 'id,name,image,parentId,desp,staffs,leader'
-
-      // console.log( this.dataFlattened.find( node => node.id == record.id ) )
-      // this.selectedNode = record
-      // this.chart.setExpanded(record.id,false).render()
-      // this.chart.setCentered(record.id).render()
-      console.log( "Render chart" )
-      this.chart.render()
-      // this.drawingOrgchart()
-      // console.log( res.data )
-      // this.drawerHelper = false
-      this.organizationModal = false
-    },
-    openChildOrganization(){
-      alert('me')
     }
-  },
-  created() {
-    // d3.csv(
-    //   'https://raw.githubusercontent.com/bumbeishvili/sample-data/main/org.csv'
-    // ).then(d => {
-    //   console.log('fetched data');
-    //   this.data = d;
-    // });
+
+    onMounted(()=>{
+      drawingOrgchart()
+    })
+
+    return {
+      ocmLogoUrl ,
+      ocmLogoUrlPng,
+      model: {
+        name: "organizations" ,
+        title: "រចនាសម្ព័ន្ធក្រសួង"
+      },
+      chart ,
+      dataFlattened,
+      chart,
+      loading ,
+      organizationStructure
+    }
   }
 }
 

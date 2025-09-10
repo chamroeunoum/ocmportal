@@ -6,13 +6,11 @@ export default {
   install(app, options = {}) {
     app.config.globalProperties.$toKhmer = ( str ) => {
       str = str != null && str != undefined ? str.toString().trim() : ''
-      console.log( str + " => ")
       if( str.length > 0 ){
         for(let i in numbers.latin){
           str = str.replaceAll( numbers.latin[i] , numbers.khmer[i] )
         }
       }
-      console.log( str + " <= ")
       return str
     }
   }
