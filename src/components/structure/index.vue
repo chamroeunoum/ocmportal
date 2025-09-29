@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen absolute left-40 top-12 right-0 flex flex-wrap" >
+  <div class="min-h-screen absolute left-40 top-0 right-0 flex flex-wrap pt-12" >
     <!-- <router-view ></router-view> -->
     <router-view v-if="$hasPermission('portal_staff_listing')" v-slot="{ Component }">
       <transition :name="$route.meta.transition || 'slide-fade'">

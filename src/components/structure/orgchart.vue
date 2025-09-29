@@ -1,54 +1,178 @@
 <template>
   <div class="relative w-full " >
-    <!-- Buttons -->
-    <!-- <div v-if="false" class="action-buttons " style="margin:0 100px" >
-      <button @click='chart.setExpanded("1").render()' class="simptip-position-bottom border border-gray-300 py-2 px-4 rounded m-2 " >Expand 1</button>
-
-      <button @click='chart.setExpanded("1",false).render()' class="simptip-position-bottom border border-gray-300 py-2 px-4 rounded m-2 " >Collapse 1</button>
-
-      <button @click='chart.addNode({id:"5",parentId:"1",name:"ក្រសួងថ្មី",image:"https://scontent.fpnh11-1.fna.fbcdn.net/v/t39.30808-1/272989966_243037994668044_1336394919081446684_n.jpg?stp=dst-jpg_p200x200&_nc_cat=101&ccb=1-7&_nc_sid=c6021c&_nc_ohc=YFBkZNzaqLkAX-WexVW&_nc_ht=scontent.fpnh11-1.fna&oh=00_AfBWCY8Gms9RVLWbKvQlJsdtlOZvVFjs32HHnQlFRixw3g&oe=639809C4"})' class="simptip-position-bottom border border-gray-300 py-2 px-4 rounded m-2 " >Add node as roots' child</button>
-      
-      <button @click='chart.addNode({id:"6",parentId:"1",name:"ក្រសួងថ្មី ១",_centered:true})' class="simptip-position-bottom border border-gray-300 py-2 px-4 rounded m-2 " >Insert node at 5-th to 1</button>
-
-      <button @click='chart.removeNode("2")' class="simptip-position-bottom border border-gray-300 py-2 px-4 rounded m-2 " >Remove 2</button>
-
-      <button @click='chart.fit()' class="simptip-position-bottom border border-gray-300 py-2 px-4 rounded m-2 " >Fit</button>
-
-      <button @click='changeLayout()' class="simptip-position-bottom border border-gray-300 py-2 px-4 rounded m-2 " >Swap Layouts</button>
-
-      <button @click='chart.setCentered("1").render()' class="simptip-position-bottom border border-gray-300 py-2 px-4 rounded m-2 " >Center O-6162 </button>
-
-      <button @click='chart.setHighlighted("1").render()' class="simptip-position-bottom border border-gray-300 py-2 px-4 rounded m-2 " >Highlight O-6162 </button>
-
-      <button @click='chart.setUpToTheRootHighlighted("1").render()' class="simptip-position-bottom border border-gray-300 py-2 px-4 rounded m-2 " >Highlight O-6162 to root </button> 
-
-      <button @click='chart.clearHighlighting()' class="simptip-position-bottom border border-gray-300 py-2 px-4 rounded m-2 " >Clear highlighting </button>
-
-      <button @click='chart.fullscreen()' class="simptip-position-bottom border border-gray-300 py-2 px-4 rounded m-2 " >Full Screen </button>
-
-      <button @click='chart.zoomIn()' class="simptip-position-bottom border border-gray-300 py-2 px-4 rounded m-2 " >Zoom In </button>
-
-      <button @click='chart.zoomOut()' class="simptip-position-bottom border border-gray-300 py-2 px-4 rounded m-2 " >Zoom Out</button>
-
-      <button @click='chart.exportImg()' class="simptip-position-bottom border border-gray-300 py-2 px-4 rounded m-2 " >Expo Current Image</button>
-
-      <button @click='chart.exportSvg()' class="simptip-position-bottom border border-gray-300 py-2 px-4 rounded m-2 " >Export SVG</button>
-
-      <button @click='chart.expandAll()' class="simptip-position-bottom border border-gray-300 py-2 px-4 rounded m-2 " >Expand All</button>
-
-      <button @click='chart.connections([{from:"O-6067",to:"O-6070",label:"Conflicts of interest"}]).render()' class="simptip-position-bottom border border-gray-300 py-2 px-4 rounded m-2 " >Multi Node Connections</button>
-      
-      <button @click='downloadPdf()' class="simptip-position-bottom border border-gray-300 py-2 px-4 rounded m-2 " >Download PDF</button>
-
-    </div> -->
-
-    <!-- <a href="https://github.com/bumbeishvili/d3-organization-chart">
-    <img style="position:fixed;top:0;right:0;border:0;z-index:2;" width="149" height="149"
-        src="https://bumbeishvili.github.io/d3-tooltip/forkme.png" alt="Fork me on GitHub">
-    </a> -->
-    <!-- Chart -->
     <Transition name="slide-fade" >
       <div v-if="dataFlattened" class="chart-container border bg-gray-50 fixed left-40 top-12 right-0 bottom-0 " > </div>
+    </Transition>
+    <Transition name="slide-fade" >
+      <div v-show="table.loading == false && ( Array.isArray( table.records.matched ) && table.records.matched.length != undefined && table.records.matched.length > 0 )" 
+        id="orgchart_officers_list" 
+        class="absolute flex flex-wrap left-0 top-10 right-0 bottom-0 pb-12 bg-gray-100 bg-opacity-80 shadow overflow-scroll" >
+        <!-- Officer Actions End -->
+        <div v-if="Array.isArray( table.records.matched ) && table.records.matched.length > 0 " class="vcb-thumbnail mb-12 w-full" >
+          <div v-for="(record, index) in table.records.matched" :key='index' class="item" >
+            <div class="content" >
+              <div v-if="record.image != false && record.image != null && record.image != undefined " class="image bg-cover bg-no-repeat " :style=" 'background-image: url(' + record.image +');' " ></div>
+              <div v-if="record.image == false || record.image == null || record.image == undefined " class="image bg-contain bg-center bg-no-repeat " :style=" 'background-image: url('+ocmLogoUrl+');' " ></div>
+              <div class="flex flex-wrap " >
+                <div class="w-full py-2" >
+                  <div v-if="record.countesy != undefined && record.countesy != null " class="w-full text-center font-moul mr-2" >{{  record.countesy.name }}</div>
+                  <div v-if="record.people != undefined && record.people != null " class="w-full text-center font-moul leading-6 tracking-wider" >{{ record.people.lastname + " " + record.people.firstname }}<br/>{{ record.people.enlastname + " " + record.people.enfirstname }}</div>
+                </div>
+                <div class="w-full flex flex-wrap justify-between text-gray-600" >
+                  <div class="w-1/2 flex flex-wrap " >
+                    <div v-if=" ( record.official_date != undefined && record.official_date != null ) " class="text-left text-xxs mt-1 leading-5 tracking-wider w-full" >{{ $toKhmer( dateFormat( new Date( record.official_date ) , 'dd-mm-yyyy' ) ) }}<br/></div>
+                    <div v-if=" record.current_job != undefined && record.current_job != null " class="text-left text-xxs leading-5 tracking-wider w-full" >{{ 
+                      record.current_job.organization_structure_position != undefined && record.current_job.organization_structure_position != null 
+                        ? record.current_job.organization_structure_position.position != undefined && record.current_job.organization_structure_position.position != null 
+                          ? record.current_job.organization_structure_position.position.name 
+                          : '' 
+                        : '' 
+                    }}</div>
+                  </div>
+                  <div v-if=" record.current_job != undefined && record.current_job != null " class="w-1/2 text-right text-xxs my-1  leading-5 tracking-wide" >{{ 
+                    record.current_job.organization_structure_position != undefined && record.current_job.organization_structure_position != null 
+                        ? record.current_job.organization_structure_position.organization_structure != undefined && record.current_job.organization_structure_position.organization_structure != null 
+                          ? record.current_job.organization_structure_position.organization_structure.organization.name 
+                          : 'ok' 
+                        : 'no'  
+                  }}</div>
+                </div>
+                <div v-if="record.card != null && record.card != undefined && record.card.id > 0" class="absolute left-1 top-1 text-vcb-xs text-left font-bold leading-6 tracking-wider" >{{ $toKhmer( record.card.number ) }}</div>
+                <div v-if="(record.card == null || record.card == undefined ) && ( record.organization != undefined && record.organization != null ) " class="absolute left-1 top-1 text-xxs text-left font-bold leading-6 tracking-wider" v-html=" $toKhmer( ( record.organization != undefined && record.organization.prefix != null && record.organization.prefix != '' ? record.organization.prefix + '-'  : '' ) + ( record.id + '' ).padStart( 4 , '0' ) )" ></div>
+                <div v-if="record.rank != null && record.rank != undefined " class="absolute left-1 top-5 text-vcb-xs text-left font-bold leading-6 tracking-wider text-xxs " v-html=" $toKhmer( record.rank.prefix + ' ' + record.rank.name )" ></div>
+                <div v-if=" record.current_job != undefined && record.current_job != null " class="absolute right-10 top-2 w-1 h-1 bg-green-400 rounded-full " ></div>
+              </div>
+              <thumbnail-actions-form v-bind:model="model" v-bind:record="record" :onClose="closeActions" />
+            </div>
+          </div>
+        </div>
+        <!-- Pagination of crud -->
+        <div class="fixed left-0 right-0 bottom-8 flex flex-wrap" >
+          <Transition name="slide-fade" >
+            <!-- This pagination is for the media side with from Medium up -->
+            <div v-if="table.pagination.totalPages > 1" class="vcb-table-pagination bg-blue-300 mx-auto">
+              <n-tooltip trigger="hover">
+                <template #trigger>
+                  <n-popselect 
+                    trigger="click"
+                    v-model:value="table.pagination.perPage"
+                    :options="[
+                      { label: 5 , value: 5 } ,
+                      { label: 10 , value: 10 } ,
+                      { label: 20 , value: 20 } ,
+                      { label: 30 , value: 30 } ,
+                      { label: 40 , value: 40 } ,
+                      { label: 50 , value: 50 } ,
+                      { label: 100 , value: 100 } ,
+                      { label: 200 , value: 200 } ,
+                      { label: 500 , value: 500 } ,
+                    ]"
+                    size="small"
+                    scrollable
+                    @update:value="goTo(1)"
+                  >
+                    <div class="cursor-pointer font-pvh rounded-full p-2 px-4 border border-gray-200 text-blue-600" >{{ $toKhmer( table.pagination.perPage ) }}</div>
+                  </n-popselect>
+                </template>
+                ចំនួនព័ត៌មានបង្ហាញម្ដង
+              </n-tooltip>
+              <!-- Information -->
+              <div class="vcb-table-pagination-info font-pvh text-blue-600 p-1 mx-2" >{{ table.pagination.totalRecords > 0 ? $toKhmer( table.pagination.totalRecords ) + " ឯកសារ" : "" }}</div>
+              <div class="vcb-table-pagination-info font-pvh text-blue-600 p-1 mx-2" >{{ table.pagination.totalPages > 0 ? $toKhmer( table.pagination.totalPages ) + " ទំព័រ" : "" }}</div>
+              <!-- Pages (7) -->
+              <div v-for="(page, index) in table.pagination.buttons" :key="index" :class=" (table.pagination.page == page ? ' vcb-pagination-page-active ' : ' vcb-pagination-page ' )" @click="table.pagination.page == page ? false : goTo(page) " >{{ $toKhmer( page ) }}</div>
+              <!-- First -->
+              <div v-if="table.pagination.page > 1 " class="vcb-pagination-page p-1" @click="first()" >
+                <svg class="w-5 h-5 mx-auto" 
+                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><path d="M18.29 17.29a.996.996 0 0 0 0-1.41L14.42 12l3.88-3.88a.996.996 0 1 0-1.41-1.41L12.3 11.3a.996.996 0 0 0 0 1.41l4.59 4.59c.38.38 1.01.38 1.4-.01z" fill="currentColor"></path><path d="M11.7 17.29a.996.996 0 0 0 0-1.41L7.83 12l3.88-3.88a.996.996 0 1 0-1.41-1.41L5.71 11.3a.996.996 0 0 0 0 1.41l4.59 4.59c.38.38 1.01.38 1.4-.01z" fill="currentColor"></path></svg>
+              </div>
+              <!-- Previous -->
+              <Transition name="slide-fade" >
+                <div v-if="table.pagination.page > 1 " class="vcb-pagination-page p-1" @click="previous()" >
+                  <svg class="w-5 h-5 mx-auto" 
+                  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><path d="M14.71 15.88L10.83 12l3.88-3.88a.996.996 0 1 0-1.41-1.41L8.71 11.3a.996.996 0 0 0 0 1.41l4.59 4.59c.39.39 1.02.39 1.41 0c.38-.39.39-1.03 0-1.42z" fill="currentColor"></path></svg>
+                </div>
+              </Transition>
+              <!-- Next -->
+              <Transition name="slide-fade" >
+                <div v-if="table.pagination.page < table.pagination.totalPages " class="vcb-pagination-page p-1" @click="next()" >
+                  <svg class="w-5 h-5 mx-auto" 
+                  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><path d="M9.29 15.88L13.17 12L9.29 8.12a.996.996 0 1 1 1.41-1.41l4.59 4.59c.39.39.39 1.02 0 1.41L10.7 17.3a.996.996 0 0 1-1.41 0c-.38-.39-.39-1.03 0-1.42z" fill="currentColor"></path></svg>
+                </div>
+              </Transition>
+              <!-- Last -->
+              <div v-if="table.pagination.page < table.pagination.totalPages "  class="vcb-pagination-page p-1" @click="last()" >
+                <svg class="w-5 h-5 mx-auto" 
+                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><path d="M5.7 6.71a.996.996 0 0 0 0 1.41L9.58 12L5.7 15.88a.996.996 0 1 0 1.41 1.41l4.59-4.59a.996.996 0 0 0 0-1.41L7.12 6.71c-.39-.39-1.03-.39-1.42 0z" fill="currentColor"></path><path d="M12.29 6.71a.996.996 0 0 0 0 1.41L16.17 12l-3.88 3.88a.996.996 0 1 0 1.41 1.41l4.59-4.59a.996.996 0 0 0 0-1.41L13.7 6.7c-.38-.38-1.02-.38-1.41.01z" fill="currentColor"></path></svg>
+              </div>
+              <!-- Go to -->
+              <!-- Total per page -->
+            </div>
+          </Transition>
+        </div>
+        <!-- Officer Actions -->
+        <div class="fixed left-40 top-12 right-0 flex title-bar border-b border-gray-200 bg-white h-10 ">
+          <!-- Title of crud -->
+          <div class="flex w-90 h-10 py-1 title px-4" >
+            <div class="font-moul leading-9" v-html="selectedOrganization != null ? selectedOrganization.organization.name : '' " ></div>
+          </div>
+          <!-- Actions button of the crud -->
+          <div class="flex-grow action-buttons flex-row-reverse flex px-4">
+            <div class="mt-1 ml-2 flex flex-wrap">
+              <n-tooltip trigger="hover">
+                <template #trigger>
+                  <svg 
+                  @click="closeOfficersPanel" 
+                  class="ml-1 w-7 h-7 p-1 mt-1 bg-white rounded-full border border-gray-300 cursor-pointer hover:text-green-500 duration-300" 
+                  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M8.658 4.527a.5.5 0 0 0-.316.948l1.158.386v1.14a.5.5 0 0 0 1 0V5.86l1.158-.386a.5.5 0 1 0-.316-.948L10 4.974l-1.342-.447zm1.77-2.46a1.5 1.5 0 0 0-.855 0l-2.865.85a.99.99 0 0 0-.708.95v4.26a1 1 0 0 0 .715.96l2.792.829A.503.503 0 0 0 9.5 10v1H8a2 2 0 0 0-2 2v.05a2.5 2.5 0 1 0 1 0V13a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v.05a2.5 2.5 0 1 0 1 0V13a2 2 0 0 0-2-2h-1.5v-1a.506.506 0 0 0-.007-.085l2.792-.83A1 1 0 0 0 14 8.128V3.874a1 1 0 0 0-.715-.959l-2.858-.849zm-.57.958a.5.5 0 0 1 .284 0L13 3.874v4.254l-2.858.849a.5.5 0 0 1-.284 0L7 8.127V3.875l2.858-.85zM5 15.5a1.5 1.5 0 1 1 3 0a1.5 1.5 0 0 1-3 0zm8.5-1.5a1.5 1.5 0 1 1 0 3a1.5 1.5 0 0 1 0-3z" fill="currentColor"></path></g></svg>
+                </template>
+                បិទព័ត៌មានមន្ត្រី និងថ្នាក់ដឹកនាំ
+              </n-tooltip>
+            </div>
+            <div class="w-3/5 md:w-2/5 relative" >
+              <n-tooltip trigger="hover">
+                <template #trigger>
+                  <div class="w-full relative" >
+                    <input type="text" @keypress.enter="filterRecords(false)" v-model="table.search" class="bg-gray-100 px-2 h-8 my-1 w-full rounded border border-gray-200 focus:border-blue-600 hover:border-blue-600 duration-300" placeholder="ស្វែងរក" />
+                    <svg class="absolute right-1 top-2 w-6 h-6 text-gray-400  cursor-pointer" @click="filterRecords(false)" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M8.5 3a5.5 5.5 0 0 1 4.227 9.02l4.127 4.126a.5.5 0 0 1-.638.765l-.07-.057l-4.126-4.127A5.5 5.5 0 1 1 8.5 3zm0 1a4.5 4.5 0 1 0 0 9a4.5 4.5 0 0 0 0-9z" fill="currentColor"></path></g></svg>
+                  </div>
+                </template>
+                សូមបញ្ចូលពាក្យគន្លឹះដើម្បីស្វែងរក
+              </n-tooltip>
+            </div>
+            <!-- <div class="mt-1 mr-2 flex flex-wrap">
+              <n-tooltip v-if="$hasPermission('portal_staff_creating')" trigger="hover">
+                <template #trigger>
+                  <div @click="showCreateModal()" class="flex cursor-pointer hover:text-green-500 duration-300 ml-2 leading-8" >
+                    <svg class="w-7 h-7 mr-1 " xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M9 12h6"></path><path d="M12 9v6"></path></g></svg>
+                    មន្ត្រីមានអត្តលេខ
+                  </div>
+                </template>
+                មន្ត្រីរាជការមុខងារសាធារណៈ
+              </n-tooltip>
+              <n-tooltip v-if="$hasPermission('portal_staff_creating')" trigger="hover">
+                <template #trigger>
+                  <div @click="showCreateNonOfficerModal()" class="flex cursor-pointer hover:text-green-500 duration-300 ml-2 leading-8" >
+                    <svg class="w-7 h-7 mr-1 " xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M9 12h6"></path><path d="M12 9v6"></path></g></svg>
+                    មន្ត្រីគ្មានអត្តលេខ
+                  </div>
+                </template>
+                មន្ត្រីនយោបាយ
+              </n-tooltip> 
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </Transition>
+    <Transition name="slide-fade" >
+      <div v-if="table.loading" class="fixed flex h-screen left-40 top-0 right-0 bottom-0 bg-white bg-opacity-90">
+        <div class="flex mx-auto items-center">
+          <div class="spinner">
+            <svg class="animate-spin w-16 mx-auto text-blue-500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><path d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48s21.49-48 48-48s48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48s48-21.49 48-48s-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48s48-21.49 48-48s-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48s48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48s48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48s48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48s48-21.49 48-48s-21.491-48-48-48z" fill="currentColor"></path></svg>
+            <br/><br/>កំពុងអានមន្ត្រី...
+          </div>
+        </div>
+      </div>
     </Transition>
     <!-- Loading -->
     <Transition name="slide-fade" >
@@ -59,17 +183,8 @@
             <br/><br/>កំពុងអានអង្គការលេខ...
           </div>
         </div>
-        <!-- <div class="absolute top-2 right-2 cursor-pointer bg-white rounded-full " @click="closeTableLoading" >
-          <svg class="w-10 mx-auto text-red-500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><path d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192s192-86 192-192z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></path><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M320 320L192 192"></path><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M192 320l128-128"></path></svg>
-        </div> -->
       </div>
     </Transition>
-    <!-- Naive Drawer for child creation -->
-    <!-- 
-    <action-form v-bind:model="model" v-bind:record="selectedNode" v-bind:show="organizationModal" :onClose="onCloseOrganizationModel" />
-    <add-child-organization-form v-bind:model="model" v-bind:record="selectedNode" v-bind:show="childOrganizationModal" :onClose="onCloseChildOrganizationModal" />
-    -->
-    <!-- <Frame4Corner />  -->
   </div>
 </template>
 
@@ -82,6 +197,8 @@ import { useStore } from 'vuex'
 import Frame4Corner from './../widgets/frame/corner4.vue'
 import ocmLogoUrl from './../../assets/logo.svg'
 import ocmLogoUrlPng from './../../assets/logo.png'
+import ThumbnailActionsForm from '../officer/listing/actions/thumbnail-action.vue'
+import dateFormat from 'dateformat'
 
 /**
  * CRUD component form
@@ -91,8 +208,7 @@ export default {
   name: "OrganizationOrgchart" ,
   components: { 
     Frame4Corner ,
-    // ActionForm ,
-    // AddChildOrganizationForm
+    ThumbnailActionsForm
   },
   setup(){
 
@@ -223,6 +339,8 @@ export default {
         })
         .nodeUpdate(function (node, i, arr) {
             d3.select(this).on('click.node', (event, d, i) => {
+              selectedOrganization.value = d.data
+              getOfficers()
               chart.value.setCentered( d.data.id +'' ).render()
             })
         })
@@ -232,13 +350,12 @@ export default {
         })
         .childrenMargin(d => 50)
         .onNodeClick( d => {
-          this.selectedNode = this.dataFlattened.find( node => node.id == d )
-          this.organizationModal = true
+          // this.selectedNode = this.dataFlattened.find( node => node.id == d )
+          // this.organizationModal = true
           /**
            * Show drawer for adding
            */
-          this.nodeVal.pid = this.selectedNode.id 
-          this.drawerHelper = true 
+          // this.nodeVal.pid = this.selectedNode.id 
         })
         .compactMarginBetween(d => 35)
         .compactMarginPair(d => 30)
@@ -276,27 +393,27 @@ export default {
                       <div style="" class="text-center text-gray-600 p-4 pt-6 font-moul leading-7" > ${d.data.name} </div>
                       <!-- Position of the shape -->
                       <!-- <div style="color:#716E7B;margin: 3px 10px 5px 10px;font-size:12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;  text-align: center; ">OK</div> -->`+ 
-                      ( 
-                        parseInt( d.data.total_jobs_of_parent_position ) > 0
-                          ?
-                          `<!-- Total staffs of each positions within the organization -->
-                          <div style="position: absolute; right: 5px; bottom: -4px; border: 1px solid #CCC; background-color: #FFF; color:#716E7B; border-radius: 5px; height: 22px; padding: 2px; float: left;" >
-                            <svg class="text-blue-600" style=" float: left; width: 11px; height: 11px; margin: 2px 5px auto 5px; display: inline-block; font-size: 12px ;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 448 512"><path d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0S96 57.3 96 128s57.3 128 128 128zm95.8 32.6L272 480l-32-136l32-56h-96l32 56l-32 136l-47.8-191.4C56.9 292 0 350.3 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-72.1-56.9-130.4-128.2-133.8z" fill="currentColor"></path></svg>
-                            <div class="text-blue-600" style=" float: right; font-size: 11px ; margin: 0px 5px 0px 0px; " >` + toKhmer( parseInt( d.data.total_jobs_of_parent_position ) ) + `</div>
-                          </div>`
-                          : ''
-                      )
-                      +
-                      ( 
-                        parseInt( d.data.total_jobs ) > 0
-                          ?
-                          `<!-- Total Staffs in the whole organization structure -->
-                          <div style="position: absolute; left: 5px; bottom: -4px; border: 1px solid #CCC; background-color: #FFF; color:#716E7B; border-radius: 5px; height: 22px; padding: 2px; float: left;" >
-                            <svg class="text-blue-600" style=" float: left; width: 11px; height: 11px; margin: 2px 5px auto 5px; display: inline-block; font-size: 12px ;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M12.475 8.014a1 1 0 0 1 .993.884l.007.116v4.368a3.484 3.484 0 0 1-6.964.19l-.005-.19V9.014a1 1 0 0 1 .883-.993l.117-.007h4.969zm0 1h-4.97v4.368a2.484 2.484 0 0 0 4.964.163l.006-.163V9.014zm-6.701-1a1.988 1.988 0 0 0-.26.82l-.008.18h-2.49v3.74a1.856 1.856 0 0 0 2.618 1.693c.08.329.196.644.344.94a2.856 2.856 0 0 1-3.957-2.466l-.004-.168V9.014a1 1 0 0 1 .883-.993l.117-.007h2.757zm8.433 0h2.784a1 1 0 0 1 .993.884l.007.116v3.74a2.855 2.855 0 0 1-3.984 2.624c.148-.298.264-.613.343-.943a1.856 1.856 0 0 0 2.635-1.536l.006-.145v-3.74h-2.516l-.006-.149a1.989 1.989 0 0 0-.262-.851zM9.988 2.989a2.227 2.227 0 1 1 0 4.455a2.227 2.227 0 0 1 0-4.455zm4.988.628a1.913 1.913 0 1 1 0 3.827a1.913 1.913 0 0 1 0-3.827zm-9.96 0a1.913 1.913 0 1 1 0 3.827a1.913 1.913 0 0 1 0-3.827zm4.972.372a1.227 1.227 0 1 0 0 2.455a1.227 1.227 0 0 0 0-2.455zm4.988.628a.913.913 0 1 0 0 1.827a.913.913 0 0 0 0-1.827zm-9.96 0a.913.913 0 1 0 0 1.827a.913.913 0 0 0 0-1.827z" fill="currentColor"></path></g></svg>
-                            <div class="text-blue-600" style=" float: right; font-size: 11px ; margin: 0px 5px 0px 0px; " >` + toKhmer( d.data.total_jobs ) + `</div>
-                          </div>`
-                          : ''
-                      )+
+                      // ( 
+                      //   parseInt( d.data.total_jobs_of_parent_position ) > 0
+                      //     ?
+                      //     `<!-- Total staffs of each positions within the organization -->
+                      //     <div style="position: absolute; right: 5px; bottom: -4px; border: 1px solid #CCC; background-color: #FFF; color:#716E7B; border-radius: 5px; height: 22px; padding: 2px; float: left;" >
+                      //       <svg class="text-blue-600" style=" float: left; width: 11px; height: 11px; margin: 2px 5px auto 5px; display: inline-block; font-size: 12px ;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 448 512"><path d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0S96 57.3 96 128s57.3 128 128 128zm95.8 32.6L272 480l-32-136l32-56h-96l32 56l-32 136l-47.8-191.4C56.9 292 0 350.3 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-72.1-56.9-130.4-128.2-133.8z" fill="currentColor"></path></svg>
+                      //       <div class="text-blue-600" style=" float: right; font-size: 11px ; margin: 0px 5px 0px 0px; " >` + toKhmer( parseInt( d.data.total_jobs_of_parent_position ) ) + `</div>
+                      //     </div>`
+                      //     : ''
+                      // )
+                      // +
+                      // ( 
+                      //   parseInt( d.data.total_jobs ) > 0
+                      //     ?
+                      //     `<!-- Total Staffs in the whole organization structure -->
+                      //     <div style="position: absolute; left: 5px; bottom: -4px; border: 1px solid #CCC; background-color: #FFF; color:#716E7B; border-radius: 5px; height: 22px; padding: 2px; float: left;" >
+                      //       <svg class="text-blue-600" style=" float: left; width: 11px; height: 11px; margin: 2px 5px auto 5px; display: inline-block; font-size: 12px ;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M12.475 8.014a1 1 0 0 1 .993.884l.007.116v4.368a3.484 3.484 0 0 1-6.964.19l-.005-.19V9.014a1 1 0 0 1 .883-.993l.117-.007h4.969zm0 1h-4.97v4.368a2.484 2.484 0 0 0 4.964.163l.006-.163V9.014zm-6.701-1a1.988 1.988 0 0 0-.26.82l-.008.18h-2.49v3.74a1.856 1.856 0 0 0 2.618 1.693c.08.329.196.644.344.94a2.856 2.856 0 0 1-3.957-2.466l-.004-.168V9.014a1 1 0 0 1 .883-.993l.117-.007h2.757zm8.433 0h2.784a1 1 0 0 1 .993.884l.007.116v3.74a2.855 2.855 0 0 1-3.984 2.624c.148-.298.264-.613.343-.943a1.856 1.856 0 0 0 2.635-1.536l.006-.145v-3.74h-2.516l-.006-.149a1.989 1.989 0 0 0-.262-.851zM9.988 2.989a2.227 2.227 0 1 1 0 4.455a2.227 2.227 0 0 1 0-4.455zm4.988.628a1.913 1.913 0 1 1 0 3.827a1.913 1.913 0 0 1 0-3.827zm-9.96 0a1.913 1.913 0 1 1 0 3.827a1.913 1.913 0 0 1 0-3.827zm4.972.372a1.227 1.227 0 1 0 0 2.455a1.227 1.227 0 0 0 0-2.455zm4.988.628a.913.913 0 1 0 0 1.827a.913.913 0 0 0 0-1.827zm-9.96 0a.913.913 0 1 0 0 1.827a.913.913 0 0 0 0-1.827z" fill="currentColor"></path></g></svg>
+                      //       <div class="text-blue-600" style=" float: right; font-size: 11px ; margin: 0px 5px 0px 0px; " >` + toKhmer( d.data.total_jobs ) + `</div>
+                      //     </div>`
+                      //     : ''
+                      // )+
                     `</div>`;
         })
         .render()
@@ -344,12 +461,138 @@ export default {
       }).catch( err => {
         console.log( err )
       })
-      this.drawerHelper = false 
     }
 
     onMounted(()=>{
       drawingOrgchart()
     })
+
+    
+    const selectedOrganization = ref(null)
+    const table = reactive( {
+      loading: false ,
+      search: '' ,
+      records: {
+        all: [] ,
+        matched: []
+      },
+      columns: {
+        searchable: {
+          username: '' ,
+          firstname: '' ,
+          lastname: '' ,
+          email: '' ,
+          phone: '' ,
+          active: ''
+        },
+        format: {
+          username: '' ,
+          firstname: '' ,
+          lastname: '' ,
+          email: '' ,
+          phone: '' ,
+          active: ''
+        }
+      } ,
+      pagination: {
+        perPage: 20 ,
+        page: 1 ,
+        totalPages: 0 ,
+        totalRecords: 0 ,
+        start: 0 ,
+        end: 0 ,
+        buttons: []
+      }
+    })
+
+    function filterRecords(){
+      setTimeout( function(){
+        table.pagination.page = 1
+        getOfficers()
+      } , 500 )
+    }
+
+    /**
+     * Functions
+     */
+    function getOfficers(){
+      if( selectedOrganization.value != null && selectedOrganization.value.id != undefined && selectedOrganization.value.id > 0 ){
+        /**
+         * Clear time interval after calling
+         */
+        window.clearTimeout()
+        table.loading = true
+        store.dispatch('officer/list',{
+          search: table.search ,
+          perPage: table.pagination.perPage ,
+          page: table.pagination.page ,
+          positions: [] ,
+          organizations: [selectedOrganization.value.id ] ,
+          ids: []
+        }).then(res => {
+          table.records.all = table.records.matched = res.data.records
+          table.pagination = res.data.pagination
+          
+          var paginationNumberList = 10
+          if( ( table.pagination.page - ( parseInt( paginationNumberList / 2 ) + 1 ) ) < 1 ){
+            table.pagination.start = 1
+            table.pagination.end = table.pagination.totalPages > paginationNumberList ? paginationNumberList : table.pagination.totalPages
+          }
+          else{
+            table.pagination.start = table.pagination.page - parseInt( paginationNumberList / 2 )
+            table.pagination.end = table.pagination.page >= table.pagination.totalPages ? table.pagination.totalPages : table.pagination.page + parseInt( paginationNumberList / 2 )
+          }
+          /**
+           * Create pagination buttons
+           */
+          table.pagination.buttons = []
+          for(var i=table.pagination.start;i<=table.pagination.end;i++){
+            i <= table.pagination.totalPages ? table.pagination.buttons.push(i) : false
+          }
+
+          closeTableLoading()
+        }).catch( err => {
+          console.log( err )
+        })
+      }
+    }
+    
+    function closeTableLoading(){
+      table.loading = false
+    }
+
+    /**
+     * Pagination functions
+     */
+     function first(){
+      goTo( table.pagination.totalPages > 0 ? 1 : 0 )
+    }
+    function previous(){
+      goTo( table.pagination.page <= 1 ? 1 : table.pagination.page - 1 )
+    }
+    function next(){
+      goTo( table.pagination.page >= table.pagination.totalPages ? table.pagination.totalPages : table.pagination.page + 1 )
+    }
+    function last(){
+      goTo( table.pagination.totalPages > 0 ? table.pagination.totalPages : 0 )
+    }
+    function goTo(page){
+      table.pagination.page = page >= table.pagination.totalPages ? table.pagination.totalPages : ( page < 1 ? 1 : page)
+      getOfficers()
+    }
+    function updatePerpage(perPage){
+      table.pagination.perPage = perPage < 5 ? 5 : ( perPage > 100 ? 100 : perPgae )
+      table.pagination.page = 1
+      getOfficers()
+    }
+
+    function closeActions( actionStatus ){
+      if( parseInt( actionStatus ) > 0 ) getOfficers()
+    }
+
+    function closeOfficersPanel(){
+      table.records.all = table.records.matched = []
+    }
 
     return {
       ocmLogoUrl ,
@@ -362,7 +605,29 @@ export default {
       dataFlattened,
       chart,
       loading ,
-      organizationStructure
+      organizationStructure ,
+      dateFormat ,
+      closeOfficersPanel ,
+      closeActions ,
+      selectedOrganization ,
+      table ,
+      /**
+       * Table
+       */
+      filterRecords ,
+      /**
+       * Pagination functions
+       */
+      updatePerpage ,
+      goTo ,
+      previous ,
+      next ,
+      first , 
+      last ,
+      /**
+       * Loading overlay
+       */
+      closeTableLoading
     }
   }
 }
@@ -390,4 +655,33 @@ export default {
       line-height: 16px !important;
       text-align: left !important;
   }
+
+  .vcb-table-pagination-info {
+      @apply leading-7; 
+    }
+  .vcb-thumbnail {
+    @apply flex flex-wrap justify-center;
+  }
+  .vcb-thumbnail .item {
+    @apply xl:w-1/5 lg:w-1/4 md:w-1/3 sm:w-1/3 w-1/2 p-2 ;
+  }
+  .vcb-thumbnail .item .content {
+    @apply border rounded-lg hover:shadow duration-500 p-4 pt-8 relative hover:scale-105 transform-gpu bg-white hover:bg-yellow-100;
+  }
+  .vcb-thumbnail .item .content .image {
+    @apply border rounded-full border-gray-200 p-2 w-20 h-20 flex-none mx-auto overflow-hidden bg-white ;
+  }
+  .vcb-filters-panel {
+    @apply fixed left-0 top-10 right-0 bottom-0 bg-opacity-60 bg-white ;
+  }
+  .vcb-filters-panel .filter-title {
+    @apply w-full text-left p-4 bg-white rounded-lg ;
+  }
+  .vcb-filters-panel .filter-actions {
+    @apply w-full text-left p-4 flex flex-wrap justify-center;
+  }
+  .vcb-filters-panel .filter-actions .filter-action {
+    @apply p-2 m-2 bg-white rounded-lg shadow border border-gray-300 w-4/6 sm:w-2/5 md:w-1/3 lg:w-1/4 xl:w-2/6 ;
+  }
+
 </style>
