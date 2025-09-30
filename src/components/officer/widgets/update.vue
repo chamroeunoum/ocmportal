@@ -1145,7 +1145,7 @@ export default {
       if( v != undefined ){
         krobkhans.value = v.krobkhans
         if( krobkhanHandleUpdateCounter.value <= 1 ) {
-          selectedKrobKhan.value = props.record.rank.krobkhan
+          selectedKrobKhan.value = props.record.rank != null && props.record.rank != undefined ? props.record.rank.krobkhan : null 
         }
         if( v.krobkhans.find( k => k.krobkhan == selectedKrobKhan.value ) == undefined ){
           selectedKrobKhan.value = null

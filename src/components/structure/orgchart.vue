@@ -4,9 +4,9 @@
       <div v-if="dataFlattened" class="chart-container border bg-gray-50 fixed left-40 top-12 right-0 bottom-0 " > </div>
     </Transition>
     <Transition name="slide-fade" >
-      <div v-show="table.loading == false && ( Array.isArray( table.records.matched ) && table.records.matched.length != undefined && table.records.matched.length > 0 )" 
+      <div v-if="panelOfficerHelper" 
         id="orgchart_officers_list" 
-        class="absolute flex flex-wrap left-0 top-10 right-0 bottom-0 pb-12 bg-gray-100 bg-opacity-80 shadow overflow-scroll" >
+        class="absolute flex flex-wrap left-0 top-10 right-0 bottom-0 pb-12 bg-gray-100 bg-opacity-95 shadow overflow-scroll" >
         <!-- Officer Actions End -->
         <div v-if="Array.isArray( table.records.matched ) && table.records.matched.length > 0 " class="vcb-thumbnail mb-12 w-full" >
           <div v-for="(record, index) in table.records.matched" :key='index' class="item" >
@@ -42,9 +42,13 @@
                 <div v-if="record.rank != null && record.rank != undefined " class="absolute left-1 top-5 text-vcb-xs text-left font-bold leading-6 tracking-wider text-xxs " v-html=" $toKhmer( record.rank.prefix + ' ' + record.rank.name )" ></div>
                 <div v-if=" record.current_job != undefined && record.current_job != null " class="absolute right-10 top-2 w-1 h-1 bg-green-400 rounded-full " ></div>
               </div>
-              <thumbnail-actions-form v-bind:model="model" v-bind:record="record" :onClose="closeActions" />
+              <thumbnail-actions-form v-bind:model="officerModel" v-bind:record="record" :onClose="closeActions" />
             </div>
           </div>
+        </div>
+        <div v-if="table.records.matched.length <= 0 || table.records.matched == null " 
+          class="vcb-thumbnail mb-12 w-full p-8 text-md" >
+          មិនមានព័ត៌មានសម្រាប់បង្ហាញឡើយ។
         </div>
         <!-- Pagination of crud -->
         <div class="fixed left-0 right-0 bottom-8 flex flex-wrap" >
@@ -199,6 +203,7 @@ import ocmLogoUrl from './../../assets/logo.svg'
 import ocmLogoUrlPng from './../../assets/logo.png'
 import ThumbnailActionsForm from '../officer/listing/actions/thumbnail-action.vue'
 import dateFormat from 'dateformat'
+import { useNotification } from 'naive-ui'
 
 /**
  * CRUD component form
@@ -213,7 +218,7 @@ export default {
   setup(){
 
     const store = useStore()
-    
+    const notify = useNotification()    
     const toKhmer = inject('toKhmer')
 
     const organizationStructure = ref([])
@@ -393,27 +398,27 @@ export default {
                       <div style="" class="text-center text-gray-600 p-4 pt-6 font-moul leading-7" > ${d.data.name} </div>
                       <!-- Position of the shape -->
                       <!-- <div style="color:#716E7B;margin: 3px 10px 5px 10px;font-size:12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;  text-align: center; ">OK</div> -->`+ 
-                      // ( 
-                      //   parseInt( d.data.total_jobs_of_parent_position ) > 0
-                      //     ?
-                      //     `<!-- Total staffs of each positions within the organization -->
-                      //     <div style="position: absolute; right: 5px; bottom: -4px; border: 1px solid #CCC; background-color: #FFF; color:#716E7B; border-radius: 5px; height: 22px; padding: 2px; float: left;" >
-                      //       <svg class="text-blue-600" style=" float: left; width: 11px; height: 11px; margin: 2px 5px auto 5px; display: inline-block; font-size: 12px ;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 448 512"><path d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0S96 57.3 96 128s57.3 128 128 128zm95.8 32.6L272 480l-32-136l32-56h-96l32 56l-32 136l-47.8-191.4C56.9 292 0 350.3 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-72.1-56.9-130.4-128.2-133.8z" fill="currentColor"></path></svg>
-                      //       <div class="text-blue-600" style=" float: right; font-size: 11px ; margin: 0px 5px 0px 0px; " >` + toKhmer( parseInt( d.data.total_jobs_of_parent_position ) ) + `</div>
-                      //     </div>`
-                      //     : ''
-                      // )
-                      // +
-                      // ( 
-                      //   parseInt( d.data.total_jobs ) > 0
-                      //     ?
-                      //     `<!-- Total Staffs in the whole organization structure -->
-                      //     <div style="position: absolute; left: 5px; bottom: -4px; border: 1px solid #CCC; background-color: #FFF; color:#716E7B; border-radius: 5px; height: 22px; padding: 2px; float: left;" >
-                      //       <svg class="text-blue-600" style=" float: left; width: 11px; height: 11px; margin: 2px 5px auto 5px; display: inline-block; font-size: 12px ;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M12.475 8.014a1 1 0 0 1 .993.884l.007.116v4.368a3.484 3.484 0 0 1-6.964.19l-.005-.19V9.014a1 1 0 0 1 .883-.993l.117-.007h4.969zm0 1h-4.97v4.368a2.484 2.484 0 0 0 4.964.163l.006-.163V9.014zm-6.701-1a1.988 1.988 0 0 0-.26.82l-.008.18h-2.49v3.74a1.856 1.856 0 0 0 2.618 1.693c.08.329.196.644.344.94a2.856 2.856 0 0 1-3.957-2.466l-.004-.168V9.014a1 1 0 0 1 .883-.993l.117-.007h2.757zm8.433 0h2.784a1 1 0 0 1 .993.884l.007.116v3.74a2.855 2.855 0 0 1-3.984 2.624c.148-.298.264-.613.343-.943a1.856 1.856 0 0 0 2.635-1.536l.006-.145v-3.74h-2.516l-.006-.149a1.989 1.989 0 0 0-.262-.851zM9.988 2.989a2.227 2.227 0 1 1 0 4.455a2.227 2.227 0 0 1 0-4.455zm4.988.628a1.913 1.913 0 1 1 0 3.827a1.913 1.913 0 0 1 0-3.827zm-9.96 0a1.913 1.913 0 1 1 0 3.827a1.913 1.913 0 0 1 0-3.827zm4.972.372a1.227 1.227 0 1 0 0 2.455a1.227 1.227 0 0 0 0-2.455zm4.988.628a.913.913 0 1 0 0 1.827a.913.913 0 0 0 0-1.827zm-9.96 0a.913.913 0 1 0 0 1.827a.913.913 0 0 0 0-1.827z" fill="currentColor"></path></g></svg>
-                      //       <div class="text-blue-600" style=" float: right; font-size: 11px ; margin: 0px 5px 0px 0px; " >` + toKhmer( d.data.total_jobs ) + `</div>
-                      //     </div>`
-                      //     : ''
-                      // )+
+                      ( 
+                        parseInt( d.data.total_jobs_of_parent_position ) > 0
+                          ?
+                          `<!-- Total staffs of each positions within the organization -->
+                          <div style="position: absolute; right: 5px; bottom: -4px; border: 1px solid #CCC; background-color: #FFF; color:#716E7B; border-radius: 5px; height: 22px; padding: 2px; float: left;" >
+                            <svg class="text-blue-600" style=" float: left; width: 11px; height: 11px; margin: 2px 5px auto 5px; display: inline-block; font-size: 12px ;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 448 512"><path d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0S96 57.3 96 128s57.3 128 128 128zm95.8 32.6L272 480l-32-136l32-56h-96l32 56l-32 136l-47.8-191.4C56.9 292 0 350.3 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-72.1-56.9-130.4-128.2-133.8z" fill="currentColor"></path></svg>
+                            <div class="text-blue-600" style=" float: right; font-size: 11px ; margin: 0px 5px 0px 0px; " >` + toKhmer( parseInt( d.data.total_jobs_of_parent_position ) ) + `</div>
+                          </div>`
+                          : ''
+                      )
+                      +
+                      ( 
+                        parseInt( d.data.total_jobs ) > 0
+                          ?
+                          `<!-- Total Staffs in the whole organization structure -->
+                          <div style="position: absolute; left: 5px; bottom: -4px; border: 1px solid #CCC; background-color: #FFF; color:#716E7B; border-radius: 5px; height: 22px; padding: 2px; float: left;" >
+                            <svg class="text-blue-600" style=" float: left; width: 11px; height: 11px; margin: 2px 5px auto 5px; display: inline-block; font-size: 12px ;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M12.475 8.014a1 1 0 0 1 .993.884l.007.116v4.368a3.484 3.484 0 0 1-6.964.19l-.005-.19V9.014a1 1 0 0 1 .883-.993l.117-.007h4.969zm0 1h-4.97v4.368a2.484 2.484 0 0 0 4.964.163l.006-.163V9.014zm-6.701-1a1.988 1.988 0 0 0-.26.82l-.008.18h-2.49v3.74a1.856 1.856 0 0 0 2.618 1.693c.08.329.196.644.344.94a2.856 2.856 0 0 1-3.957-2.466l-.004-.168V9.014a1 1 0 0 1 .883-.993l.117-.007h2.757zm8.433 0h2.784a1 1 0 0 1 .993.884l.007.116v3.74a2.855 2.855 0 0 1-3.984 2.624c.148-.298.264-.613.343-.943a1.856 1.856 0 0 0 2.635-1.536l.006-.145v-3.74h-2.516l-.006-.149a1.989 1.989 0 0 0-.262-.851zM9.988 2.989a2.227 2.227 0 1 1 0 4.455a2.227 2.227 0 0 1 0-4.455zm4.988.628a1.913 1.913 0 1 1 0 3.827a1.913 1.913 0 0 1 0-3.827zm-9.96 0a1.913 1.913 0 1 1 0 3.827a1.913 1.913 0 0 1 0-3.827zm4.972.372a1.227 1.227 0 1 0 0 2.455a1.227 1.227 0 0 0 0-2.455zm4.988.628a.913.913 0 1 0 0 1.827a.913.913 0 0 0 0-1.827zm-9.96 0a.913.913 0 1 0 0 1.827a.913.913 0 0 0 0-1.827z" fill="currentColor"></path></g></svg>
+                            <div class="text-blue-600" style=" float: right; font-size: 11px ; margin: 0px 5px 0px 0px; " >` + toKhmer( d.data.total_jobs ) + `</div>
+                          </div>`
+                          : ''
+                      )+
                     `</div>`;
         })
         .render()
@@ -468,6 +473,7 @@ export default {
     })
 
     
+    const panelOfficerHelper = ref(false)
     const selectedOrganization = ref(null)
     const table = reactive( {
       loading: false ,
@@ -520,6 +526,7 @@ export default {
         /**
          * Clear time interval after calling
          */
+        panelOfficerHelper.value = true
         window.clearTimeout()
         table.loading = true
         store.dispatch('officer/list',{
@@ -549,8 +556,15 @@ export default {
           for(var i=table.pagination.start;i<=table.pagination.end;i++){
             i <= table.pagination.totalPages ? table.pagination.buttons.push(i) : false
           }
-
+          
           closeTableLoading()
+          if( table.records.matched.length <= 0 ){
+            notify.info({
+              title: 'ព័ត៌មានមន្ត្រី និងថ្នាក់ដឹកនាំ' ,
+              content: 'មិនមានព័ត៌មានឡើយ។' ,
+              duration: 2000
+            })
+          }
         }).catch( err => {
           console.log( err )
         })
@@ -592,7 +606,71 @@ export default {
 
     function closeOfficersPanel(){
       table.records.all = table.records.matched = []
+      panelOfficerHelper.value = false
+      table.loading = false
+      table.search = ''
+      table.pagination = {
+        perPage: 20 ,
+        page: 1 ,
+        totalPages: 0 ,
+        totalRecords: 0 ,
+        start: 0 ,
+        end: 0 ,
+        buttons: []
+      }
     }
+
+    function getRankStructure(){
+      if( store.getters['rank/records'].all.length <= 0 ){
+        store.dispatch('rank/structure').then( 
+          res => {
+            if( res.data.ok ){
+              store.commit('rank/setAllRecords',res.data.records)
+            }else{
+              notify.info({
+                title: 'អានព័ត៌មានតួនាទី' ,
+                content: res.data.message
+              })
+            }
+          }
+        ).catch( err => {
+          console.log( err )
+        })
+      }
+    }
+
+    function getCountesies(){
+      store.dispatch('countesy/list',{
+        page: 1 ,
+        perPage: 1000 ,
+        search: ''
+      }).then(res=>{
+        store.commit('countesy/setRecords',res.data.records)
+      }).catch(err =>{
+        notify.error({
+          title: 'អានងារ' ,
+          description: 'មានបញ្ហាពេលអានងារ។'
+        })
+        console.log( err )
+      })
+    }
+
+    function getPdcv(){
+      if( store.getters['province/records'].all.length <= 0 ){
+        store.dispatch( 'province/pdcv' ).then( res => {
+          store.commit('province/setAllRecords',res.data.provinces)
+          store.commit('district/setAllRecords',res.data.districts)
+          store.commit('commune/setAllRecords',res.data.communes)
+          store.commit('village/setAllRecords',res.data.villages)
+        }).catch( err => {
+          console.log( err )
+        })
+      }
+    }
+
+    getRankStructure()
+    getCountesies()
+    getPdcv()
 
     return {
       ocmLogoUrl ,
@@ -601,6 +679,11 @@ export default {
         name: "organizations" ,
         title: "រចនាសម្ព័ន្ធក្រសួង"
       },
+      officerModel : {
+        name: "officer" ,
+        module: "officers" ,
+        title: "មន្ត្រីរាជការមុខងារសាធារណៈ"
+      },
       chart ,
       dataFlattened,
       chart,
@@ -608,6 +691,7 @@ export default {
       organizationStructure ,
       dateFormat ,
       closeOfficersPanel ,
+      panelOfficerHelper,
       closeActions ,
       selectedOrganization ,
       table ,
