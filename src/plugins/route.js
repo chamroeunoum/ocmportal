@@ -40,6 +40,7 @@ import PasswordChangeComponent from './../components/user/password_change.vue'
  */
 import OfficerCrud from './../components/officer/index.vue'
 import OfficerThumbnailCrud from './../components/officer/listing/thumbnail.vue'
+import OfficerTableCrud from './../components/officer/listing/table.vue'
 import PrintOfficerProfileComponent from './../layouts/staff/printprofile.vue'
 
 /**
@@ -283,7 +284,7 @@ export const getRoutes = () => {
                 ],
                 children: [
                     {
-                        name: "OfficerTable" ,
+                        name: "OfficerThumbnail" ,
                         path: '' ,
                         component: OfficerThumbnailCrud , // UserTableCrud
                         permissions: [
@@ -291,9 +292,9 @@ export const getRoutes = () => {
                         ],
                     },
                     {
-                        name: "OfficerThumbnail" ,
-                        path: 'thumbnail' ,
-                        component: OfficerThumbnailCrud ,
+                        name: "OfficerTable" ,
+                        path: 'table' ,
+                        component: OfficerTableCrud ,
                         permissions: [
                             'portal_staff_listing'
                         ],
