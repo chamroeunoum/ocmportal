@@ -30,9 +30,15 @@
           </n-tooltip>
         </div>
         <div class="mt-1 mr-2 flex flex-wrap">
-          <router-link to="/hr/officer/table">
-            <svg class="w-6 h-6 pt-2 " xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 28 28"><g fill="none"><path d="M25 6.75A3.75 3.75 0 0 0 21.25 3H6.75A3.75 3.75 0 0 0 3 6.75v14.5A3.75 3.75 0 0 0 6.75 25h14.5A3.75 3.75 0 0 0 25 21.25V6.75zM4.5 11h5v6h-5v-6zM17 17h-6v-6h6v6zM4.5 18.5h5v5H6.75a2.25 2.25 0 0 1-2.25-2.25V18.5zm12.5 5h-6v-5h6v5zm6.5-2.25a2.25 2.25 0 0 1-2.25 2.25H18.5v-5h5v2.75zm0-10.25v6h-5v-6h5zm-19-4.25A2.25 2.25 0 0 1 6.75 4.5h14.5a2.25 2.25 0 0 1 2.25 2.25V9.5h-19V6.75z" fill="currentColor"></path></g></svg>
-          </router-link>
+          <n-tooltip v-if="$hasPermission('portal_staff_creating')" trigger="hover">
+            <template #trigger>
+              <div @click="tableView()" class="flex cursor-pointer hover:text-green-500 duration-300 ml-2 leading-8" >
+                <svg class="w-6 h-6 mt-1 mr-1 " xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 28 28"><g fill="none"><path d="M25 6.75A3.75 3.75 0 0 0 21.25 3H6.75A3.75 3.75 0 0 0 3 6.75v14.5A3.75 3.75 0 0 0 6.75 25h14.5A3.75 3.75 0 0 0 25 21.25V6.75zM4.5 11h5v6h-5v-6zM17 17h-6v-6h6v6zM4.5 18.5h5v5H6.75a2.25 2.25 0 0 1-2.25-2.25V18.5zm12.5 5h-6v-5h6v5zm6.5-2.25a2.25 2.25 0 0 1-2.25 2.25H18.5v-5h5v2.75zm0-10.25v6h-5v-6h5zm-19-4.25A2.25 2.25 0 0 1 6.75 4.5h14.5a2.25 2.25 0 0 1 2.25 2.25V9.5h-19V6.75z" fill="currentColor"></path></g></svg>
+                តារាង
+              </div>
+            </template>
+            បង្ហាញជាតារាង
+          </n-tooltip>
           <n-tooltip v-if="$hasPermission('portal_staff_creating')" trigger="hover">
             <template #trigger>
               <div @click="showCreateModal()" class="flex cursor-pointer hover:text-green-500 duration-300 ml-2 leading-8" >
@@ -68,12 +74,13 @@
         <div v-if="Array.isArray( table.records.matched ) && table.records.matched.length > 0 " class="vcb-thumbnail mb-12" >
           <div v-for="(record, index) in table.records.matched" :key='index' class="item" >
             <div class="content" >
-              <!-- <div v-if="record.image != false && record.image != null && record.image != undefined " class="image bg-cover bg-no-repeat " :style=" 'background-image: url(' + record.image +');' " ></div>
-              <div v-if="record.image == false || record.image == null || record.image == undefined " class="image bg-contain bg-center bg-no-repeat " :style=" 'background-image: url('+ocmLogoUrl+');' " ></div> -->
+              <div v-if="record.image != false && record.image != null && record.image != undefined " class="image bg-cover bg-no-repeat " :style=" 'background-image: url(' + record.image +');' " ></div>
+              <div v-if="record.image == false || record.image == null || record.image == undefined " class="image bg-contain bg-center bg-no-repeat " :style=" 'background-image: url('+ocmLogoUrl+');' " ></div>
               <div class="flex flex-wrap " >
                 <div class="w-full py-2" >
-                  <div v-if="record.countesy != undefined && record.countesy != null " class="w-full text-center font-moul mr-2" >{{  record.countesy.name }}</div>
-                  <div v-if="record.people != undefined && record.people != null " class="w-full text-center font-moul leading-6 tracking-wider" >{{ record.people.lastname + " " + record.people.firstname }}<br/>{{ record.people.enlastname + " " + record.people.enfirstname }}</div>
+                  <div v-if="record.countesy != undefined && record.countesy != null " class="w-full officer-countesy text-center font-moul" >{{  record.countesy.name }}</div>
+                  <div v-if="record.people != undefined && record.people != null " class="w-full officer-name text-center font-moul tracking-wider pt-1" >{{ record.people.lastname + " " + record.people.firstname }}</div>
+                  <div v-if="record.people != undefined && record.people != null " class="w-full officer-name text-center font-moul tracking-wider" >{{ record.people.enlastname + " " + record.people.enfirstname }}</div>
                 </div>
                 <div class="w-full flex flex-wrap justify-between text-gray-600" >
                   <div class="w-1/2 flex flex-wrap " >
@@ -238,6 +245,7 @@ export default {
     const dialog = useDialog()
     const message = useMessage()
     const notify = useNotification()
+    const router = useRouter()
 
     const peopleIds = ref( 
       route.params.ids != undefined && route.params.ids.trim().length > 0 ? route.params.ids.split(',') : null
@@ -424,7 +432,7 @@ export default {
       return positions
     })
     function getPositions(){
-      store.dispatch('position/list',{
+      store.dispatch('position/structurePosition',{
         page: 1 ,
         perPage: 1000 ,
         search: ''
@@ -450,7 +458,7 @@ export default {
       return organizations
     })
     function getOrganizations(){
-      store.dispatch('organization/list',{
+      store.dispatch('organization/organizationStructure',{
         page: 1 ,
         perPage: 1000 ,
         search: '' ,
@@ -544,6 +552,9 @@ export default {
       }
     }
 
+    function tableView(){
+      router.push('/hr/officer/table')
+    }
     /**
      * Initial the data
      */
@@ -608,7 +619,8 @@ export default {
       optionOrganizations ,
       selectedOrganizations ,
       dateFormat ,
-      locationLoading
+      locationLoading ,
+      tableView
     }
   }
 }
@@ -622,16 +634,19 @@ export default {
   @apply flex flex-wrap justify-center;
 }
 .vcb-thumbnail .item {
-  @apply xl:w-1/5 lg:w-1/4 md:w-1/3 sm:w-1/3 w-1/2 p-2 ;
+  @apply 2xl:w-2/12 xl:w-1/5 lg:w-1/4 md:w-1/3 sm:w-1/3 w-1/2 p-2 ;
 }
 .vcb-thumbnail .item .content {
   @apply border rounded-lg hover:shadow duration-500 p-4 pt-8 relative hover:scale-105 transform-gpu bg-white hover:bg-yellow-100;
 }
+.vcb-thumbnail .item .content .officer-countesy , .vcb-thumbnail .item .content .officer-name {
+  font-size: 0.65rem;
+}
 .vcb-thumbnail .item .content .image {
-  @apply border rounded-full border-gray-200 p-2 w-20 h-20 flex-none mx-auto overflow-hidden bg-white ;
+  @apply border rounded-full border-gray-200 p-2 w-16 h-16 flex-none mx-auto overflow-hidden bg-white ;
 }
 .vcb-filters-panel {
-  @apply fixed left-0 top-10 right-0 bottom-0 bg-opacity-60 bg-white ;
+  @apply fixed left-40 top-10 right-0 bottom-0 bg-opacity-60 bg-white ;
 }
 .vcb-filters-panel .filter-title {
   @apply w-full text-left p-4 bg-white rounded-lg ;

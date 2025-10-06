@@ -15,8 +15,8 @@
               <div v-if="record.image == false || record.image == null || record.image == undefined " class="image bg-contain bg-center bg-no-repeat " :style=" 'background-image: url('+ocmLogoUrl+');' " ></div>
               <div class="flex flex-wrap " >
                 <div class="w-full py-2" >
-                  <div v-if="record.countesy != undefined && record.countesy != null " class="w-full text-center font-moul mr-2" >{{  record.countesy.name }}</div>
-                  <div v-if="record.people != undefined && record.people != null " class="w-full text-center font-moul leading-6 tracking-wider" >{{ record.people.lastname + " " + record.people.firstname }}<br/>{{ record.people.enlastname + " " + record.people.enfirstname }}</div>
+                  <div v-if="record.countesy != undefined && record.countesy != null " class="w-full officer-countesy text-center font-moul mr-2" >{{  record.countesy.name }}</div>
+                  <div v-if="record.people != undefined && record.people != null " class="w-full officer-name text-center font-moul leading-6 tracking-wider" >{{ record.people.lastname + " " + record.people.firstname }}<br/>{{ record.people.enlastname + " " + record.people.enfirstname }}</div>
                 </div>
                 <div class="w-full flex flex-wrap justify-between text-gray-600" >
                   <div class="w-1/2 flex flex-wrap " >
@@ -530,6 +530,7 @@ export default {
      */
     function getOfficers(){
       if( selectedOrganization.value != null && selectedOrganization.value.id != undefined && selectedOrganization.value.id > 0 ){
+        console.log( selectedOrganization.value )
         /**
          * Clear time interval after calling
          */
@@ -541,7 +542,7 @@ export default {
           perPage: table.pagination.perPage ,
           page: table.pagination.page ,
           positions: [] ,
-          organizations: [selectedOrganization.value.id ] ,
+          organizations: [selectedOrganization.value.organization.id ] ,
           ids: []
         }).then(res => {
           table.records.all = table.records.matched = res.data.records
@@ -754,11 +755,14 @@ export default {
     @apply flex flex-wrap justify-center;
   }
   .vcb-thumbnail .item {
-    @apply xl:w-1/5 lg:w-1/4 md:w-1/3 sm:w-1/3 w-1/2 p-2 ;
+    @apply 2xl:w-2/12 xl:w-1/5 lg:w-1/4 md:w-1/3 sm:w-1/3 w-1/2 p-2 ;
   }
   .vcb-thumbnail .item .content {
     @apply border rounded-lg hover:shadow duration-500 p-4 pt-8 relative hover:scale-105 transform-gpu bg-white hover:bg-yellow-100;
   }
+  .vcb-thumbnail .item .content .officer-countesy , .vcb-thumbnail .item .content .officer-name {
+  font-size: 0.65rem;
+}
   .vcb-thumbnail .item .content .image {
     @apply border rounded-full border-gray-200 p-2 w-20 h-20 flex-none mx-auto overflow-hidden bg-white ;
   }

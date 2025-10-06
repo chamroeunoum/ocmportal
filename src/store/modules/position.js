@@ -31,6 +31,14 @@ const actions = {
       }).toString()
     )
   },
+  async structurePosition ({ state, commit, rootState },params) {
+    return await crud.list(import.meta.env.VITE_API_SERVER+"/"+state.model.name + "/structure_position?" + new URLSearchParams({
+        search: params.search ,
+        perPage: params.perPage ,
+        page: params.page
+      }).toString()
+    )
+  },
   async read ({ state, commit, rootState },params) {
     return await crud.read(import.meta.env.VITE_API_SERVER+"/"+state.model.name+"/"+params.id+'/read')
   },

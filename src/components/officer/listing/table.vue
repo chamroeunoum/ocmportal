@@ -30,9 +30,15 @@
           </n-tooltip>
         </div>
         <div class="mt-1 mr-2 flex flex-wrap">
-          <router-link to="/hr/officer">
-            <svg class="w-6 h-6 pt-2 " xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M8 30H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2zm-4-6v4h4v-4z" fill="currentColor"></path><path d="M18 30h-4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2zm-4-6v4h4v-4z" fill="currentColor"></path><path d="M28 30h-4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2zm-4-6v4h4v-4z" fill="currentColor"></path><path d="M8 20H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2zm-4-6v4h4v-4z" fill="currentColor"></path><path d="M18 20h-4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2zm-4-6v4h4v-4z" fill="currentColor"></path><path d="M28 20h-4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2zm-4-6v4h4v-4z" fill="currentColor"></path><path d="M8 10H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2zM4 4v4h4V4z" fill="currentColor"></path><path d="M18 10h-4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2zm-4-6v4h4V4z" fill="currentColor"></path><path d="M28 10h-4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2zm-4-6v4h4V4z" fill="currentColor"></path></svg>
-          </router-link>
+          <n-tooltip trigger="hover">
+            <template #trigger>
+              <div @click="thumbnailView()" class="flex cursor-pointer hover:text-green-500 duration-300 ml-2 leading-8" >
+                <svg class="w-6 h-6 mt-1 mr-1 " xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M8 30H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2zm-4-6v4h4v-4z" fill="currentColor"></path><path d="M18 30h-4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2zm-4-6v4h4v-4z" fill="currentColor"></path><path d="M28 30h-4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2zm-4-6v4h4v-4z" fill="currentColor"></path><path d="M8 20H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2zm-4-6v4h4v-4z" fill="currentColor"></path><path d="M18 20h-4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2zm-4-6v4h4v-4z" fill="currentColor"></path><path d="M28 20h-4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2zm-4-6v4h4v-4z" fill="currentColor"></path><path d="M8 10H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2zM4 4v4h4V4z" fill="currentColor"></path><path d="M18 10h-4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2zm-4-6v4h4V4z" fill="currentColor"></path><path d="M28 10h-4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2zm-4-6v4h4V4z" fill="currentColor"></path></svg>
+                ប្រអប់
+              </div>
+            </template>
+            បង្ហាញជារាងប្រអប់
+          </n-tooltip>
           <n-tooltip v-if="$hasPermission('portal_staff_creating')" trigger="hover">
             <template #trigger>
               <div @click="showCreateModal()" class="flex cursor-pointer hover:text-green-500 duration-300 ml-2 leading-8" >
@@ -102,11 +108,6 @@
               </td>
             </tr>
           </tbody>
-          <tfooter>
-            <tr class="otc-footer-row">
-              <th></th>
-            </tr>
-          </tfooter>
         </table>
         <!-- <div v-if="Array.isArray( table.records.matched ) && table.records.matched.length > 0 " class="vcb-thumbnail mb-12" >
           <div v-for="(record, index) in table.records.matched" :key='index' class="item" >
@@ -231,7 +232,7 @@
     <create-non-officer-form v-bind:model="model" v-bind:show="createNonOfficerModal.show" :onClose="closeCreateNonOfficerModal"/>
     <!-- Filter panel of crud -->
     <Transition name="slide-fade" >
-      <div v-if="filter" class="vcb-filters-panel">
+      <div v-if="filter" class="vcb-filters-panel ">
         <svg @click="toggleFilter()" class="absolute bg-white rounded-full shadow p-2 right-2 top-2 w-10 h-10 border border-gray-200 cursor-pointer hover:text-green-500 duration-300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32"><path d="M18 28h-4a2 2 0 0 1-2-2v-7.59L4.59 11A2 2 0 0 1 4 9.59V6a2 2 0 0 1 2-2h20a2 2 0 0 1 2 2v3.59a2 2 0 0 1-.59 1.41L20 18.41V26a2 2 0 0 1-2 2zM6 6v3.59l8 8V26h4v-8.41l8-8V6z" fill="currentColor"></path></svg>
         <div class="filter-title font-moul" >សូមជ្រើសរើសលក្ខណ សម្រង់ទិន្នន័យ៖</div>
         <div class="filter-actions" >
@@ -282,6 +283,7 @@ export default {
     const dialog = useDialog()
     const message = useMessage()
     const notify = useNotification()
+    const router = useRouter()
 
     const peopleIds = ref( 
       route.params.ids != undefined && route.params.ids.trim().length > 0 ? route.params.ids.split(',') : null
@@ -463,12 +465,15 @@ export default {
     const selectedPositions = ref(null)
     const optionPositions = computed( () => {
       let positions = Array.isArray( store.getters['position/getRecords'] ) && store.getters['position/getRecords'].length > 0 ? store.getters['position/getRecords'] : []
-      positions = positions.map( ( p ) => { return { label : p.name , value : p.id } })
+      console.log( positions )
+      positions = positions.map( ( p ) => { 
+        return { label : p.name , value : p.id } 
+      })
       positions.unshift({ label: 'សូមជ្រើសរើស មុនតំណែង' , value: null })
       return positions
     })
     function getPositions(){
-      store.dispatch('position/list',{
+      store.dispatch('position/structurePosition',{
         page: 1 ,
         perPage: 1000 ,
         search: ''
@@ -494,7 +499,7 @@ export default {
       return organizations
     })
     function getOrganizations(){
-      store.dispatch('organization/list',{
+      store.dispatch('organization/organizationStructure',{
         page: 1 ,
         perPage: 1000 ,
         search: '' ,
@@ -588,6 +593,10 @@ export default {
       }
     }
 
+    function thumbnailView(){
+      router.push('/hr/officer')
+    }
+
     /**
      * Initial the data
      */
@@ -652,7 +661,8 @@ export default {
       optionOrganizations ,
       selectedOrganizations ,
       dateFormat ,
-      locationLoading
+      locationLoading ,
+      thumbnailView
     }
   }
 }
@@ -681,7 +691,7 @@ export default {
     @apply leading-7; 
   }
 .vcb-filters-panel {
-  @apply fixed left-0 top-10 right-0 bottom-0 bg-opacity-60 bg-white ;
+  @apply fixed left-40 top-10 right-0 bottom-0 bg-opacity-60 bg-white ;
 }
 .vcb-filters-panel .filter-title {
   @apply w-full text-left p-4 bg-white rounded-lg ;
