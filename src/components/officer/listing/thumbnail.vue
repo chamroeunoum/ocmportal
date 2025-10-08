@@ -102,7 +102,7 @@
                   }}</div>
                 </div>
                 <div v-if="record.card != null && record.card != undefined && record.card.id > 0" class="absolute left-1 top-1 text-vcb-xs text-left font-bold leading-6 tracking-wider" >{{ $toKhmer( record.card.number ) }}</div>
-                <div v-if="(record.card == null || record.card == undefined ) && ( record.organization != undefined && record.organization != null ) " class="absolute left-1 top-1 text-xxs text-left font-bold leading-6 tracking-wider" v-html=" $toKhmer( ( record.organization != undefined && record.organization.prefix != null && record.organization.prefix != '' ? record.organization.prefix + '-'  : '' ) + ( record.id + '' ).padStart( 4 , '0' ) )" ></div>
+                <!-- <div v-if="(record.card == null || record.card == undefined ) && ( record.organization != undefined && record.organization != null ) " class="absolute left-1 top-1 text-xxs text-left font-bold leading-6 tracking-wider" v-html=" $toKhmer( ( record.organization != undefined && record.organization.prefix != null && record.organization.prefix != '' ? record.organization.prefix + '-'  : '' ) + ( record.id + '' ).padStart( 4 , '0' ) )" ></div> -->
                 <div v-if="record.rank != null && record.rank != undefined " class="absolute left-1 top-5 text-vcb-xs text-left font-bold leading-6 tracking-wider text-xxs " v-html=" $toKhmer( record.rank.prefix + ' ' + record.rank.name )" ></div>
                 <div v-if=" record.current_job != undefined && record.current_job != null " class="absolute right-10 top-2 w-1 h-1 bg-green-400 rounded-full " ></div>
               </div>

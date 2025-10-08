@@ -9,6 +9,15 @@
       <div class="flex justify-end h-8 w-1/2" >
         <n-tooltip trigger="hover">
           <template #trigger>
+            <svg 
+              class="flex-none w-8 h-8 mr-2 text-blue-500 cursor-pointer"
+              @click="$router.push('/regulator')" 
+              xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M249.38 336L170 256l79.38-80"></path><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M181.03 256H342"></path><path d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192s192-86 192-192z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></path></svg>
+          </template>
+          ស្វែងរកឯកសារ
+        </n-tooltip>
+        <n-tooltip trigger="hover">
+          <template #trigger>
             <div class="flex-grow relative flex justify-end" >
               <input type="text" 
                 class="bg-gray-100 px-2 h-8 pr-10 truncate text-xs w-full rounded border border-gray-200 duration-300 focus:border-blue-600 hover:border-blue-600 "

@@ -341,13 +341,15 @@ export default {
           }else{
             notify.error({
             title: 'ពិនិត្យវត្តមាន ចូល និង ចេញ' ,
-            content: res.data.message
+            content: res.data.message ,
+            duration: 3000
           })  
           }
         }).catch( err => {
           notify.error({
             title: 'ពិនិត្យវត្តមាន ចូល និង ចេញ' ,
-            content: err.response != undefined && err.response.data != undefined ? err.response.data.message : "មានបញ្ហាពិនិត្យវត្តមាន។"
+            content: err.response != undefined && err.response.data != undefined ? err.response.data.message : "មានបញ្ហាពិនិត្យវត្តមាន។" ,
+            duration: 3000
           })
           console.log( err )
         })
@@ -378,7 +380,11 @@ export default {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition, showError);
         } else {
-            notify.error( "មិនមានការទ្រទ្រង់សម្រាប់ការស្នើរសុំទីតាំងអ្នកប្រើប្រាស់។")
+            notify.error( {
+              title : 'មានកំហុស' ,
+              content: "មិនមានការទ្រទ្រង់សម្រាប់ការស្នើរសុំទីតាំងអ្នកប្រើប្រាស់។" ,
+              duration: 3000
+            } )
         }
     }
 
@@ -392,25 +398,29 @@ export default {
           case error.PERMISSION_DENIED:
               notify.error( {
                 title: 'ចាប់ទីតាំង' ,
-                content: "ការស្នើរសុំទីតាំង ត្រូវបានបដិសេធ៏ដោយអ្នកប្រើប្រាស់។"
+                content: "ការស្នើរសុំទីតាំង ត្រូវបានបដិសេធ៏ដោយអ្នកប្រើប្រាស់។" ,
+                duration: 2000                 
               } )
               break;
           case error.POSITION_UNAVAILABLE:
               notify.error( {
                 title: 'ចាប់ទីតាំង' ,
-                content: "ព័ត៌មានពីទីតាំអ្នកប្រើប្រាស់មិនមានឡើយ។"
+                content: "ព័ត៌មានពីទីតាំអ្នកប្រើប្រាស់មិនមានឡើយ។" ,
+                duration: 2000 
               } )
               break;
           case error.TIMEOUT:
               notify.error( {
                 title: 'ចាប់ទីតាំង' ,
-                content: "អស់ពេលស្នើរសុំព័ត៌មានទីតាំងរបស់អ្នកប្រើប្រាស់។"
+                content: "អស់ពេលស្នើរសុំព័ត៌មានទីតាំងរបស់អ្នកប្រើប្រាស់។" ,
+                duration: 2000 
               } )
               break;
           case error.UNKNOWN_ERROR:
           notify.error( {
                 title: 'ចាប់ទីតាំង' ,
-                content: "មានកំហុសដែលមិនបានរំពឹងទុកកើតឡើង។"
+                content: "មានកំហុសដែលមិនបានរំពឹងទុកកើតឡើង។" ,
+                duration: 2000 
               } )
               break;
       }

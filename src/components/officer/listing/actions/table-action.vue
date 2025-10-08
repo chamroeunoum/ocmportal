@@ -52,7 +52,7 @@
     </n-tooltip>
     <n-tooltip v-if="!show && record.card != undefined && record.card != null"  trigger="hover">
       <template #trigger>
-        <svg class="absolute right-1 top-10 w-5 h-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 28 28"><g fill="none"><path d="M15 11.75a.75.75 0 0 1 .75-.75h5.5a.75.75 0 0 1 0 1.5h-5.5a.75.75 0 0 1-.75-.75zm.75 3.25a.75.75 0 0 0 0 1.5h5.5a.75.75 0 0 0 0-1.5h-5.5zm-4.5-3.25a1.75 1.75 0 1 1-3.5 0a1.75 1.75 0 0 1 3.5 0zM7 14.5h5a1 1 0 0 1 1 1v.5s-.5 2.5-3.5 2.5S6 16 6 16v-.5a1 1 0 0 1 1-1zM2.004 6.75A2.75 2.75 0 0 1 4.754 4H23.25A2.75 2.75 0 0 1 26 6.75v14.5A2.75 2.75 0 0 1 23.25 24H4.755a2.75 2.75 0 0 1-2.75-2.75V6.75zm2.75-1.25c-.69 0-1.25.56-1.25 1.25v14.5c0 .69.56 1.25 1.25 1.25H23.25c.69 0 1.25-.56 1.25-1.25V6.75c0-.69-.56-1.25-1.25-1.25H4.755z" fill="currentColor"></path></g></svg>
+        <svg class="absolute right-8 top-1 w-5 h-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 28 28"><g fill="none"><path d="M15 11.75a.75.75 0 0 1 .75-.75h5.5a.75.75 0 0 1 0 1.5h-5.5a.75.75 0 0 1-.75-.75zm.75 3.25a.75.75 0 0 0 0 1.5h5.5a.75.75 0 0 0 0-1.5h-5.5zm-4.5-3.25a1.75 1.75 0 1 1-3.5 0a1.75 1.75 0 0 1 3.5 0zM7 14.5h5a1 1 0 0 1 1 1v.5s-.5 2.5-3.5 2.5S6 16 6 16v-.5a1 1 0 0 1 1-1zM2.004 6.75A2.75 2.75 0 0 1 4.754 4H23.25A2.75 2.75 0 0 1 26 6.75v14.5A2.75 2.75 0 0 1 23.25 24H4.755a2.75 2.75 0 0 1-2.75-2.75V6.75zm2.75-1.25c-.69 0-1.25.56-1.25 1.25v14.5c0 .69.56 1.25 1.25 1.25H23.25c.69 0 1.25-.56 1.25-1.25V6.75c0-.69-.56-1.25-1.25-1.25H4.755z" fill="currentColor"></path></g></svg>
       </template>
       បានបោះកាតរួចហើយ
     </n-tooltip>
@@ -255,16 +255,16 @@ export default {
 
 </script>
 <style type="text/css" scoped >
-.vcb-thumbnail .actions {
+.actions {
   @apply flex flex-wrap justify-center absolute left-0 top-0 right-0 bottom-0;
 }
-.vcb-thumbnail .actions .action-toggle {
-  @apply absolute top-1 right-1 w-8 h-8 p-1 rounded-full cursor-pointer ;
+.actions .action-toggle {
+  @apply absolute top-1 right-1 w-5 h-5 p-1 rounded-full cursor-pointer ;
 }
-.vcb-thumbnail .actions .panel {
+.actions .panel {
   @apply bg-white bg-opacity-90 absolute w-full top-0 bottom-0 flex flex-wrap content-center justify-center p-4 ;
 }
-.vcb-thumbnail .actions .action {
-  @apply cursor-pointer w-10 m-1 p-1 bg-white border border-gray-200 rounded-sm ;
+.actions .action {
+  @apply cursor-pointer w-8 m-1 p-1 bg-white border border-gray-200 rounded-sm ;
 }
 </style>

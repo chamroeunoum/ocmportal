@@ -86,7 +86,7 @@
               <th class="text-left" >ឋានន្តរសក្ក</th>
               <th class="text-left" >អង្គភាព / តួនាទី</th>
               <th class="text-left" >អាសយដ្ឋានអេឡិចត្រូនិច</th>
-              <th></th>
+              <th class="w-12"></th>
             </tr>
           </thead>
           <tbody>
@@ -103,8 +103,8 @@
               <td class="text-left" >{{ record.rank != null ? record.rank.name : '' }}</td>
               <td class="text-left" >{{ record.current_job.organization_structure_position.organization_structure.organization.name }}<br/>{{ record.current_job.organization_structure_position.position.name }}</td>
               <td class="text-left" >{{ record.email }}</td>
-              <td class="text-left" >...
-                <!-- <thumbnail-actions-form v-bind:model="model" v-bind:record="record" :onClose="closeActions" /> -->
+              <td class="text-left" >
+                <table-actions-form v-bind:model="model" v-bind:record="record" :onClose="closeActions" />
               </td>
             </tr>
           </tbody>
@@ -263,7 +263,7 @@ import dateFormat from 'dateformat'
  */
 import CreateForm from './../widgets/create.vue'
 import CreateNonOfficerForm from './../widgets/createnonofficer.vue'
-import ThumbnailActionsForm from './actions/thumbnail-action.vue'
+import TableActionsForm from './actions/table-action.vue'
 import { rank } from 'd3'
 export default {
   name: "People" ,
@@ -275,7 +275,7 @@ export default {
      */
     CreateForm ,
     CreateNonOfficerForm ,
-    ThumbnailActionsForm
+    TableActionsForm
   },
   setup(){
     const store = useStore()
@@ -669,6 +669,7 @@ export default {
 
 </script>
 <style type="text/css" scoped >
+
 .otc-table {
   @apply w-full shadow-md ;
 }
@@ -686,6 +687,9 @@ export default {
 }
 .otc-table .otc-header-row th {
   @apply p-2 ;
+}
+.otc-table .otc-body-row {
+  @apply relative ;
 }
 .vcb-table-pagination-info {
     @apply leading-7; 

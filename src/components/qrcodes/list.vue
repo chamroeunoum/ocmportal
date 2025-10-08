@@ -131,7 +131,7 @@ export default {
      */    
     var model = reactive( {
       name: "organization" ,
-      title: "QR វត្តមាន នៃក្រសួងស្ថាប័ន"
+      title: "QR វត្តមានតាមអង្គភាព"
     })
     var table = reactive( {
       loading: false ,
@@ -191,7 +191,7 @@ export default {
        */
       window.clearTimeout()
       table.loading = true
-      store.dispatch(model.name+'/list',{
+      store.dispatch(model.name+'/organizationStructure',{
         search: table.search ,
         perPage: table.pagination.perPage ,
         page: table.pagination.page ,

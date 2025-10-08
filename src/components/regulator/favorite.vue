@@ -359,7 +359,7 @@ export default {
        */
       window.clearTimeout()
       table.loading = true
-      store.dispatch(model.name+'/list',{
+      store.dispatch(model.name+'/favorites',{
         search: table.search ,
         perPage: table.pagination.perPage ,
         page: table.pagination.page ,

@@ -1,7 +1,20 @@
 <template>
   <div class="relative w-full " >
     <Transition name="slide-fade" >
-      <div v-if="dataFlattened" class="chart-container border bg-gray-50 fixed left-40 top-12 right-0 bottom-0 " > </div>
+      <div v-if="dataFlattened"  class="" >
+        <div class="chart-container border bg-gray-50 fixed left-40 top-12 right-0 bottom-0 " > </div>
+        <!-- <div class="absolute right-2 top-2 w-1/5 " >
+          <n-tooltip trigger="hover">
+            <template #trigger>
+              <div class="w-full relative" >
+                <input type="text" @keypress.enter="filterChart(event)" v-model="searchChart" class="bg-gray-100 px-2 h-8 w-full rounded border border-gray-200 focus:border-blue-600 hover:border-blue-600 duration-300" placeholder="ស្វែងរក" />
+                <svg class="absolute right-1 top-1 w-6 h-6 text-gray-400  cursor-pointer" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M8.5 3a5.5 5.5 0 0 1 4.227 9.02l4.127 4.126a.5.5 0 0 1-.638.765l-.07-.057l-4.126-4.127A5.5 5.5 0 1 1 8.5 3zm0 1a4.5 4.5 0 1 0 0 9a4.5 4.5 0 0 0 0-9z" fill="currentColor"></path></g></svg>
+              </div>
+            </template>
+            សូមបញ្ចូលពាក្យគន្លឹះដើម្បីស្វែងរក
+          </n-tooltip>
+        </div> -->
+      </div>
     </Transition>
     <Transition name="slide-fade" >
       <div v-if="panelOfficerHelper" 
@@ -38,15 +51,25 @@
                   }}</div>
                 </div>
                 <div class="absolute left-1 top-1 text-vcb-xs text-left font-bold leading-6 tracking-wider flex flex-wrap" >
-                  <div v-if="record.card != null && record.card != undefined && record.card.id > 0" 
+                  <div v-if="record.code != null && record.code != undefined && record.code != '' " 
+                     class="w-full text-left font-bold leading-6 tracking-wider h-4" style="font-size: 0.5rem; " >{{ $toKhmer( record.code ) }}</div>
+                  <div v-if="(record.code == null || record.code == undefined || record.code == '' ) && record.card != null && record.card != undefined && record.card.id > 0" 
                     class="w-full text-vcb-xs text-left font-bold leading-6 tracking-wider" >{{ $toKhmer( record.card.number ) }}</div>
-                  <div v-if="(record.card == null || record.card == undefined ) && ( record.organization != undefined && record.organization != null ) " 
-                  class="w-full text-xxs text-left font-bold leading-6 tracking-wider" v-html=" $toKhmer( ( record.organization != undefined && record.organization.prefix != null && record.organization.prefix != '' ? record.organization.prefix + '-'  : '' ) + ( record.id + '' ).padStart( 4 , '0' ) )" ></div>
-                  <div v-if="record.code != ''" class="w-full text-left font-bold leading-6 tracking-wider h-4" style="font-size: 0.5rem; " >{{ $toKhmer( record.code ) }}</div>
-                  <div v-if="record.people != undefined && record.people.nid != ''" class="w-full text-left font-bold leading-6 tracking-wider h-4" style="font-size: 0.5rem; " >{{ $toKhmer( record.people.nid ) }}</div>
-                  <div v-if="record.people != undefined && record.people.dob != ''" class="w-full text-left font-bold leading-6 tracking-wider h-4" style="font-size: 0.5rem; " >{{ $toKhmer( dateFormat( new Date( record.people.dob ) , 'dd-mm-yyyy' ) ) }}</div>
+                  <div v-if="(record.code == null || record.code == undefined || record.code == '' ) && (record.card == null || record.card == undefined ) && ( record.organization != undefined && record.organization != null ) " 
+                    class="w-full text-xxs text-left font-bold leading-6 tracking-wider" 
+                    v-html=" $toKhmer( ( record.organization != undefined && record.organization.prefix != null && record.organization.prefix != '' ? record.organization.prefix + '-'  : '' ) + ( record.id + '' ).padStart( 4 , '0' ) )" ></div>
+                  <!-- <div v-if="record.code != ''" class="w-full text-left font-bold leading-6 tracking-wider h-4" style="font-size: 0.5rem; " >{{ $toKhmer( record.code ) }}</div> -->
+                  <div v-if="record.people != undefined && record.people.nid != '' && record.people.nid != null " class="w-full text-left font-bold leading-6 tracking-wider h-4" style="font-size: 0.5rem; " >
+                    <!-- <svg class="w-3 h-3 inline mr-1 text-blue-600 " xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 576 512"><path d="M528 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h480c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm0 400H48V80h480v352zM208 256c35.3 0 64-28.7 64-64s-28.7-64-64-64s-64 28.7-64 64s28.7 64 64 64zm-89.6 128h179.2c12.4 0 22.4-8.6 22.4-19.2v-19.2c0-31.8-30.1-57.6-67.2-57.6c-10.8 0-18.7 8-44.8 8c-26.9 0-33.4-8-44.8-8c-37.1 0-67.2 25.8-67.2 57.6v19.2c0 10.6 10 19.2 22.4 19.2zM360 320h112c4.4 0 8-3.6 8-8v-16c0-4.4-3.6-8-8-8H360c-4.4 0-8 3.6-8 8v16c0 4.4 3.6 8 8 8zm0-64h112c4.4 0 8-3.6 8-8v-16c0-4.4-3.6-8-8-8H360c-4.4 0-8 3.6-8 8v16c0 4.4 3.6 8 8 8zm0-64h112c4.4 0 8-3.6 8-8v-16c0-4.4-3.6-8-8-8H360c-4.4 0-8 3.6-8 8v16c0 4.4 3.6 8 8 8z" fill="currentColor"></path></svg> -->
+                    {{ $toKhmer( record.people.nid ) }}</div>
+                  <div v-if="record.people != undefined && record.people.dob != '' && record.people.dob != null " class="w-full text-left font-bold leading-6 tracking-wider h-4" style="font-size: 0.5rem; " >
+                    <!-- <svg class="w-3 h-3 inline mr-1 text-blue-600 " xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 448 512"><path d="M448 384c-28.02 0-31.26-32-74.5-32c-43.43 0-46.825 32-74.75 32c-27.695 0-31.454-32-74.75-32c-42.842 0-47.218 32-74.5 32c-28.148 0-31.202-32-74.75-32c-43.547 0-46.653 32-74.75 32v-80c0-26.5 21.5-48 48-48h16V112h64v144h64V112h64v144h64V112h64v144h16c26.5 0 48 21.5 48 48v80zm0 128H0v-96c43.356 0 46.767-32 74.75-32c27.951 0 31.253 32 74.75 32c42.843 0 47.217-32 74.5-32c28.148 0 31.201 32 74.75 32c43.357 0 46.767-32 74.75-32c27.488 0 31.252 32 74.5 32v96zM96 96c-17.75 0-32-14.25-32-32c0-31 32-23 32-64c12 0 32 29.5 32 56s-14.25 40-32 40zm128 0c-17.75 0-32-14.25-32-32c0-31 32-23 32-64c12 0 32 29.5 32 56s-14.25 40-32 40zm128 0c-17.75 0-32-14.25-32-32c0-31 32-23 32-64c12 0 32 29.5 32 56s-14.25 40-32 40z" fill="currentColor"></path></svg> -->
+                    {{ $toKhmer( dateFormat( new Date( record.people.dob ) , 'dd-mm-yyyy' ) ) }}</div>
+                  <div v-if="record.rank != null && record.rank != undefined " class="w-full text-left font-bold leading-6 tracking-wider " style="font-size: 0.5rem; " >
+                    <!-- <svg class="w-3 h-3 inline mr-1 text-blue-600 " xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 7v13H7V7l5-3z"></path><path d="M10 13l2-1l2 1"></path><path d="M10 17l2-1l2 1"></path><path d="M10 9l2-1l2 1"></path></g></svg> -->
+                    {{ $toKhmer( record.rank.prefix + ' ' + record.rank.name ) }}
+                  </div>
                 </div>
-                <div v-if="record.rank != null && record.rank != undefined " class="absolute left-1 top-5 text-vcb-xs text-left font-bold leading-6 tracking-wider text-xxs " v-html=" $toKhmer( record.rank.prefix + ' ' + record.rank.name )" ></div>
                 <div v-if=" record.current_job != undefined && record.current_job != null " class="absolute right-10 top-2 w-1 h-1 bg-green-400 rounded-full " ></div>
               </div>
               <thumbnail-actions-form v-bind:model="officerModel" v-bind:record="record" :onClose="closeActions" />
@@ -318,28 +341,48 @@ export default {
       dataFlattened.value.columns = 'id,name,image,parentId,desp'
       chart.value = new OrgChart()
         .container('.chart-container')
+
+        .compact(false)
+        .pagingStep((d) => 5)
+        .minPagingVisibleNodes((d) => 3)
+        .pagingButton((d, i, arr, state) => {
+          const step = state.pagingStep(d.parent);
+          const currentIndex = d.parent.data._pagingStep;
+          const diff = d.parent.data._directSubordinatesPaging - currentIndex;
+          const min = Math.min(diff, step);
+          return `
+                    <div style="margin-top:50px;">
+                        <div style="display:flex;width:170px;border-radius:20px;padding:5px 15px; padding-bottom:4px;;background-color:#E5E9F2">
+                        <div><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5.59 7.41L10.18 12L5.59 16.59L7 18L13 12L7 6L5.59 7.41ZM16 6H18V18H16V6Z" fill="#716E7B" stroke="#716E7B"/>
+                        </svg>
+                        </div><div style="line-height:2"> បង្ហាញអង្គភាព ${ toKhmer(min )} បន្ទាប់</div></div>
+                    </div>
+                  `;
+        })
+
         .data( 
           dataFlattened.value
         )
         .svgHeight(window.innerHeight - 55)
         .initialZoom(0.8)
-        .nodeWidth((d3Node) => {
-          let i = 0;
-          if (d3Node.parent) { i = d3Node.parent.children.indexOf(d3Node); }
-          if (i && i == d3Node.parent.children.length - 1) { return 600; }
-          return (!i || i == d3Node.parent.children.length - 1) ? 300 : 100
-        })
-        .nodeHeight((d3Node) => {
-          let i = 0;
-          if (d3Node.parent) { i = d3Node.parent.children.indexOf(d3Node); }
-          if (i && i == d3Node.parent.children.length - 1) { return 300; }
-          return (!i || i == d3Node.parent.children.length - 1) ? 200 : 100
-        })
+        // .nodeWidth((d3Node) => {
+        //   let i = 0;
+        //   if (d3Node.parent) { i = d3Node.parent.children.indexOf(d3Node); }
+        //   if (i && i == d3Node.parent.children.length - 1) { return 600; }
+        //   return (!i || i == d3Node.parent.children.length - 1) ? 300 : 100
+        // })
+        // .nodeHeight((d3Node) => {
+        //   let i = 0;
+        //   if (d3Node.parent) { i = d3Node.parent.children.indexOf(d3Node); }
+        //   if (i && i == d3Node.parent.children.length - 1) { return 300; }
+        //   return (!i || i == d3Node.parent.children.length - 1) ? 200 : 100
+        // })
         .siblingsMargin(d3Node => 50)
         .childrenMargin(d3Node => 50)
         // .neightbourMargin((n1, n2) => 50)
-        .compactMarginPair(d3Node => 70)
-        .compactMarginBetween(d3Node => 50)
+        // .compactMarginPair(d3Node => 70)
+        // .compactMarginBetween(d3Node => 50)
         .setActiveNodeCentered(true)
         // .layout(new URLSearchParams(new URL(document.location.href).search).get('layout') || "top")
         .layout("top")
@@ -352,7 +395,7 @@ export default {
         .nodeUpdate(function (node, i, arr) {
             d3.select(this).on('click.node', (event, d, i) => {
               selectedOrganization.value = d.data
-              getOfficers()
+              // getOfficers()
               chart.value.setCentered( d.data.id +'' ).render()
             })
         })
@@ -390,11 +433,14 @@ export default {
         .nodeContent(function (d, i, arr, state) {
             const colors = ['#278B8D', '#404040', '#0C5C73', '#33C6CB'];
             const color = "#FFFFFF"
-            return `<div style="font-family: 'Inter', sans-serif;background-color:${color}; position:absolute;margin-top:-1px; margin-left:-1px;width:${d.width}px;height:${d.height}px;border-radius:10px;border: 1px solid #E4E2E9;">
+            console.log( d )
+            return `<div 
+              style="font-family: 'Inter', sans-serif;background-color:${color}; position:absolute;margin-top:-1px; margin-left:-1px;width:${d.width}px;height:${d.height}px;border-radius:10px;border: ${ ( d._highlighted == true ? ' 2px solid blue; ' : ' 1px solid #E4E2E9; ' ) }">
                       <div class="border overflow-hidden border-gray-200" style="background-color:${color};position:absolute;margin-top:-25px;margin-left:${15}px;border-radius:100px;width:50px;height:50px;" >
                       <!-- Picture -->` +
                       (
-                        d.data.image!=null && d.data.image!=undefined
+                        // d.data.image!=null && d.data.image!=undefined
+                        false
                         ? `<div class="bg-center bg-cover " style="background-image: url(`+ d.data.image +`); width: 50px; height: 50px;  background-repeat: no-repeat; background-position: center;" ></div>`
                         // : `<svg class='w-8 h-8 m-2' xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M9 2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H10v1a5 5 0 0 1 5 5v1h1a2 2 0 0 1 2 2v4a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-4a2 2 0 0 1 2-2h1v-1a5.002 5.002 0 0 1 4-4.9V2.5zm7 9.5h-1.5a.5.5 0 0 1-.5-.5V10a4 4 0 0 0-8 0v1.5a.5.5 0 0 1-.5.5H4a1 1 0 0 0-1 1v4h5v-2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2h5v-4a1 1 0 0 0-1-1zM6 13.5a.5.5 0 0 0-1 0v2a.5.5 0 0 0 1 0v-2zm9 0a.5.5 0 0 0-1 0v2a.5.5 0 0 0 1 0v-2zM8.5 9a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 1 0v-2a.5.5 0 0 0-.5-.5zm3.5.5a.5.5 0 0 0-1 0v2a.5.5 0 0 0 1 0v-2zM9 17h2v-2H9v2z" fill="currentColor"></path></g></svg>`
                         : `<div class="" style="background-image: url(`+ ocmLogoUrlPng +`); width: 50px; height: 50px;  background-size: 70%; background-repeat: no-repeat; background-position: center;" ></div>`
@@ -405,27 +451,27 @@ export default {
                       <div style="" class="text-center text-gray-600 p-4 pt-6 font-moul leading-7" > ${d.data.name} </div>
                       <!-- Position of the shape -->
                       <!-- <div style="color:#716E7B;margin: 3px 10px 5px 10px;font-size:12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;  text-align: center; ">OK</div> -->`+ 
-                      ( 
-                        parseInt( d.data.total_jobs_of_parent_position ) > 0
-                          ?
-                          `<!-- Total staffs of each positions within the organization -->
-                          <div style="position: absolute; right: 5px; bottom: -4px; border: 1px solid #CCC; background-color: #FFF; color:#716E7B; border-radius: 5px; height: 22px; padding: 2px; float: left;" >
-                            <svg class="text-blue-600" style=" float: left; width: 11px; height: 11px; margin: 2px 5px auto 5px; display: inline-block; font-size: 12px ;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 448 512"><path d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0S96 57.3 96 128s57.3 128 128 128zm95.8 32.6L272 480l-32-136l32-56h-96l32 56l-32 136l-47.8-191.4C56.9 292 0 350.3 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-72.1-56.9-130.4-128.2-133.8z" fill="currentColor"></path></svg>
-                            <div class="text-blue-600" style=" float: right; font-size: 11px ; margin: 0px 5px 0px 0px; " >` + toKhmer( parseInt( d.data.total_jobs_of_parent_position ) ) + `</div>
-                          </div>`
-                          : ''
-                      )
-                      +
-                      ( 
-                        parseInt( d.data.total_jobs ) > 0
-                          ?
-                          `<!-- Total Staffs in the whole organization structure -->
-                          <div style="position: absolute; left: 5px; bottom: -4px; border: 1px solid #CCC; background-color: #FFF; color:#716E7B; border-radius: 5px; height: 22px; padding: 2px; float: left;" >
-                            <svg class="text-blue-600" style=" float: left; width: 11px; height: 11px; margin: 2px 5px auto 5px; display: inline-block; font-size: 12px ;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M12.475 8.014a1 1 0 0 1 .993.884l.007.116v4.368a3.484 3.484 0 0 1-6.964.19l-.005-.19V9.014a1 1 0 0 1 .883-.993l.117-.007h4.969zm0 1h-4.97v4.368a2.484 2.484 0 0 0 4.964.163l.006-.163V9.014zm-6.701-1a1.988 1.988 0 0 0-.26.82l-.008.18h-2.49v3.74a1.856 1.856 0 0 0 2.618 1.693c.08.329.196.644.344.94a2.856 2.856 0 0 1-3.957-2.466l-.004-.168V9.014a1 1 0 0 1 .883-.993l.117-.007h2.757zm8.433 0h2.784a1 1 0 0 1 .993.884l.007.116v3.74a2.855 2.855 0 0 1-3.984 2.624c.148-.298.264-.613.343-.943a1.856 1.856 0 0 0 2.635-1.536l.006-.145v-3.74h-2.516l-.006-.149a1.989 1.989 0 0 0-.262-.851zM9.988 2.989a2.227 2.227 0 1 1 0 4.455a2.227 2.227 0 0 1 0-4.455zm4.988.628a1.913 1.913 0 1 1 0 3.827a1.913 1.913 0 0 1 0-3.827zm-9.96 0a1.913 1.913 0 1 1 0 3.827a1.913 1.913 0 0 1 0-3.827zm4.972.372a1.227 1.227 0 1 0 0 2.455a1.227 1.227 0 0 0 0-2.455zm4.988.628a.913.913 0 1 0 0 1.827a.913.913 0 0 0 0-1.827zm-9.96 0a.913.913 0 1 0 0 1.827a.913.913 0 0 0 0-1.827z" fill="currentColor"></path></g></svg>
-                            <div class="text-blue-600" style=" float: right; font-size: 11px ; margin: 0px 5px 0px 0px; " >` + toKhmer( d.data.total_jobs ) + `</div>
-                          </div>`
-                          : ''
-                      )+
+                      // ( 
+                      //   parseInt( d.data.total_jobs_of_parent_position ) > 0
+                      //     ?
+                      //     `<!-- Total staffs of each positions within the organization -->
+                      //     <div style="position: absolute; right: 5px; bottom: -4px; border: 1px solid #CCC; background-color: #FFF; color:#716E7B; border-radius: 5px; height: 22px; padding: 2px; float: left;" >
+                      //       <svg class="text-blue-600" style=" float: left; width: 11px; height: 11px; margin: 2px 5px auto 5px; display: inline-block; font-size: 12px ;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 448 512"><path d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0S96 57.3 96 128s57.3 128 128 128zm95.8 32.6L272 480l-32-136l32-56h-96l32 56l-32 136l-47.8-191.4C56.9 292 0 350.3 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-72.1-56.9-130.4-128.2-133.8z" fill="currentColor"></path></svg>
+                      //       <div class="text-blue-600" style=" float: right; font-size: 11px ; margin: 0px 5px 0px 0px; " >` + toKhmer( parseInt( d.data.total_jobs_of_parent_position ) ) + `</div>
+                      //     </div>`
+                      //     : ''
+                      // )
+                      // +
+                      // ( 
+                      //   parseInt( d.data.total_jobs ) > 0
+                      //     ?
+                      //     `<!-- Total Staffs in the whole organization structure -->
+                      //     <div style="position: absolute; left: 5px; bottom: -4px; border: 1px solid #CCC; background-color: #FFF; color:#716E7B; border-radius: 5px; height: 22px; padding: 2px; float: left;" >
+                      //       <svg class="text-blue-600" style=" float: left; width: 11px; height: 11px; margin: 2px 5px auto 5px; display: inline-block; font-size: 12px ;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M12.475 8.014a1 1 0 0 1 .993.884l.007.116v4.368a3.484 3.484 0 0 1-6.964.19l-.005-.19V9.014a1 1 0 0 1 .883-.993l.117-.007h4.969zm0 1h-4.97v4.368a2.484 2.484 0 0 0 4.964.163l.006-.163V9.014zm-6.701-1a1.988 1.988 0 0 0-.26.82l-.008.18h-2.49v3.74a1.856 1.856 0 0 0 2.618 1.693c.08.329.196.644.344.94a2.856 2.856 0 0 1-3.957-2.466l-.004-.168V9.014a1 1 0 0 1 .883-.993l.117-.007h2.757zm8.433 0h2.784a1 1 0 0 1 .993.884l.007.116v3.74a2.855 2.855 0 0 1-3.984 2.624c.148-.298.264-.613.343-.943a1.856 1.856 0 0 0 2.635-1.536l.006-.145v-3.74h-2.516l-.006-.149a1.989 1.989 0 0 0-.262-.851zM9.988 2.989a2.227 2.227 0 1 1 0 4.455a2.227 2.227 0 0 1 0-4.455zm4.988.628a1.913 1.913 0 1 1 0 3.827a1.913 1.913 0 0 1 0-3.827zm-9.96 0a1.913 1.913 0 1 1 0 3.827a1.913 1.913 0 0 1 0-3.827zm4.972.372a1.227 1.227 0 1 0 0 2.455a1.227 1.227 0 0 0 0-2.455zm4.988.628a.913.913 0 1 0 0 1.827a.913.913 0 0 0 0-1.827zm-9.96 0a.913.913 0 1 0 0 1.827a.913.913 0 0 0 0-1.827z" fill="currentColor"></path></g></svg>
+                      //       <div class="text-blue-600" style=" float: right; font-size: 11px ; margin: 0px 5px 0px 0px; " >` + toKhmer( d.data.total_jobs ) + `</div>
+                      //     </div>`
+                      //     : ''
+                      // )+
                     `</div>`;
         })
         .render()
@@ -434,6 +480,33 @@ export default {
         loading.value = false
     }
 
+    const searchChart = ref('')
+    function filterChart() {
+      // Get input value
+      const value = searchChart.value
+
+      // Clear previous higlighting
+      chart.value.clearHighlighting();
+
+      // Get chart nodes
+      const data = chart.value.data();
+
+      // Mark all previously expanded nodes for collapse
+      data.forEach((d) => (d._expanded = false));
+
+      // Loop over data and check if input value matches any name
+      data.forEach((d) => {
+        if (value != '' && d.name.toLowerCase().includes(value.toLowerCase())) {
+          // If matches, mark node as highlighted
+          d._highlighted = true;
+          d._expanded = true;
+        }
+      });
+
+      // Update data and rerender graph
+      chart.value.data(data).render().fit();
+    }
+    
     function addChild(){
       this.$store.dispatch( 'organizations/addchild',{
         name: this.childNode.name ,
@@ -719,7 +792,9 @@ export default {
       /**
        * Loading overlay
        */
-      closeTableLoading
+      closeTableLoading ,
+      filterChart ,
+      searchChart
     }
   }
 }
