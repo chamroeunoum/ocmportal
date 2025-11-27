@@ -3,7 +3,8 @@
     <Transition name="slide-fade" >
       <div v-if="dataFlattened"  class="" >
         <div class="chart-container border bg-gray-50 fixed left-40 top-12 right-0 bottom-0 " > </div>
-        <!-- <div class="absolute right-2 top-2 w-1/5 " >
+        <div @click="rednerCompactChart()" class="absolute right-2 top-2 p-1 h-8 leading-6 w-28 bg-blue-700 rounded text-white cursor-pointer hover:bg-green-700 duration-300 " >ប្ដូររាងឋានានុក្រម</div>
+        <div class="absolute right-32 top-2 w-1/5 " >
           <n-tooltip trigger="hover">
             <template #trigger>
               <div class="w-full relative" >
@@ -13,7 +14,7 @@
             </template>
             សូមបញ្ចូលពាក្យគន្លឹះដើម្បីស្វែងរក
           </n-tooltip>
-        </div> -->
+        </div>
       </div>
     </Transition>
     <Transition name="slide-fade" >
@@ -210,7 +211,7 @@
     </Transition>
     <!-- Loading -->
     <Transition name="slide-fade" >
-      <div v-if="loading" class="fixed flex h-screen left-0 top-0 right-0 bottom-0 bg-white bg-opacity-90 bg-green-100 ">
+      <div v-if="loading" class="fixed flex h-screen left-0 top-0 right-0 bottom-0 bg-white bg-opacity-90 bg-white ">
         <div class="flex mx-auto items-center">
           <div class="spinner">
             <svg class="animate-spin w-16 mx-auto text-blue-500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"><path d="M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48s21.49-48 48-48s48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48s48-21.49 48-48s-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48s48-21.49 48-48s-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48s48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48s48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48s48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48s48-21.49 48-48s-21.491-48-48-48z" fill="currentColor"></path></svg>
@@ -282,6 +283,7 @@ export default {
 
     const dataFlattened = ref([])
     const chart = ref(null)
+    const chartCompact = ref(false)
     const loading = ref(true)
     const nodes = ref([])
     function drawingOrgchart(){
@@ -335,6 +337,11 @@ export default {
       }).catch( err => { console.log( err ) } );
 
     }
+    function rednerCompactChart(){
+      chartCompact.value = !chartCompact.value
+      console.log( chartCompact.value )
+      chart.value.compact( chartCompact.value ).render().fit()
+    }
 
     function drawChart(){
       dataFlattened.value = nodes.value
@@ -360,7 +367,6 @@ export default {
                     </div>
                   `;
         })
-
         .data( 
           dataFlattened.value
         )
@@ -395,7 +401,7 @@ export default {
         .nodeUpdate(function (node, i, arr) {
             d3.select(this).on('click.node', (event, d, i) => {
               selectedOrganization.value = d.data
-              // getOfficers()
+              getOfficers()
               chart.value.setCentered( d.data.id +'' ).render()
             })
         })
@@ -435,7 +441,7 @@ export default {
             const color = "#FFFFFF"
             console.log( d )
             return `<div 
-              style="font-family: 'Inter', sans-serif;background-color:${color}; position:absolute;margin-top:-1px; margin-left:-1px;width:${d.width}px;height:${d.height}px;border-radius:10px;border: ${ ( d._highlighted == true ? ' 2px solid blue; ' : ' 1px solid #E4E2E9; ' ) }">
+              style="font-family: 'Inter', sans-serif;background-color:${color}; position:absolute;margin-top:-1px; margin-left:-1px;width:${d.width}px;height:${d.height}px;border-radius:10px; border : ${d.data._highlighted || d.data._upToTheRootHighlighted ? '5px solid #E27396"' : '1px solid #E4E2E9"'}}">
                       <div class="border overflow-hidden border-gray-200" style="background-color:${color};position:absolute;margin-top:-25px;margin-left:${15}px;border-radius:100px;width:50px;height:50px;" >
                       <!-- Picture -->` +
                       (
@@ -451,27 +457,27 @@ export default {
                       <div style="" class="text-center text-gray-600 p-4 pt-6 font-moul leading-7" > ${d.data.name} </div>
                       <!-- Position of the shape -->
                       <!-- <div style="color:#716E7B;margin: 3px 10px 5px 10px;font-size:12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;  text-align: center; ">OK</div> -->`+ 
-                      // ( 
-                      //   parseInt( d.data.total_jobs_of_parent_position ) > 0
-                      //     ?
-                      //     `<!-- Total staffs of each positions within the organization -->
-                      //     <div style="position: absolute; right: 5px; bottom: -4px; border: 1px solid #CCC; background-color: #FFF; color:#716E7B; border-radius: 5px; height: 22px; padding: 2px; float: left;" >
-                      //       <svg class="text-blue-600" style=" float: left; width: 11px; height: 11px; margin: 2px 5px auto 5px; display: inline-block; font-size: 12px ;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 448 512"><path d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0S96 57.3 96 128s57.3 128 128 128zm95.8 32.6L272 480l-32-136l32-56h-96l32 56l-32 136l-47.8-191.4C56.9 292 0 350.3 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-72.1-56.9-130.4-128.2-133.8z" fill="currentColor"></path></svg>
-                      //       <div class="text-blue-600" style=" float: right; font-size: 11px ; margin: 0px 5px 0px 0px; " >` + toKhmer( parseInt( d.data.total_jobs_of_parent_position ) ) + `</div>
-                      //     </div>`
-                      //     : ''
-                      // )
-                      // +
-                      // ( 
-                      //   parseInt( d.data.total_jobs ) > 0
-                      //     ?
-                      //     `<!-- Total Staffs in the whole organization structure -->
-                      //     <div style="position: absolute; left: 5px; bottom: -4px; border: 1px solid #CCC; background-color: #FFF; color:#716E7B; border-radius: 5px; height: 22px; padding: 2px; float: left;" >
-                      //       <svg class="text-blue-600" style=" float: left; width: 11px; height: 11px; margin: 2px 5px auto 5px; display: inline-block; font-size: 12px ;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M12.475 8.014a1 1 0 0 1 .993.884l.007.116v4.368a3.484 3.484 0 0 1-6.964.19l-.005-.19V9.014a1 1 0 0 1 .883-.993l.117-.007h4.969zm0 1h-4.97v4.368a2.484 2.484 0 0 0 4.964.163l.006-.163V9.014zm-6.701-1a1.988 1.988 0 0 0-.26.82l-.008.18h-2.49v3.74a1.856 1.856 0 0 0 2.618 1.693c.08.329.196.644.344.94a2.856 2.856 0 0 1-3.957-2.466l-.004-.168V9.014a1 1 0 0 1 .883-.993l.117-.007h2.757zm8.433 0h2.784a1 1 0 0 1 .993.884l.007.116v3.74a2.855 2.855 0 0 1-3.984 2.624c.148-.298.264-.613.343-.943a1.856 1.856 0 0 0 2.635-1.536l.006-.145v-3.74h-2.516l-.006-.149a1.989 1.989 0 0 0-.262-.851zM9.988 2.989a2.227 2.227 0 1 1 0 4.455a2.227 2.227 0 0 1 0-4.455zm4.988.628a1.913 1.913 0 1 1 0 3.827a1.913 1.913 0 0 1 0-3.827zm-9.96 0a1.913 1.913 0 1 1 0 3.827a1.913 1.913 0 0 1 0-3.827zm4.972.372a1.227 1.227 0 1 0 0 2.455a1.227 1.227 0 0 0 0-2.455zm4.988.628a.913.913 0 1 0 0 1.827a.913.913 0 0 0 0-1.827zm-9.96 0a.913.913 0 1 0 0 1.827a.913.913 0 0 0 0-1.827z" fill="currentColor"></path></g></svg>
-                      //       <div class="text-blue-600" style=" float: right; font-size: 11px ; margin: 0px 5px 0px 0px; " >` + toKhmer( d.data.total_jobs ) + `</div>
-                      //     </div>`
-                      //     : ''
-                      // )+
+                      ( 
+                        parseInt( d.data.total_jobs_of_parent_position ) > 0
+                          ?
+                          `<!-- Total staffs of each positions within the organization -->
+                          <div style="position: absolute; right: 5px; bottom: -4px; border: 1px solid #CCC; background-color: #FFF; color:#716E7B; border-radius: 5px; height: 22px; padding: 2px; float: left;" >
+                            <svg class="text-blue-600" style=" float: left; width: 11px; height: 11px; margin: 2px 5px auto 5px; display: inline-block; font-size: 12px ;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 448 512"><path d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0S96 57.3 96 128s57.3 128 128 128zm95.8 32.6L272 480l-32-136l32-56h-96l32 56l-32 136l-47.8-191.4C56.9 292 0 350.3 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-72.1-56.9-130.4-128.2-133.8z" fill="currentColor"></path></svg>
+                            <div class="text-blue-600" style=" float: right; font-size: 11px ; margin: 0px 5px 0px 0px; " >` + toKhmer( parseInt( d.data.total_jobs_of_parent_position ) ) + `</div>
+                          </div>`
+                          : ''
+                      )
+                      +
+                      ( 
+                        parseInt( d.data.total_jobs ) > 0
+                          ?
+                          `<!-- Total Staffs in the whole organization structure -->
+                          <div style="position: absolute; left: 5px; bottom: -4px; border: 1px solid #CCC; background-color: #FFF; color:#716E7B; border-radius: 5px; height: 22px; padding: 2px; float: left;" >
+                            <svg class="text-blue-600" style=" float: left; width: 11px; height: 11px; margin: 2px 5px auto 5px; display: inline-block; font-size: 12px ;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20"><g fill="none"><path d="M12.475 8.014a1 1 0 0 1 .993.884l.007.116v4.368a3.484 3.484 0 0 1-6.964.19l-.005-.19V9.014a1 1 0 0 1 .883-.993l.117-.007h4.969zm0 1h-4.97v4.368a2.484 2.484 0 0 0 4.964.163l.006-.163V9.014zm-6.701-1a1.988 1.988 0 0 0-.26.82l-.008.18h-2.49v3.74a1.856 1.856 0 0 0 2.618 1.693c.08.329.196.644.344.94a2.856 2.856 0 0 1-3.957-2.466l-.004-.168V9.014a1 1 0 0 1 .883-.993l.117-.007h2.757zm8.433 0h2.784a1 1 0 0 1 .993.884l.007.116v3.74a2.855 2.855 0 0 1-3.984 2.624c.148-.298.264-.613.343-.943a1.856 1.856 0 0 0 2.635-1.536l.006-.145v-3.74h-2.516l-.006-.149a1.989 1.989 0 0 0-.262-.851zM9.988 2.989a2.227 2.227 0 1 1 0 4.455a2.227 2.227 0 0 1 0-4.455zm4.988.628a1.913 1.913 0 1 1 0 3.827a1.913 1.913 0 0 1 0-3.827zm-9.96 0a1.913 1.913 0 1 1 0 3.827a1.913 1.913 0 0 1 0-3.827zm4.972.372a1.227 1.227 0 1 0 0 2.455a1.227 1.227 0 0 0 0-2.455zm4.988.628a.913.913 0 1 0 0 1.827a.913.913 0 0 0 0-1.827zm-9.96 0a.913.913 0 1 0 0 1.827a.913.913 0 0 0 0-1.827z" fill="currentColor"></path></g></svg>
+                            <div class="text-blue-600" style=" float: right; font-size: 11px ; margin: 0px 5px 0px 0px; " >` + toKhmer( d.data.total_jobs ) + `</div>
+                          </div>`
+                          : ''
+                      )+
                     `</div>`;
         })
         .render()
@@ -494,17 +500,24 @@ export default {
       // Mark all previously expanded nodes for collapse
       data.forEach((d) => (d._expanded = false));
 
+      const foundedNode = ref(null)
       // Loop over data and check if input value matches any name
       data.forEach((d) => {
         if (value != '' && d.name.toLowerCase().includes(value.toLowerCase())) {
           // If matches, mark node as highlighted
           d._highlighted = true;
           d._expanded = true;
+          foundedNode.value = d
         }
       });
 
       // Update data and rerender graph
-      chart.value.data(data).render().fit();
+      chart.value.data(data)
+      if( foundedNode.value._highlighted == true ){
+        chart.value.setHighlighted( foundedNode.value.id )
+        // chart.value.setUpToTheRootHighlighted( foundedNode.value.id )
+      }
+      chart.value.render().fit()
     }
     
     function addChild(){
@@ -794,7 +807,8 @@ export default {
        */
       closeTableLoading ,
       filterChart ,
-      searchChart
+      searchChart ,
+      rednerCompactChart
     }
   }
 }
